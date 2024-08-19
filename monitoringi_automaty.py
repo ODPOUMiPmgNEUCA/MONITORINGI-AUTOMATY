@@ -344,7 +344,7 @@ if sekcja == 'Slideros':
     st.download_button(
         label='Pobierz',
         data=excel_file1,
-        file_name='czy_dodac.xlsx',,
+        file_name='czy_dodac.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
