@@ -57,19 +57,6 @@ def percentage_to_float(percentage_str):
     return float(percentage_str.replace(',', '.').replace('%', ''))
 
 
-#TERAZ IMS
-    ims = st.file_uploader(
-        label = "Wrzuć plik ims_nhd"
-    )
-
-    if ims:
-        ims = pd.read_excel(ims, usecols=[0,2,19,21])
-        st.write(ims.head())
-
-    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
-    ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna'])]
-
-
 
 #SOCZYSTE RABATY
 if sekcja == 'Soczyste rabaty':
@@ -126,13 +113,18 @@ if sekcja == 'Soczyste rabaty':
     powiazanie = powiazanie[['KLIENT','Kod klienta','max_percent']]
 
 
+    #TERAZ IMS
+    ims = st.file_uploader(
+        label = "Wrzuć plik ims_nhd"
+    )
 
+    if ims:
+        ims = pd.read_excel(ims, usecols=[0,2,19,21])
+        st.write(ims.head())
 
+    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+    ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna'])]
 
-
-
-
-    
 
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
 
@@ -227,7 +219,7 @@ if sekcja == 'Slideros':
     st.write(tabs_font_css, unsafe_allow_html=True)
 
     df = st.file_uploader(
-        label = "Wrzuć plik Slideros max formuły"
+        label = "Wrzuć plik Slideros"
     )
     if df:
         df = pd.read_excel(df, sheet_name = 'Promocje_rabat', skiprows = 17, usecols = [1,2,9,15,16,17,18,19,20,21,22])
