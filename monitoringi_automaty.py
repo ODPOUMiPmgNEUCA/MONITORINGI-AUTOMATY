@@ -27,7 +27,7 @@ st.set_page_config(page_title='Monitoringi AUTOMATY', layout='wide')
 
 sekcja = st.sidebar.radio(
     'Wybierz monitoring:',
-    ('Soczyste rabaty','Slideros')
+    ('Soczyste rabaty','Slideros','Paramig Fast Junior 250MG')
  )
 
 tabs_font_css = """
@@ -344,7 +344,7 @@ if sekcja == 'Slideros':
     st.download_button(
         label='Pobierz',
         data=excel_file1,
-        file_name='czy_dodac.xlsx',
+        file_name='czy_dodac.xlsx',,
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
@@ -365,6 +365,15 @@ if sekcja == 'Slideros':
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
+if sekcja == 'Paramig Fast Junior 250MG':
+    st.write(tabs_font_css, unsafe_allow_html=True)
+
+    df = st.file_uploader(
+        label = "Wrzuć plik Cykl - soczyste rabaty"
+    )
+    if df:
+        df = pd.read_excel(df, sheet_name = 'Promocje na utrzymanie i FUS', skiprows = 16, usecols = [1,2,16,17,18,19,20,21])
+        st.write(df.head())
 
 
     
