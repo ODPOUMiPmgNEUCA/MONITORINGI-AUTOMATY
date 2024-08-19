@@ -148,7 +148,7 @@ if sekcja == 'Soczyste rabaty':
     ostatecznie = posortowane.drop_duplicates(subset='Kod klienta')
 
 
-    st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu I NIE POBIERAJ TEGO PLIKU')
+    st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
     excel_file = io.BytesIO()
     with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
         ostatecznie.to_excel(writer, index=False, sheet_name='Sheet1')
