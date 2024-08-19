@@ -190,7 +190,7 @@ if sekcja == 'Soczyste rabaty':
 
     # Umożliwienie pobrania pliku Excel
     st.download_button(
-        label='Pobierz wynik Excel',
+        label='Pobierz wynik Excel ',
         data=excel_file1,
         file_name='wynik.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
