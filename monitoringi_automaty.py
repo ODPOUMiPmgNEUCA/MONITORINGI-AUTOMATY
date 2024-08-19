@@ -223,4 +223,6 @@ if sekcja == 'Slideros':
         df = pd.read_excel(df, sheet_name = 'Promocje_rabat', skiprows = 17, usecols = [1,2,9,15,16,17,18,19,20,21,22])
         st.write(df.head())
 
+    df
+
     
