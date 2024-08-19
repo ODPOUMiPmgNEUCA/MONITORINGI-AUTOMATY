@@ -281,11 +281,6 @@ if sekcja == 'Slideros':
     ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
     ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna'])]
 
-    ims = pd.read_excel(ims_path, usecols=[0,2,19,21])
-    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
-    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
-    ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna'])]
-
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
 
     # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
