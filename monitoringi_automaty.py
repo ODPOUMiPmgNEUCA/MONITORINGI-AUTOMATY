@@ -156,7 +156,7 @@ if sekcja == 'Soczyste rabaty':
 
     # Umożliwienie pobrania pliku Excel
     st.download_button(
-        label='Kliknij, aby pobrać, jeśli to pierwszy monitoring',
+        label='Pobierz, jeśli to pierwszy monitoring',
         data=excel_file,
         file_name='czy_dodac.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
