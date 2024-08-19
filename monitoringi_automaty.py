@@ -181,7 +181,6 @@ if sekcja == 'Soczyste rabaty':
     result['Czy dodać'] = result.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
     result
     st.write('To jest plik, który musisz pobrać, aby wiedzieć, które kody dodać')
-    result
 
     excel_file1 = io.BytesIO()
     with pd.ExcelWriter(excel_file1, engine='xlsxwriter') as writer:
@@ -195,6 +194,9 @@ if sekcja == 'Soczyste rabaty':
         file_name='wynik.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
+
+    result['new_max_percent'] = result[['max_percent', 'old_percent']].max(axis=1)
+    result
 
 
     
