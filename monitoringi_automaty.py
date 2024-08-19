@@ -188,6 +188,15 @@ if sekcja == 'Soczyste rabaty':
         result.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
+    # Umożliwienie pobrania pliku Excel
+    st.download_button(
+        label='Pobierz wynik Excel',
+        data=excel_file1,
+        file_name='wynik.xlsx',
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+
+
     
 
     
