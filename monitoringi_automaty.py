@@ -195,8 +195,8 @@ if sekcja == 'Soczyste rabaty':
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
-    result['new_max_percent'] = result[['max_percent', 'old_percent']].max(axis=1)
     result
+    result = result.drop(columns=['old_percent', 'Czy dodać'])
 
 
     
