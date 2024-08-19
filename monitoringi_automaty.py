@@ -182,6 +182,12 @@ if sekcja == 'Soczyste rabaty':
     result
     st.write('To jest plik, który musisz pobrać, aby wiedzieć, które kody dodać')
     result
+
+    excel_file1 = io.BytesIO()
+    with pd.ExcelWriter(excel_file1, engine='xlsxwriter') as writer:
+        result.to_excel(writer, index=False, sheet_name='Sheet1')
+    excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
+
     
 
     
