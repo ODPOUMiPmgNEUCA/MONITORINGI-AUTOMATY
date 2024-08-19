@@ -222,7 +222,7 @@ if sekcja == 'Slideros':
         label = "Wrzuć plik Slideros"
     )
     if df:
-        df = pd.read_excel(df, sheet_name = 'Promocje_rabat', skiprows = 17, usecols = [1,2,9,15,16,17,18,19,20,21,22])
+        df = pd.read_excel(df, sheet_name = 'Promocje_rabat', skiprows = 17, usecols = [1,2,25,26,27,28,29,30,31,32])
         st.write(df.head())
 
     df
