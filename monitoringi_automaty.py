@@ -225,6 +225,95 @@ if sekcja == 'Slideros':
         df = pd.read_excel(df, sheet_name = 'Promocje_rabat', skiprows = 17, usecols = [1,2,25,26,27,28,29,30,31,32])
         st.write(df.head())
 
-    df
+    #usuń braki danych z Kod klienta
+    df = df.dropna(subset=['Kod klienta'])
+    # klient na całkowite
+    df['KLIENT'] = df['KLIENT'].astype(int)
+    df['Kod klienta'] = df['Kod klienta'].astype(int)
+    # Zmiana nazw kolumn
+    df = df.rename(columns={'0.08.3': '8', '0.1.3': '10', '0.12.3':'12.1' , '0.12.4':'12.2' , '0.14.3':'14' , '0.15.3': '15', '0.17.3':'17.1', '0.17.4':'17.2'})
+
+    # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnach '12' lub '14' jest słowo 'powiązanie'
+    df['SIECIOWY'] = df.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['8']).lower() or 'powiązanie' in str(row['10']).lower() 
+                              or 'powiązanie' in str(row['12.1']).lower() or 'powiązanie' in str(row['12.2']).lower() 
+                              or 'powiązanie' in str(row['14']).lower() or 'powiązanie' in str(row['15']).lower() 
+                              or 'powiązanie' in str(row['17.1']).lower() or 'powiązanie' in str(row['17.2']).lower() else '', axis=1)
+    df['8_percent'] = df['8_percent'].apply(percentage_to_float)
+    df['10_percent'] = df['10_percent'].apply(percentage_to_float)
+    df['12.1_percent'] = df['12.1_percent'].apply(percentage_to_float)
+    df['12.2_percent'] = df['12.2_percent'].apply(percentage_to_float)
+    df['14_percent'] = df['14_percent'].apply(percentage_to_float)
+    df['15_percent'] = df['15_percent'].apply(percentage_to_float)
+    df['17.1_percent'] = df['17.1_percent'].apply(percentage_to_float)
+    df['17.2_percent'] = df['17.2_percent'].apply(percentage_to_float)
+
+    # Dodaj nową kolumnę 'max_percent' z maksymalnymi wartościami z kolumn '12_percent' i '14_percent'
+    df['max_percent'] = df[['8_percent', '10_percent', '12.1_percent', '12.2_percent', '14_percent', '15_percent', 
+                            '17.1_percent', '17.2_percent']].max(axis=1)
+
+    # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
+    filtered_df = df[df['max_percent'] != 0]
+
+    standard = filtered_df[filtered_df['SIECIOWY'] != 'SIECIOWY']
+    powiazanie = filtered_df[filtered_df['SIECIOWY'] == 'SIECIOWY']
+
+    standard_ost = standard[['Kod klienta', 'max_percent']]
+    powiazanie = powiazanie[['KLIENT','Kod klienta','max_percent']]
+
+    #TERAZ IMS
+    ims = st.file_uploader(
+        label = "Wrzuć plik ims_nhd"
+    )
+
+    if ims:
+        ims = pd.read_excel(ims, usecols=[0,2,19,21])
+        st.write(ims.head())
+
+    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+    ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna'])]
+
+    ims = pd.read_excel(ims_path, usecols=[0,2,19,21])
+    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+    ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna'])]
+
+    wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
+
+    # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
+    wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+
+
+    #to są kody SAP
+    wynik_df1 = wynik_df.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_df1 = wynik_df1[['Kod klienta','max_percent']]
+    #wynik_df1
+
+    #to są kody powiazan
+    wynik_df2 = wynik_df.rename(columns={'KLIENT': 'Kod klienta'})
+    wynik_df2 = wynik_df2[['Kod klienta','max_percent']]
+    #wynik_df2
+
+    #POŁĄCZYĆ wynik_df z standard_ost
+    polaczone = pd.concat([standard_ost, wynik_df1, wynik_df2], axis = 0)
+  
+    posortowane = polaczone.sort_values(by='max_percent', ascending=False)
+
+    ostatecznie = posortowane.drop_duplicates(subset='Kod klienta')
+
+    
+    st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
+    excel_file = io.BytesIO()
+    with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
+        ostatecznie.to_excel(writer, index=False, sheet_name='Sheet1')
+    excel_file.seek(0)  # Resetowanie wskaźnika do początku pliku
+
+    # Umożliwienie pobrania pliku Excel
+    st.download_button(
+        label='Pobierz, jeśli to pierwszy monitoring',
+        data=excel_file,
+        file_name='czy_dodac.xlsx',
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+
 
     
