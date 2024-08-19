@@ -195,8 +195,8 @@ if sekcja == 'Soczyste rabaty':
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
-    result
     result = result.drop(columns=['old_percent', 'Czy dodać'])
+    result
 
 
     
