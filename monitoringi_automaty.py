@@ -177,6 +177,8 @@ if sekcja == 'Soczyste rabaty':
     poprzedni = poprzedni.rename(columns={'max_percent': 'old_percent'})
     # Wykonanie left join, dodanie 'old_percent' do pliku 'ostatecznie'
     result = ostatecznie.merge(poprzedni[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+    result['old_percent'] = result['old_percent'].fillna(0)
+    result['Czy dodać'] = result.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
     result
 
     
