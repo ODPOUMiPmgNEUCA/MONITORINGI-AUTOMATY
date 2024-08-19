@@ -156,9 +156,9 @@ if sekcja == 'Soczyste rabaty':
 
     # Umożliwienie pobrania pliku Excel
     st.download_button(
-        label='Pobierz wynik Excel',
+        label='Kliknij, aby pobrać, jeśli to pierwszy monitoring',
         data=excel_file,
-        file_name='wynik.xlsx',
+        file_name='czy_dodac.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
@@ -186,7 +186,7 @@ if sekcja == 'Soczyste rabaty':
 
     # Umożliwienie pobrania pliku Excel
     st.download_button(
-        label='Pobierz wplik z kodami, które należy dodać',
+        label='Kilknij, aby pobrać plik z kodami, które należy dodać',
         data=excel_file1,
         file_name='czy_dodac.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -195,7 +195,7 @@ if sekcja == 'Soczyste rabaty':
     result = result.drop(columns=['old_percent', 'Czy dodać'])
 
 
-    st.write('Pobierz plik z formułą max do następnego monitoringu')
+    st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
     excel_file2 = io.BytesIO()
     with pd.ExcelWriter(excel_file2, engine='xlsxwriter') as writer:
         result.to_excel(writer, index=False, sheet_name='Sheet1')
