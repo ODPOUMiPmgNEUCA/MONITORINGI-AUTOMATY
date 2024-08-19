@@ -117,10 +117,12 @@ if sekcja == 'Soczyste rabaty':
     )
 
     if ims:
-        ims = pd.read_excel(ims, usecols=[0,2,21])
+        ims = pd.read_excel(ims, usecols=[0,2,19,21])
         st.write(ims.head())
 
     ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+    ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna'])]
+
 
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
 
@@ -162,4 +164,16 @@ if sekcja == 'Soczyste rabaty':
         file_name='wynik.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
+
+    #plik z poprzedniego monitoringu
+    poprzedni = st.file_uploader(
+        label = "Wrzuć plik z poprzedniego monitoringu"
+    )
+
+    if poprzedni:
+        poprzedni = pd.read_excel(poprzedni)
+        st.write(poprzedni.head())
+
+    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+    
 
