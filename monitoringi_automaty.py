@@ -180,6 +180,9 @@ if sekcja == 'Soczyste rabaty':
     result['old_percent'] = result['old_percent'].fillna(0)
     result['Czy dodać'] = result.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
     result
+    st.write('To jest plik, który musisz pobrać, aby wiedzieć, które kody dodać')
+    result
+    
 
     
 
