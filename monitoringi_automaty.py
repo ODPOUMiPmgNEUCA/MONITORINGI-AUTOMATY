@@ -42,6 +42,33 @@ div[class*="stSelectbox"] label {
 }
 </style>
 """
+#POTRZEBNE FUNKCJE
+#1 Funkcja do wyodrębnienia wartości procentowej
+def extract_percentage(text):
+    import re
+    match = re.search(r'(\d+,\d+|\d+)%', text)
+    return match.group(0) if match else ''
+
+#2 Funkcja do konwersji wartości procentowej na float
+def percentage_to_float(percentage_str):
+    if pd.isna(percentage_str) or not percentage_str:
+        return 0.0  # Zmieniono na 0.0, aby brakujące wartości były traktowane jako 0
+    # Zamiana przecinka na kropkę, usunięcie znaku '%'
+    return float(percentage_str.replace(',', '.').replace('%', ''))
+
+
+#TERAZ IMS
+    ims = st.file_uploader(
+        label = "Wrzuć plik ims_nhd"
+    )
+
+    if ims:
+        ims = pd.read_excel(ims, usecols=[0,2,19,21])
+        st.write(ims.head())
+
+    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+    ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna'])]
+
 
 
 #SOCZYSTE RABATY
@@ -73,22 +100,11 @@ if sekcja == 'Soczyste rabaty':
     #df[df['SIECIOWY'] == 'SIECIOWY']
     #DZIAŁA :)
 
-    #Funkcja do wyodrębnienia wartości procentowej
-    def extract_percentage(text):
-        import re
-        match = re.search(r'(\d+,\d+|\d+)%', text)
-        return match.group(0) if match else ''
-
+    
     # Zastosowanie funkcji do kolumn '12' i '14'
     df['12_percent'] = df['12'].apply(extract_percentage)
     df['14_percent'] = df['14'].apply(extract_percentage)
 
-    # Funkcja do konwersji wartości procentowej na float
-    def percentage_to_float(percentage_str):
-        if pd.isna(percentage_str) or not percentage_str:
-            return 0.0  # Zmieniono na 0.0, aby brakujące wartości były traktowane jako 0
-        # Zamiana przecinka na kropkę, usunięcie znaku '%'
-        return float(percentage_str.replace(',', '.').replace('%', ''))
 
     # Konwersja kolumn '12_percent' i '14_percent' na liczby zmiennoprzecinkowe
     df['12_percent'] = df['12_percent'].apply(percentage_to_float)
@@ -111,18 +127,12 @@ if sekcja == 'Soczyste rabaty':
 
 
 
-    #TERAZ IMS
-    ims = st.file_uploader(
-        label = "Wrzuć plik ims_nhd"
-    )
 
-    if ims:
-        ims = pd.read_excel(ims, usecols=[0,2,19,21])
-        st.write(ims.head())
 
-    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
-    ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna'])]
 
+
+
+    
 
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
 
