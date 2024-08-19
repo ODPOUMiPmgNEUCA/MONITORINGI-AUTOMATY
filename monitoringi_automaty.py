@@ -375,5 +375,18 @@ if sekcja == 'Paramig Fast Junior 250MG':
         df = pd.read_excel(df, sheet_name = 'PARAMIG FAST JUNIOR 250MG', skiprows = 16, usecols = [1,2,16,17,18,19,20,21])
         st.write(df.head())
 
+    #usuń braki danych z Kod klienta
+    df = df.dropna(subset=['Kod klienta'])
+
+    # klient na całkowite
+    df['KLIENT'] = df['KLIENT'].astype(int)
+    df['Kod klienta'] = df['Kod klienta'].astype(int)
+    df
+
+    # Zmiana nazw kolumn
+    df = df.rename(columns={'0.12.1': '12', '0.14.1': '14'})
+
+    
+
 
     
