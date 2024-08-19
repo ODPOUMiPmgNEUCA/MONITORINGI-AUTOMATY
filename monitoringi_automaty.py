@@ -369,10 +369,10 @@ if sekcja == 'Paramig Fast Junior 250MG':
     st.write(tabs_font_css, unsafe_allow_html=True)
 
     df = st.file_uploader(
-        label = "Wrzuć plik Cykl - soczyste rabaty"
+        label = "Wrzuć plik Cykl Paramig"
     )
     if df:
-        df = pd.read_excel(df, sheet_name = 'Promocje na utrzymanie i FUS', skiprows = 16, usecols = [1,2,16,17,18,19,20,21])
+        df = pd.read_excel(df, sheet_name = 'PARAMIG FAST JUNIOR 250MG', skiprows = 16, usecols = [1,2,16,17,18,19,20,21])
         st.write(df.head())
 
 
