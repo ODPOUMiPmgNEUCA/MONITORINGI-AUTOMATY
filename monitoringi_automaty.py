@@ -148,10 +148,7 @@ if sekcja == 'Soczyste rabaty':
     ostatecznie = posortowane.drop_duplicates(subset='Kod klienta')
 
 
-
-
-    #st.download_button('Pobierz wynik', ostatecznie)
-
+    st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu I NIE POBIERAJ TEGO PLIKU')
     excel_file = io.BytesIO()
     with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
         ostatecznie.to_excel(writer, index=False, sheet_name='Sheet1')
@@ -180,7 +177,7 @@ if sekcja == 'Soczyste rabaty':
     result['old_percent'] = result['old_percent'].fillna(0)
     result['Czy dodać'] = result.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
     result
-    st.write('To jest plik, który musisz pobrać, aby wiedzieć, które kody dodać')
+    st.write('Plik, który musisz pobrać, aby wiedzieć, które kody należy dodać')
 
     excel_file1 = io.BytesIO()
     with pd.ExcelWriter(excel_file1, engine='xlsxwriter') as writer:
@@ -191,12 +188,26 @@ if sekcja == 'Soczyste rabaty':
     st.download_button(
         label='Pobierz wynik Excel ',
         data=excel_file1,
-        file_name='wynik.xlsx',
+        file_name='czy_dodac.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
     result = result.drop(columns=['old_percent', 'Czy dodać'])
-    result
+
+
+    st.write('Pobierz plik z formułą max do następnego monitoringu')
+    excel_file2 = io.BytesIO()
+    with pd.ExcelWriter(excel_file2, engine='xlsxwriter') as writer:
+        result.to_excel(writer, index=False, sheet_name='Sheet1')
+    excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
+
+    # Umożliwienie pobrania pliku Excel
+    st.download_button(
+        label='Pobierz nowy plik FORMUŁA MAX',
+        data=excel_file2,
+        file_name='formula_max.xlsx',
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
 
 
     
