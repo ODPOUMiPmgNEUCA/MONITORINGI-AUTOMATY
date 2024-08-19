@@ -174,6 +174,10 @@ if sekcja == 'Soczyste rabaty':
         poprzedni = pd.read_excel(poprzedni)
         st.write(poprzedni.head())
 
-    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+    poprzedni = poprzedni.rename(columns={'max_percent': 'old_percent'})
+    # Wykonanie left join, dodanie 'old_percent' do pliku 'ostatecznie'
+    result = ostatecznie.merge(poprzedni[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+    result
+
     
 
