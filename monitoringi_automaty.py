@@ -425,11 +425,13 @@ if sekcja == 'Paramig Fast Junior 250MG':
         result.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
+    nazwa_pliku1 = f"PARAMIG_250_{dzisiejsza_data}.xlsx"
+
     # Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Pobierz',
         data=excel_file1,
-        file_name='czy_dodac.xlsx',
+        file_name=nazwa_pliku1,
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
@@ -441,12 +443,14 @@ if sekcja == 'Paramig Fast Junior 250MG':
     with pd.ExcelWriter(excel_file2, engine='xlsxwriter') as writer:
         result.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
+    
+    nazwa_pliku = f"FM_PARAMIG_250_{dzisiejsza_data}.xlsx"
 
     # Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Pobierz nowy plik FORMUŁA MAX',
         data=excel_file2,
-        file_name='formula_max.xlsx',
+        file_name=nazwa_pliku,
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
