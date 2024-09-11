@@ -240,23 +240,27 @@ if sekcja == 'Paramig Fast Junior 250MG':
     df = df.dropna(subset=['Kod klienta'])
     df1 = df1.dropna(subset=['Kod klienta'])
     df2 = df2.dropna(subset=['Kod klienta'])
+    df3 = df3.dropna(subset=['Kod klienta'])
 
 
     # klient na całkowite
     df['KLIENT'] = df['KLIENT'].astype(int)
     df1['KLIENT'] = df1['KLIENT'].astype(int)
     df2['KLIENT'] = df2['KLIENT'].astype(int)
+    df3['KLIENT'] = df3['KLIENT'].astype(int)
     
     df['Kod klienta'] = df['Kod klienta'].astype(int)
     df1['Kod klienta'] = df1['Kod klienta'].astype(int)
     df2['Kod klienta'] = df2['Kod klienta'].astype(int)
-    df2
+    df3['Kod klienta'] = df3['Kod klienta'].astype(int)
+
     
 
     #Zmiana nazw kolumn
     df = df.rename(columns={'0.08.3': '8', '0.1.3': '10', '0.13.3': '13', '0.08.4': '8_1', '0.1.4': '10_1', '0.13.4': '13_1', '0.13.5':'13_2'})
     df1 = df1.rename(columns={'0.1.3': '10', '0.13.3': '13', '0.1.4': '10_1', '0.13.4': '13_1'})
     df2 = df2.rename(columns={'0.22.2': '22', '0.24.2': '24', '0.27.2': '27', '0.22.3': '22_1', '0.24.3': '24_1', '0.27.3': '27_1'})
+    df3 = df3.rename(columns={'0.24.2': '24', '0.27.2': '27', '0.24.3': '24_1', '0.27.3': '27_1'})
     
 
     # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnachjest słowo 'powiązanie'
@@ -266,8 +270,6 @@ if sekcja == 'Paramig Fast Junior 250MG':
 
     
     
-    
-
     def classify_row(row):
         if 'powiązanie' in str(row['10']).lower() or \
            'powiązanie' in str(row['13']).lower() or \
@@ -292,6 +294,17 @@ if sekcja == 'Paramig Fast Junior 250MG':
 
     df2['SIECIOWY'] = df2.apply(classify_row1, axis=1)
 
+    def classify_row2(row):
+        if 'powiązanie' in str(row['24']).lower() or \
+           'powiązanie' in str(row['27']).lower() or \
+           'powiązanie' in str(row['24_1']).lower() or \
+           'powiązanie' in str(row['27_1']).lower():
+            return 'SIECIOWY'
+        else:
+            return ''
+
+    df3['SIECIOWY'] = df3.apply(classify_row2, axis=1)
+
 
     # Zastosowanie funkcji do kolumn
     df['8_percent'] = df['8'].apply(extract_percentage)
@@ -313,6 +326,11 @@ if sekcja == 'Paramig Fast Junior 250MG':
     df2['22_1_percent'] = df2['22_1'].apply(extract_percentage)
     df2['24_1_percent'] = df2['24_1'].apply(extract_percentage)
     df2['27_1_percent'] = df2['27_1'].apply(extract_percentage)
+
+    df3['24_percent'] = df3['24'].apply(extract_percentage)
+    df3['27_percent'] = df3['27'].apply(extract_percentage)
+    df3['24_1_percent'] = df3['24_1'].apply(extract_percentage)
+    df3['27_1_percent'] = df3['27_1'].apply(extract_percentage)
   
 
 
@@ -337,6 +355,11 @@ if sekcja == 'Paramig Fast Junior 250MG':
     df2['22_1_percent'] = df2['22_1_percent'].apply(percentage_to_float)
     df2['24_1_percent'] = df2['24_1_percent'].apply(percentage_to_float)
     df2['27_1_percent'] = df2['27_1_percent'].apply(percentage_to_float)
+
+    df3['24_percent'] = df3['24_percent'].apply(percentage_to_float)
+    df3['27_percent'] = df3['27_percent'].apply(percentage_to_float)
+    df3['24_1_percent'] = df3['24_1_percent'].apply(percentage_to_float)
+    df3['27_1_percent'] = df3['27_1_percent'].apply(percentage_to_float)
    
     
 
@@ -344,11 +367,13 @@ if sekcja == 'Paramig Fast Junior 250MG':
     df['max_percent'] = df[['8_percent', '10_percent', '13_percent', '8_1_percent', '10_1_percent', '13_1_percent', '13_2_percent']].max(axis=1)
     df1['max_percent'] = df1[['10_percent', '13_percent', '10_1_percent', '13_1_percent']].max(axis=1)
     df2['max_percent'] = df2[['22_percent', '24_percent', '27_percent', '22_1_percent', '24_1_percent', '27_1_percent']].max(axis=1)
+    df3['max_percent'] = df3[['24_percent', '27_percent', '24_1_percent', '27_1_percent']].max(axis=1)
 
     # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
     filtered_df = df[df['max_percent'] != 0]
     filtered_df1 = df1[df1['max_percent'] != 0]
     filtered_df2 = df2[df2['max_percent'] != 0]
+    filtered_df3 = df3[df3['max_percent'] != 0]
 
     standard = filtered_df[filtered_df['SIECIOWY'] != 'SIECIOWY']
     powiazanie = filtered_df[filtered_df['SIECIOWY'] == 'SIECIOWY']
@@ -358,6 +383,9 @@ if sekcja == 'Paramig Fast Junior 250MG':
 
     standard2 = filtered_df2[filtered_df2['SIECIOWY'] != 'SIECIOWY']
     powiazanie2 = filtered_df2[filtered_df2['SIECIOWY'] == 'SIECIOWY']
+
+    standard3 = filtered_df3[filtered_df3['SIECIOWY'] != 'SIECIOWY']
+    powiazanie3 = filtered_df3[filtered_df3['SIECIOWY'] == 'SIECIOWY']
 
     #len(standard), len(powiazanie), len(filtered_df)
 
@@ -370,7 +398,8 @@ if sekcja == 'Paramig Fast Junior 250MG':
     standard_ost2 = standard2[['Kod klienta', 'max_percent']]
     powiazanie2 = powiazanie2[['KLIENT','Kod klienta','max_percent']]
 
-
+    standard_ost3 = standard3[['Kod klienta', 'max_percent']]
+    powiazanie3 = powiazanie3[['KLIENT','Kod klienta','max_percent']]
 
 
     #########################################         TERAZ IMS
@@ -392,13 +421,13 @@ if sekcja == 'Paramig Fast Junior 250MG':
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
     wynik_df1 = pd.merge(powiazanie1, ims, left_on='KLIENT', right_on='Klient', how='left')
     wynik_df2 = pd.merge(powiazanie2, ims, left_on='KLIENT', right_on='Klient', how='left')
+    wynik_df3 = pd.merge(powiazanie3, ims, left_on='KLIENT', right_on='Klient', how='left')
 
     # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
     wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     wynik_df1 = wynik_df1[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     wynik_df2 = wynik_df2[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
-
-
+    wynik_df3 = wynik_df3[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
 
     
     #### do tego pierwszego
@@ -451,13 +480,31 @@ if sekcja == 'Paramig Fast Junior 250MG':
     #POŁĄCZYĆ wynik_df z standard_ost
     polaczone2 = pd.concat([standard_ost2, wynik_df_12, wynik_df_22], axis = 0)
     posortowane2 = polaczone2.sort_values(by='max_percent', ascending=False)
-    ostatecznie2 = posortowane1.drop_duplicates(subset='Kod klienta')
+    ostatecznie2 = posortowane2.drop_duplicates(subset='Kod klienta')
+
+
+    ### do tego czwartego
+    wynik_df_13 = wynik_df3.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_df_13 = wynik_df_13[['Kod klienta','max_percent']]
+    #wynik_df1
+
+    #to są kody powiazan
+    wynik_df_23 = wynik_df3.rename(columns={'KLIENT': 'Kod klienta'})
+    wynik_df_23 = wynik_df_23[['Kod klienta','max_percent']]
+    #wynik_df2
+
+    #POŁĄCZYĆ wynik_df z standard_ost
+    polaczone3 = pd.concat([standard_ost3, wynik_df_13, wynik_df_23], axis = 0)
+    posortowane3 = polaczone3.sort_values(by='max_percent', ascending=False)
+    ostatecznie3 = posortowane3.drop_duplicates(subset='Kod klienta')
     
 
 
 
 
-    combined_df = pd.concat([ostatecznie, ostatecznie1, ostatecznie2], ignore_index=True)
+
+
+    combined_df = pd.concat([ostatecznie, ostatecznie1, ostatecznie2, ostatecznie3], ignore_index=True)
     max_rabaty = combined_df.groupby('Kod klienta')['max_percent'].max().reset_index()
     max_rabaty
     max_rabaty.shape
