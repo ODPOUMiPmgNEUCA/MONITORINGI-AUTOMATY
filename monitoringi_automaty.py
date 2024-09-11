@@ -241,6 +241,48 @@ if sekcja == 'Paramig Fast Junior 250MG':
     df = df.rename(columns={'0.08.3': '8', '0.1.3': '10', '0.13.3': '13', '0.08.4': '8_1', '0.1.4': '10_1', '0.13.4': '13_1', '0.13.5':'13_2'})
     df
 
+    # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnachjest słowo 'powiązanie'
+    df['SIECIOWY'] = df.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['8']).lower() or 'powiązanie' in str(row['10']).lower() or 'powiązanie' in str(row['13']).lower()
+                              or 'powiązanie' in str(row['8_1']).lower() or 'powiązanie' in str(row['10_1']).lower() or 'powiązanie' in str(row['13_1']).lower()
+                              or 'powiązanie' in str(row['13_2']).lower() else '', axis=1)
+
+    # Zastosowanie funkcji do kolumn
+    df['8_percent'] = df['8'].apply(extract_percentage)
+    df['10_percent'] = df['10'].apply(extract_percentage)
+    df['13_percent'] = df['13'].apply(extract_percentage)
+    df['8_1_percent'] = df['8_1'].apply(extract_percentage)
+    df['10_1_percent'] = df['10_1'].apply(extract_percentage)
+    df['13_1_percent'] = df['13_1'].apply(extract_percentage)
+    df['13_2_percent'] = df['13_2'].apply(extract_percentage)
+
+    
+    # Konwersja kolumn na liczby zmiennoprzecinkowe
+    df['8_percent'] = df['8_percent'].apply(percentage_to_float)
+    df['10_percent'] = df['10_percent'].apply(percentage_to_float)
+    df['13_percent'] = df['13_percent'].apply(percentage_to_float)
+    df['8_1_percent'] = df['8_1_percent'].apply(percentage_to_float)
+    df['10_1_percent'] = df['10_1_percent'].apply(percentage_to_float)
+    df['13_1_percent'] = df['13_1_percent'].apply(percentage_to_float)
+    df['13_2_percent'] = df['13_2_percent'].apply(percentage_to_float)
+    
+
+    # Dodaj nową kolumnę 'max_percent' z maksymalnymi wartościami z kolumn '12_percent' i '14_percent'
+    df['max_percent'] = df[['8_percent', '10_percent', '13_percent', '8_1_percent', '10_1_percent', '13_1_percent', '13_2_percent']].max(axis=1)
+
+    # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
+    filtered_df = df[df['max_percent'] != 0]
+
+    standard = filtered_df[filtered_df['SIECIOWY'] != 'SIECIOWY']
+    powiazanie = filtered_df[filtered_df['SIECIOWY'] == 'SIECIOWY']
+
+    #len(standard), len(powiazanie), len(filtered_df)
+
+    standard_ost = standard[['Kod klienta', 'max_percent']]
+
+    powiazanie = powiazanie[['KLIENT','Kod klienta','max_percent']]
+
+    
+
     
 
 
