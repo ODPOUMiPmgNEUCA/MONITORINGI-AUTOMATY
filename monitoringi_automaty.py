@@ -239,6 +239,7 @@ if sekcja == 'Paramig Fast Junior 250MG':
 
     #Zmiana nazw kolumn
     df = df.rename(columns={'0.08.3': '8', '0.1.3': '10', '0.13.3': '13', '0.08.4': '8_1', '0.1.4': '10_1', '0.13.4': '13_1', '0.13.5':'13_2'})
+    df
 
     
 
