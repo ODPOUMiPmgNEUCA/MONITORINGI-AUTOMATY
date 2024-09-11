@@ -255,8 +255,18 @@ if sekcja == 'Paramig Fast Junior 250MG':
 
     
     
-    df1['SIECIOWY'] = df1.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['10']).lower() or 'powiązanie' in str(row['13']).lower() or 
-       'powiązanie' in str(row['10_1']).lower() or 'powiązanie' in str(row['13_1']).lower() else '', axis=1)
+    
+
+    def classify_row(row):
+        if 'powiązanie' in str(row['10']).lower() or \
+           'powiązanie' in str(row['13']).lower() or \
+           'powiązanie' in str(row['10_1']).lower() or \
+           'powiązanie' in str(row['13_1']).lower():
+            return 'SIECIOWY'
+        else:
+            return ''
+
+    df1['SIECIOWY'] = df1.apply(classify_row, axis=1)
 
 
     # Zastosowanie funkcji do kolumn
