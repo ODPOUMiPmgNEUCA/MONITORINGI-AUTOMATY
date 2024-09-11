@@ -252,13 +252,11 @@ if sekcja == 'Paramig Fast Junior 250MG':
     df['SIECIOWY'] = df.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['8']).lower() or 'powiązanie' in str(row['10']).lower() or 'powiązanie' in str(row['13']).lower()
                               or 'powiązanie' in str(row['8_1']).lower() or 'powiązanie' in str(row['10_1']).lower() or 'powiązanie' in str(row['13_1']).lower()
                               or 'powiązanie' in str(row['13_2']).lower() else '', axis=1)
+
     
-    df1['SIECIOWY'] = df1.apply(lambda row: 'SIECIOWY' 
-    if 'powiązanie' in str(row['10']).lower() or 
-       'powiązanie' in str(row['13']).lower() or 
-       'powiązanie' in str(row['10_1']).lower() or 
-       'powiązanie' in str(row['13_1']).lower() 
-    else '', axis=1)
+    
+    df1['SIECIOWY'] = df1.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['10']).lower() or 'powiązanie' in str(row['13']).lower() or 
+       'powiązanie' in str(row['10_1']).lower() or 'powiązanie' in str(row['13_1']).lower() else '', axis=1)
 
 
     # Zastosowanie funkcji do kolumn
