@@ -57,7 +57,7 @@ def percentage_to_float(percentage_str):
     return float(percentage_str.replace(',', '.').replace('%', ''))
 
 
-
+dzisiejsza_data = datetime.datetime.now().strftime("%d.%m.%Y")
 ############################################################################### SOCZYSTE RABATY  ##############################################################################################
 if sekcja == 'Soczyste rabaty':
     st.write(tabs_font_css, unsafe_allow_html=True)
@@ -205,11 +205,12 @@ if sekcja == 'Soczyste rabaty':
         result.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
+    nazwa_pliku = f"FM_SOCZYSTE_RABATY_{dzisiejsza_data}.xlsx"
     # Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Pobierz nowy plik FORMUŁA MAX',
         data=excel_file2,
-        file_name='formula_max.xlsx',
+        file_name = nazwa_pliku,
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
