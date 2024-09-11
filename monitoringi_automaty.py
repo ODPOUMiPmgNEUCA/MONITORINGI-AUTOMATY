@@ -568,7 +568,7 @@ if sekcja == 'Paramig Fast 500MG':
         label = "Wrzuć plik Cykl Paramig"
     )
     if uploaded_file:
-        df = pd.read_excel(uploaded_file, sheet_name = 'PPARAMIG FAST 500MG od 20.08', skiprows = 16, usecols = [1,2,16,17,18,19,20,21,22])
+        df = pd.read_excel(uploaded_file, sheet_name = 'PARAMIG FAST 500MG od 20.08', skiprows = 16, usecols = [1,2,16,17,18,19,20,21,22])
         df1 = pd.read_excel(uploaded_file, sheet_name = 'MIX od 20.08', skiprows = 16, usecols = [1,2,13,14,15,16])
         df2 = pd.read_excel(uploaded_file, sheet_name = 'PARAMIG FAST 500MG_nowe', skiprows = 16, usecols = [1,2,13,14,15,16,17,18])
         df3 = pd.read_excel(uploaded_file, sheet_name = 'MIX od 08.07 i 05.08', skiprows = 16, usecols = [1,2,11,12,13,14])
