@@ -28,7 +28,7 @@ st.set_page_config(page_title='Monitoringi AUTOMATY', layout='wide')
 
 sekcja = st.sidebar.radio(
     'Wybierz monitoring:',
-    ('Soczyste rabaty','Paramig Fast Junior 250MG', 'Paramig Fast 500MG','Slideros','jakiś tam kolejny')
+    ('Soczyste rabaty','Paramig Fast Junior 250MG', 'Paramig Fast 500MG','Paramig MIX','Slideros','jakiś tam kolejny')
  )
 
 tabs_font_css = """
@@ -881,6 +881,231 @@ if sekcja == 'Paramig Fast 500MG':
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
     
     nazwa_pliku = f"FM_PARAMIG_500_{dzisiejsza_data}.xlsx"
+
+    # Umożliwienie pobrania pliku Excel
+    st.download_button(
+        label='Pobierz nowy plik FORMUŁA MAX',
+        data=excel_file2,
+        file_name=nazwa_pliku,
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+
+
+
+######################################################################## PARAMIG MIX ###################################################################################################
+
+
+
+if sekcja == 'Paramig MIX':
+    st.wRite(tabs_font_css, unsafe_allow_html=True)
+
+    uploaded_file = st.file_uploader(
+        label = "Wrzuć plik Cykl Paramig"
+    )
+    if uploaded_file:
+        df1 = pd.read_excel(uploaded_file, sheet_name = 'MIX od 20.08', skiprows = 16, usecols = [1,2,13,14,15,16])
+        df3 = pd.read_excel(uploaded_file, sheet_name = 'MIX od 08.07 i 05.08', skiprows = 16, usecols = [1,2,11,12,13,14])
+    
+    
+
+    #usuń braki danych z Kod klienta
+    df1 = df1.dropna(subset=['Kod klienta'])
+    df3 = df3.dropna(subset=['Kod klienta'])
+
+
+    # klient na całkowite
+    df1['KLIENT'] = df1['KLIENT'].astype(int)
+    df3['KLIENT'] = df3['KLIENT'].astype(int)
+    
+    df1['Kod klienta'] = df1['Kod klienta'].astype(int)
+    df3['Kod klienta'] = df3['Kod klienta'].astype(int)
+
+    
+
+    #Zmiana nazw kolumn
+    df1 = df1.rename(columns={'0.1.3': '10', '0.13.3': '13', '0.1.4': '10_1', '0.13.4': '13_1'})
+    df3 = df3.rename(columns={'0.24.2': '24', '0.27.2': '27', '0.24.3': '24_1', '0.27.3': '27_1'})
+    
+
+    # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnachjest słowo 'powiązanie'    
+    def classify_row(row):
+        if 'powiązanie' in str(row['10']).lower() or \
+           'powiązanie' in str(row['13']).lower() or \
+           'powiązanie' in str(row['10_1']).lower() or \
+           'powiązanie' in str(row['13_1']).lower():
+            return 'SIECIOWY'
+        else:
+            return ''
+
+    df1['SIECIOWY'] = df1.apply(classify_row, axis=1)
+
+    def classify_row2(row):
+        if 'powiązanie' in str(row['24']).lower() or \
+           'powiązanie' in str(row['27']).lower() or \
+           'powiązanie' in str(row['24_1']).lower() or \
+           'powiązanie' in str(row['27_1']).lower():
+            return 'SIECIOWY'
+        else:
+            return ''
+
+    df3['SIECIOWY'] = df3.apply(classify_row2, axis=1)
+
+
+    # Zastosowanie funkcji do kolumn
+    df1['10_percent'] = df1['10'].apply(extract_percentage)
+    df1['13_percent'] = df1['13'].apply(extract_percentage)
+    df1['10_1_percent'] = df1['10_1'].apply(extract_percentage)
+    df1['13_1_percent'] = df1['13_1'].apply(extract_percentage)
+
+    df3['24_percent'] = df3['24'].apply(extract_percentage)
+    df3['27_percent'] = df3['27'].apply(extract_percentage)
+    df3['24_1_percent'] = df3['24_1'].apply(extract_percentage)
+    df3['27_1_percent'] = df3['27_1'].apply(extract_percentage)
+  
+
+
+    
+    # Konwersja kolumn na liczby zmiennoprzecinkowe
+    df1['10_percent'] = df1['10_percent'].apply(percentage_to_float)
+    df1['13_percent'] = df1['13_percent'].apply(percentage_to_float)
+    df1['10_1_percent'] = df1['10_1_percent'].apply(percentage_to_float)
+    df1['13_1_percent'] = df1['13_1_percent'].apply(percentage_to_float)
+
+    df3['24_percent'] = df3['24_percent'].apply(percentage_to_float)
+    df3['27_percent'] = df3['27_percent'].apply(percentage_to_float)
+    df3['24_1_percent'] = df3['24_1_percent'].apply(percentage_to_float)
+    df3['27_1_percent'] = df3['27_1_percent'].apply(percentage_to_float)
+   
+    
+
+    # Dodaj nową kolumnę 'max_percent' z maksymalnymi wartościami z kolumn 
+    df1['max_percent'] = df1[['10_percent', '13_percent', '10_1_percent', '13_1_percent']].max(axis=1)
+    df3['max_percent'] = df3[['24_percent', '27_percent', '24_1_percent', '27_1_percent']].max(axis=1)
+
+    # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
+    filtered_df1 = df1[df1['max_percent'] != 0]
+    filtered_df3 = df3[df3['max_percent'] != 0]
+
+    standard1 = filtered_df1[filtered_df1['SIECIOWY'] != 'SIECIOWY']
+    powiazanie1 = filtered_df1[filtered_df1['SIECIOWY'] == 'SIECIOWY']
+    
+    standard3 = filtered_df3[filtered_df3['SIECIOWY'] != 'SIECIOWY']
+    powiazanie3 = filtered_df3[filtered_df3['SIECIOWY'] == 'SIECIOWY']
+
+    #len(standard), len(powiazanie), len(filtered_df)
+
+    standard_ost1 = standard1[['Kod klienta', 'max_percent']]
+    powiazanie1 = powiazanie1[['KLIENT','Kod klienta','max_percent']]
+
+    standard_ost3 = standard3[['Kod klienta', 'max_percent']]
+    powiazanie3 = powiazanie3[['KLIENT','Kod klienta','max_percent']]
+
+
+    #########################################         TERAZ IMS
+    ims = st.file_uploader(
+        label = "Wrzuć plik ims_nhd"
+    )
+
+    if ims:
+        ims = pd.read_excel(ims, usecols=[0,2,19,21])
+        st.write(ims.head())
+
+    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+    ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna', 'ZA - Apteka zakładowa', 'KI - Ogólnodostępna sieć handlowa', 
+                                                     'GA Gabinet lekarski', 'HB - Hurtownia farmaceutyczna bez psychotropów', 'HU - Hurtownia farmaceutyczna z psychotropami', 'GW - Gabinet weterynaryjny', 'HP - Hurtownia farmaceutyczna apteczna - psychotropy',
+                                                      'GP - Gabinet pielęgniarski','UC - Uczelnia','HK - Hurtownia farmaceutyczna apteczna kontrolowane','HO - Hurtownia z ograniczonym asortymentem','DP - Dom pomocy społ.','DR - drogeria hurt',
+                                                      'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.'])]
+
+
+    wynik_df1 = pd.merge(powiazanie1, ims, left_on='KLIENT', right_on='Klient', how='left')
+    wynik_df3 = pd.merge(powiazanie3, ims, left_on='KLIENT', right_on='Klient', how='left')
+
+    # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
+    wynik_df1 = wynik_df1[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+    wynik_df3 = wynik_df3[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+
+    
+    
+    ### do tego drugiego
+    wynik_df_11 = wynik_df1.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_df_11 = wynik_df_11[['Kod klienta','max_percent']]
+    #wynik_df1
+
+    #to są kody powiazan
+    wynik_df_21 = wynik_df1.rename(columns={'KLIENT': 'Kod klienta'})
+    wynik_df_21 = wynik_df_21[['Kod klienta','max_percent']]
+    #wynik_df2
+
+    #POŁĄCZYĆ wynik_df z standard_ost
+    polaczone1 = pd.concat([standard_ost1, wynik_df_11, wynik_df_21], axis = 0)
+    posortowane1 = polaczone1.sort_values(by='max_percent', ascending=False)
+    ostatecznie1 = posortowane1.drop_duplicates(subset='Kod klienta')
+
+
+    
+
+    ### do tego czwartego
+    wynik_df_13 = wynik_df3.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_df_13 = wynik_df_13[['Kod klienta','max_percent']]
+    #wynik_df1
+
+    #to są kody powiazan
+    wynik_df_23 = wynik_df3.rename(columns={'KLIENT': 'Kod klienta'})
+    wynik_df_23 = wynik_df_23[['Kod klienta','max_percent']]
+    #wynik_df2
+
+    #POŁĄCZYĆ wynik_df z standard_ost
+    polaczone3 = pd.concat([standard_ost3, wynik_df_13, wynik_df_23], axis = 0)
+    posortowane3 = polaczone3.sort_values(by='max_percent', ascending=False)
+    ostatecznie3 = posortowane3.drop_duplicates(subset='Kod klienta')
+    
+
+    combined_df = pd.concat([ostatecznie1, ostatecznie3], ignore_index=True)
+    max_rabaty = combined_df.groupby('Kod klienta')['max_percent'].max().reset_index()
+
+
+
+    #plik z poprzedniego monitoringu
+    poprzedni = st.file_uploader(
+        label = "Wrzuć plik z poprzedniego monitoringu"
+    )
+
+    if poprzedni:
+        poprzedni = pd.read_excel(poprzedni)
+        st.write(poprzedni.head())
+
+    poprzedni = poprzedni.rename(columns={'max_percent': 'old_percent'})
+    # Wykonanie left join, dodanie 'old_percent' do pliku 'ostatecznie'
+    result = max_rabaty.merge(poprzedni[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+    result['old_percent'] = result['old_percent'].fillna(0)
+    result['Czy dodać'] = result.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
+    st.write('Kliknij aby pobrać plik z kodami, które kody należy dodać')
+
+    excel_file1 = io.BytesIO()
+    with pd.ExcelWriter(excel_file1, engine='xlsxwriter') as writer:
+        result.to_excel(writer, index=False, sheet_name='Sheet1')
+    excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
+
+    nazwa_pliku1 = f"PARAMIG_MIX_{dzisiejsza_data}.xlsx"
+
+    # Umożliwienie pobrania pliku Excel
+    st.download_button(
+        label='Pobierz',
+        data=excel_file1,
+        file_name=nazwa_pliku1,
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+
+    result = result.drop(columns=['old_percent', 'Czy dodać'])
+
+
+    st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
+    excel_file2 = io.BytesIO()
+    with pd.ExcelWriter(excel_file2, engine='xlsxwriter') as writer:
+        result.to_excel(writer, index=False, sheet_name='Sheet1')
+    excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
+    
+    nazwa_pliku = f"FM_PARAMIG_MIX_{dzisiejsza_data}.xlsx"
 
     # Umożliwienie pobrania pliku Excel
     st.download_button(
