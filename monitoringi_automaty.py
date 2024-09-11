@@ -306,12 +306,12 @@ if sekcja == 'Paramig Fast Junior 250MG':
     df1['10_1_percent'] = df1['10_1'].apply(extract_percentage)
     df1['13_1_percent'] = df1['13_1'].apply(extract_percentage)
 
-    df2['22_percent'] = df1['22'].apply(extract_percentage)
-    df2['24_percent'] = df1['24'].apply(extract_percentage)
-    df2['27_percent'] = df1['27'].apply(extract_percentage)
-    df2['22_1_percent'] = df1['22_1'].apply(extract_percentage)
-    df2['24_1_percent'] = df1['24_1'].apply(extract_percentage)
-    df2['27_1_percent'] = df1['27_1'].apply(extract_percentage)
+    df2['22_percent'] = df2['22'].apply(extract_percentage)
+    df2['24_percent'] = df2['24'].apply(extract_percentage)
+    df2['27_percent'] = df2['27'].apply(extract_percentage)
+    df2['22_1_percent'] = df2['22_1'].apply(extract_percentage)
+    df2['24_1_percent'] = df2['24_1'].apply(extract_percentage)
+    df2['27_1_percent'] = df2['27_1'].apply(extract_percentage)
   
 
 
