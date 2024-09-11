@@ -27,7 +27,7 @@ st.set_page_config(page_title='Monitoringi AUTOMATY', layout='wide')
 
 sekcja = st.sidebar.radio(
     'Wybierz monitoring:',
-    ('Soczyste rabaty','Slideros','Paramig Fast Junior 250MG','jakiś tam kolejny')
+    ('Soczyste rabaty','Paramig Fast Junior 250MG','Slideros','jakiś tam kolejny')
  )
 
 tabs_font_css = """
@@ -58,7 +58,7 @@ def percentage_to_float(percentage_str):
 
 
 
-#SOCZYSTE RABATY
+############################################################################### SOCZYSTE RABATY  ##############################################################################################
 if sekcja == 'Soczyste rabaty':
     st.write(tabs_font_css, unsafe_allow_html=True)
 
@@ -216,6 +216,34 @@ if sekcja == 'Soczyste rabaty':
 
 
 
+#############################################################        PARAMIG FAST JUNIOR 250                    ############################################################################
+
+
+if sekcja == 'Paramig Fast Junior 250MG':
+    st.write(tabs_font_css, unsafe_allow_html=True)
+
+    df = st.file_uploader(
+        label = "Wrzuć plik Cykl Paramig"
+    )
+    if df:
+        df = pd.read_excel(df, sheet_name = 'PARAMIG FAST JUN 250MG od 20.08', skiprows = 16, usecols = [1,2,16,17,18,19,20,21,22])
+        st.write(df.head())
+
+    #usuń braki danych z Kod klienta
+    df = df.dropna(subset=['Kod klienta'])
+
+    # klient na całkowite
+    df['KLIENT'] = df['KLIENT'].astype(int)
+    df['Kod klienta'] = df['Kod klienta'].astype(int)
+    df
+
+    # Zmiana nazw kolumn
+    #df = df.rename(columns={'0.12.1': '12', '0.14.1': '14'})
+
+    
+
+
+
 
 #SLIDEROS
 if sekcja == 'Slideros':
@@ -368,28 +396,8 @@ if sekcja == 'Slideros':
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
-if sekcja == 'Paramig Fast Junior 250MG':
-    st.write(tabs_font_css, unsafe_allow_html=True)
 
-    df = st.file_uploader(
-        label = "Wrzuć plik Cykl Paramig"
-    )
-    if df:
-        df = pd.read_excel(df, sheet_name = 'PARAMIG FAST JUNIOR 250MG', skiprows = 16, usecols = [1,2,16,17,18,19,20,21])
-        st.write(df.head())
 
-    #usuń braki danych z Kod klienta
-    df = df.dropna(subset=['Kod klienta'])
-
-    # klient na całkowite
-    df['KLIENT'] = df['KLIENT'].astype(int)
-    df['Kod klienta'] = df['Kod klienta'].astype(int)
-    df
-
-    # Zmiana nazw kolumn
-    df = df.rename(columns={'0.12.1': '12', '0.14.1': '14'})
-
-    
 
 
     
