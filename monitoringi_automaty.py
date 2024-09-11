@@ -342,7 +342,7 @@ if sekcja == 'Paramig Fast Junior 250MG':
     # Dodaj nową kolumnę 'max_percent' z maksymalnymi wartościami z kolumn 
     df['max_percent'] = df[['8_percent', '10_percent', '13_percent', '8_1_percent', '10_1_percent', '13_1_percent', '13_2_percent']].max(axis=1)
     df1['max_percent'] = df1[['10_percent', '13_percent', '10_1_percent', '13_1_percent']].max(axis=1)
-    df2['max_percent'] = df1[['22_percent', '24_percent', '27_percent', '22_1_percent', '24_1_percent', '27_1_percent']].max(axis=1)
+    df2['max_percent'] = df2[['22_percent', '24_percent', '27_percent', '22_1_percent', '24_1_percent', '27_1_percent']].max(axis=1)
 
     # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
     filtered_df = df[df['max_percent'] != 0]
