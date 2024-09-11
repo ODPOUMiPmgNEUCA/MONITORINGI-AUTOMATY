@@ -401,7 +401,7 @@ if sekcja == 'Paramig Fast Junior 250MG':
     max_rabaty
     max_rabaty.shape
 
-'''
+
 
 
 
