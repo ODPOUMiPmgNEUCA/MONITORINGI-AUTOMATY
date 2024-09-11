@@ -897,7 +897,7 @@ if sekcja == 'Paramig Fast 500MG':
 
 
 if sekcja == 'Paramig MIX':
-    st.wRite(tabs_font_css, unsafe_allow_html=True)
+    st.write(tabs_font_css, unsafe_allow_html=True)
 
     uploaded_file = st.file_uploader(
         label = "Wrzuć plik Cykl Paramig"
