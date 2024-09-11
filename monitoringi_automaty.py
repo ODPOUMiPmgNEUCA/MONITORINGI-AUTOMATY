@@ -231,19 +231,25 @@ if sekcja == 'Paramig Fast Junior 250MG':
     if uploaded_file:
         df = pd.read_excel(uploaded_file, sheet_name = 'PARAMIG FAST JUN 250MG od 20.08', skiprows = 16, usecols = [1,2,16,17,18,19,20,21,22])
         df1 = pd.read_excel(uploaded_file, sheet_name = 'MIX od 20.08', skiprows = 16, usecols = [1,2,13,14,15,16])
+        df3 = pd.read_excel(uploaded_file, sheet_name = 'PARAMIG FAST JUNIOR 250MG_nowe', skiprows = 16, usecols = [1,2,13,14,15,16,17,18])
         st.write(df.head())
-        st.write(df1.head())
+    
 
     #usuń braki danych z Kod klienta
     df = df.dropna(subset=['Kod klienta'])
     df1 = df1.dropna(subset=['Kod klienta'])
+    df2 = df2.dropna(subset=['Kod klienta'])
+
 
     # klient na całkowite
     df['KLIENT'] = df['KLIENT'].astype(int)
     df1['KLIENT'] = df1['KLIENT'].astype(int)
+    df2['KLIENT'] = df2['KLIENT'].astype(int)
     
     df['Kod klienta'] = df['Kod klienta'].astype(int)
     df1['Kod klienta'] = df1['Kod klienta'].astype(int)
+    df2['Kod klienta'] = df2['Kod klienta'].astype(int)
+    df
     
 
     #Zmiana nazw kolumn
