@@ -501,8 +501,6 @@ if sekcja == 'Paramig Fast Junior 250MG':
 
     combined_df = pd.concat([ostatecznie, ostatecznie1, ostatecznie2, ostatecznie3], ignore_index=True)
     max_rabaty = combined_df.groupby('Kod klienta')['max_percent'].max().reset_index()
-    max_rabaty
-    max_rabaty.shape
 
 
 
@@ -839,8 +837,6 @@ if sekcja == 'Paramig Fast 500MG':
 
     combined_df = pd.concat([ostatecznie, ostatecznie1, ostatecznie2, ostatecznie3], ignore_index=True)
     max_rabaty = combined_df.groupby('Kod klienta')['max_percent'].max().reset_index()
-    max_rabaty
-    max_rabaty.shape
 
 
 
