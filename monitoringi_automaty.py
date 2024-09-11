@@ -255,7 +255,7 @@ if sekcja == 'Paramig Fast Junior 250MG':
     #Zmiana nazw kolumn
     df = df.rename(columns={'0.08.3': '8', '0.1.3': '10', '0.13.3': '13', '0.08.4': '8_1', '0.1.4': '10_1', '0.13.4': '13_1', '0.13.5':'13_2'})
     df1 = df1.rename(columns={'0.1.3': '10', '0.13.3': '13', '0.1.4': '10_1', '0.13.4': '13_1'})
-    df2 = df2.rename(columns={'0.22.2': '22', '0.24.2': '24', '0.27.2': '27', '0.22.4': '22_1', '0.24.4': '24_1', '0.27.4': '27_1'})
+    df2 = df2.rename(columns={'0.22.2': '22', '0.24.2': '24', '0.27.2': '27', '0.22.3': '22_1', '0.24.3': '24_1', '0.27.3': '27_1'})
     
 
     # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnachjest słowo 'powiązanie'
