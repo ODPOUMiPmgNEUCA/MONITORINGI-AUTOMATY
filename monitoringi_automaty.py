@@ -391,8 +391,8 @@ if sekcja == 'Paramig Fast Junior 250MG':
     ostatecznie1 = posortowane1.drop_duplicates(subset='Kod klienta')
 
 
-    ostatecznie
-    ostatecznie1
+    ostatecznie.shape
+    ostatecznie1.shape
 
     
 
