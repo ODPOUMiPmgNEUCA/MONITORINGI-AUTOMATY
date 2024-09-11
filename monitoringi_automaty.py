@@ -391,10 +391,17 @@ if sekcja == 'Paramig Fast Junior 250MG':
     ostatecznie1 = posortowane.drop_duplicates(subset='Kod klienta')
 
 
+    ostatecznie
+    ostatecznie1
+
+    
+'''
     combined_df = pd.concat([ostatecznie, ostatecznie1], ignore_index=True)
     max_rabaty = combined_df.groupby('Kod klienta')['max_percent'].max().reset_index()
     max_rabaty
     max_rabaty.shape
+
+'''
 
 
 
