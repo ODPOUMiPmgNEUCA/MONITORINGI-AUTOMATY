@@ -123,7 +123,10 @@ if sekcja == 'Soczyste rabaty':
         st.write(ims.head())
 
     ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
-    ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna'])]
+    ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna', 'ZA - Apteka zakładowa', 'KI - Ogólnodostępna sieć handlowa', 
+                                                     'GA Gabinet lekarski', 'HB - Hurtownia farmaceutyczna bez psychotropów', 'HU - Hurtownia farmaceutyczna z psychotropami', 'GW - Gabinet weterynaryjny', 'HP - Hurtownia farmaceutyczna apteczna - psychotropy',
+                                                      'GP - Gabinet pielęgniarski','UC - Uczelnia','HK - Hurtownia farmaceutyczna apteczna kontrolowane','HO - Hurtownia z ograniczonym asortymentem','DP - Dom pomocy społ.','DR - drogeria hurt',
+                                                      'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.'])]
 
 
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
