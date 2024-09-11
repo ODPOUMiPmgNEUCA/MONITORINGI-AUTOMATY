@@ -189,11 +189,12 @@ if sekcja == 'Soczyste rabaty':
         result.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
+    nazwa_pliku1 = f"SOCZYSTE_RABATY_{dzisiejsza_data}.xlsx"
     # Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Pobierz',
         data=excel_file1,
-        file_name='czy_dodac.xlsx',
+        file_name=nazwa_pliku1,
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
