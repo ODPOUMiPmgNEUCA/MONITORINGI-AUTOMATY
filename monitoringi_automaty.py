@@ -232,7 +232,8 @@ if sekcja == 'Paramig Fast Junior 250MG':
         df = pd.read_excel(uploaded_file, sheet_name = 'PARAMIG FAST JUN 250MG od 20.08', skiprows = 16, usecols = [1,2,16,17,18,19,20,21,22])
         df1 = pd.read_excel(uploaded_file, sheet_name = 'MIX od 20.08', skiprows = 16, usecols = [1,2,13,14,15,16])
         df2 = pd.read_excel(uploaded_file, sheet_name = 'PARAMIG FAST JUNIOR 250MG_nowe', skiprows = 16, usecols = [1,2,13,14,15,16,17,18])
-        st.write(df.head())
+        df3 = pd.read_excel(uploaded_file, sheet_name = 'MIX od 08.07 i 05.08', skiprows = 16, usecols = [1,2,11,12,13,14])
+        st.write(df3.head())
     
 
     #usuń braki danych z Kod klienta
