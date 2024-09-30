@@ -1162,12 +1162,16 @@ if sekcja == 'Wsparcie z natury':
     standard = filtered_df[filtered_df['SIECIOWY'] != 'SIECIOWY']
     
     powiazanie = filtered_df[filtered_df['SIECIOWY'] == 'SIECIOWY']
-    powiazanie
     #len(standard), len(powiazanie), len(filtered_df)
 
     # Dodanie kolumny "CZY_OK", sprawdzającej długość tekstu
     powiazanie['KLIENT_S'] = powiazanie['KLIENT'].apply(lambda x: x if len(str(x)) == 5 else '')
     powiazanie
+
+    dane1 = powiazanie[powiazanie['KLIENT_S'].isna()
+    dane1
+    dane2 = powiazanie[powiazanie['KLIENT_S'].notna()
+    dane2
     
 
     '''
