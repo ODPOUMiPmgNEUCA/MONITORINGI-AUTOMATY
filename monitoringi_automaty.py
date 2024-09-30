@@ -1166,7 +1166,7 @@ if sekcja == 'Wsparcie z natury':
     #len(standard), len(powiazanie), len(filtered_df)
 
     # Dodanie kolumny "CZY_OK", sprawdzającej długość tekstu
-    powiazanie['CZY_OK'] = powiazanie['KLIENT'].apply(lambda x: 'OK' if len(x) == 5 else '')
+    powiazanie['CZY_OK'] = powiazanie['KLIENT'].apply(lambda x: 'OK' if len(str(x)) == 5 else '')
     
 
     '''
