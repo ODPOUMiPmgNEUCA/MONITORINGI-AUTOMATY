@@ -1166,7 +1166,7 @@ if sekcja == 'Wsparcie z natury':
 
     # Dodanie kolumny "CZY_OK", sprawdzającej długość tekstu
     powiazanie['KLIENT_S'] = powiazanie['KLIENT'].apply(lambda x: x if len(str(x)) == 5 else '')
-    powiazanie
+    #powiazanie
 
     dane1 = powiazanie[powiazanie['KLIENT_S'].isna()]
     dane1
