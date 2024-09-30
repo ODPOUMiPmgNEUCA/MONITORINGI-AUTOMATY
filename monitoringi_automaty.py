@@ -1192,8 +1192,11 @@ if sekcja == 'Wsparcie z natury':
 
     # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
     wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+    wynik_df
+    wynik_df = wynik_df.rename(columns={'KLIENT': 'KLIENT1'})
 
-
+    
+    '''
     #to są kody SAP
     wynik_df1 = wynik_df.rename(columns={'APD_kod_SAP_apteki': 'KLIENT'})
     wynik_df1 = wynik_df1[['KLIENT','max_percent']]
@@ -1207,7 +1210,7 @@ if sekcja == 'Wsparcie z natury':
     wynik_df1
     wynik_df2
 
-    '''
+    
     #POŁĄCZYĆ wynik_df z standard_ost
     polaczone = pd.concat([standard_ost, wynik_df1, wynik_df2], axis = 0)
   
