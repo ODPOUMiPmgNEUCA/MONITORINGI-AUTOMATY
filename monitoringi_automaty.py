@@ -1210,6 +1210,7 @@ if sekcja == 'Wsparcie z natury':
     polaczone = pd.concat([wynik_df1, wynik_df2], axis = 0)
     posortowane = polaczone.sort_values(by='max_percent', ascending=False)
     ostatecznie1 = posortowane.drop_duplicates(subset='Kod klienta')
+    ostatecznie1
 
     dane2 = dane2[['Kod klienta','max_percent']]
 
