@@ -1224,12 +1224,12 @@ if sekcja == 'Wsparcie z natury':
     ostateczne = ostateczne.drop_duplicates(subset='Kod klienta')
     ostateczne.shape
 
-    '''
+    
 
     st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
     excel_file = io.BytesIO()
     with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
-        ostatecznie.to_excel(writer, index=False, sheet_name='Sheet1')
+        ostateczne.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file.seek(0)  # Resetowanie wskaźnika do początku pliku
 
     # Umożliwienie pobrania pliku Excel
@@ -1261,7 +1261,7 @@ if sekcja == 'Wsparcie z natury':
         result.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
-    nazwa_pliku1 = f"SOCZYSTE_RABATY_{dzisiejsza_data}.xlsx"
+    nazwa_pliku1 = f"WSPARCIE_Z_NATURY_{dzisiejsza_data}.xlsx"
     # Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Pobierz',
@@ -1279,7 +1279,7 @@ if sekcja == 'Wsparcie z natury':
         result.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
-    nazwa_pliku = f"FM_SOCZYSTE_RABATY_{dzisiejsza_data}.xlsx"
+    nazwa_pliku = f"FM_WSPARCIE_Z_NATURY_{dzisiejsza_data}.xlsx"
     # Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Pobierz nowy plik FORMUŁA MAX',
@@ -1291,7 +1291,7 @@ if sekcja == 'Wsparcie z natury':
 
 
     
-    '''
+    
 
 
 
