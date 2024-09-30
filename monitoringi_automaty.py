@@ -1219,7 +1219,7 @@ if sekcja == 'Wsparcie z natury':
     ostateczne = pd.concat([ostatecznie1, dane2], axis = 0)
     ostateczne = ostateczne.sort_values(by='max_percent', ascending=False)
     ostateczne = ostateczne.drop_duplicates(subset='Kod klienta')
-    ostateczne
+    ostateczne.shape()
 
     '''
 
