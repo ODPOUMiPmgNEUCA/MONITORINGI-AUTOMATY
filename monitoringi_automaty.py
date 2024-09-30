@@ -1280,7 +1280,7 @@ if sekcja == 'Wsparcie z natury':
 
 
 
-
+'''
 
 
 
