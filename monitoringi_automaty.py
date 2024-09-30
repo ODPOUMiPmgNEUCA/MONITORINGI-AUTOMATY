@@ -1153,7 +1153,7 @@ if sekcja == 'Wsparcie z natury':
 
     # Konwersja kolumn '12_percent' i '14_percent' na liczby zmiennoprzecinkowe
     df['15_percent'] = df['15_percent'].apply(percentage_to_float)
-    df = df.rename(columns={'15_percent':'max_percent'}
+    df = df.rename(columns={'15_percent':'max_percent'})
 
 
     # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
