@@ -1209,7 +1209,7 @@ if sekcja == 'Wsparcie z natury':
     wynik_df2
 
     #POŁĄCZYĆ wynik_df z standard_ost
-    polaczone = pd.concat([standard_ost, wynik_df1, wynik_df2], axis = 0)
+    polaczone = pd.concat([wynik_df1, wynik_df2], axis = 0)
     posortowane = polaczone.sort_values(by='max_percent', ascending=False)
     ostatecznie1 = posortowane.drop_duplicates(subset='Kod klienta')
     ostatecznie1
