@@ -1214,6 +1214,10 @@ if sekcja == 'Wsparcie z natury':
     ostatecznie1 = posortowane.drop_duplicates(subset='Kod klienta')
     ostatecznie1
 
+
+    wynik_df2 = pd.merge(dane2, ims, left_on='Kod klienta', right_on='APD_kod_SAP_apteki', how='left')
+    wynik_df2
+
     '''
 
     st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
