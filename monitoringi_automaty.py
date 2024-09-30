@@ -1161,6 +1161,8 @@ if sekcja == 'Wsparcie z natury':
     filtered_df = df[df['max_percent'] != 0]
 
     standard = filtered_df[filtered_df['SIECIOWY'] != 'SIECIOWY']
+    standard
+    
     powiazanie = filtered_df[filtered_df['SIECIOWY'] == 'SIECIOWY']
 
     #len(standard), len(powiazanie), len(filtered_df)
