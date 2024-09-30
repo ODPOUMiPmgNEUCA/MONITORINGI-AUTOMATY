@@ -1160,17 +1160,19 @@ if sekcja == 'Wsparcie z natury':
     filtered_df = df[df['max_percent'] != 0]
 
     standard = filtered_df[filtered_df['SIECIOWY'] != 'SIECIOWY']
-    #standard
+    standard
     
     powiazanie = filtered_df[filtered_df['SIECIOWY'] == 'SIECIOWY']
-
+    powiazanie
     #len(standard), len(powiazanie), len(filtered_df)
 
+    '''
     standard_ost = standard[['Kod klienta', 'max_percent']]
 
     powiazanie = powiazanie[['Kod klienta', 'max_percent']]
 
     powiazanie
+    '''
 
 
 
