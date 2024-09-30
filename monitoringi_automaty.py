@@ -1168,9 +1168,9 @@ if sekcja == 'Wsparcie z natury':
     powiazanie['KLIENT_S'] = powiazanie['KLIENT'].apply(lambda x: x if len(str(x)) == 5 else '')
     #powiazanie
 
-    dane1 = powiazanie[powiazanie['KLIENT_S'].isna()]
+    dane1 = powiazanie[powiazanie['KLIENT_S'].notna() & (powiazanie['KLIENT_S'] != '')]
     dane1
-    dane2 = powiazanie[powiazanie['KLIENT_S'].notna()]
+    dane2 = powiazanie[powiazanie['KLIENT_S'].isna() | (powiazanie['KLIENT_S'] == '')]
     dane2
     
 
