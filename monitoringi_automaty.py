@@ -1173,6 +1173,7 @@ if sekcja == 'Wsparcie z natury':
     dane2 = powiazanie[powiazanie['KLIENT_S'].isna() | (powiazanie['KLIENT_S'] == '')]
     dane2 = dane2.rename(columns={'KLIENT':'Kod klienta'})
     dane2
+    dane2.shape
 
 
     ######################################################### TERAZ IMS
@@ -1202,11 +1203,13 @@ if sekcja == 'Wsparcie z natury':
     wynik_df1 = wynik_df.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
     wynik_df1 = wynik_df1[['Kod klienta','max_percent']]
     wynik_df1
+    wynik_df1.shape
 
     #to są kody powiazan
     wynik_df2 = wynik_df.rename(columns={'KLIENT': 'Kod klienta'})
     wynik_df2 = wynik_df2[['Kod klienta','max_percent']]
     wynik_df2
+    wynik_df2.shape
 
     #POŁĄCZYĆ wynik_df z standard_ost
     polaczone = pd.concat([wynik_df1, wynik_df2], axis = 0)
