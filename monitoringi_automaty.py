@@ -1201,10 +1201,12 @@ if sekcja == 'Wsparcie z natury':
     #to są kody SAP
     wynik_df1 = wynik_df.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
     wynik_df1 = wynik_df1[['Kod klienta','max_percent']]
+    wynik_df1
 
     #to są kody powiazan
     wynik_df2 = wynik_df.rename(columns={'KLIENT': 'Kod klienta'})
     wynik_df2 = wynik_df2[['Kod klienta','max_percent']]
+    wynik_df2
 
     #POŁĄCZYĆ wynik_df z standard_ost
     polaczone = pd.concat([wynik_df1, wynik_df2], axis = 0)
