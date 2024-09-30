@@ -1168,20 +1168,11 @@ if sekcja == 'Wsparcie z natury':
     powiazanie['KLIENT_S'] = powiazanie['KLIENT'].apply(lambda x: x if len(str(x)) == 5 else '')
     powiazanie
 
-    dane1 = powiazanie[powiazanie['KLIENT_S'].isna()
+    dane1 = powiazanie[powiazanie['KLIENT_S'].isna()]
     dane1
-    dane2 = powiazanie[powiazanie['KLIENT_S'].notna()
+    dane2 = powiazanie[powiazanie['KLIENT_S'].notna()]
     dane2
     
-
-    '''
-    standard_ost = standard[['Kod klienta', 'max_percent']]
-
-    powiazanie = powiazanie[['Kod klienta', 'max_percent']]
-
-    powiazanie
-    '''
-
 
 
 
