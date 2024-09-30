@@ -1135,12 +1135,12 @@ if sekcja == 'Wsparcie z natury':
     # klient na całkowite
     df['KLIENT'] = df['KLIENT'].astype(int)
 
-    '''
+    
     # Zmiana nazw kolumn
-    df = df.rename(columns={'0.12.1': '12', '0.14.1': '14'})
+    df = df.rename(columns={'0.15.1': '15'})
 
     # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnach '12' lub '14' jest słowo 'powiązanie'
-    df['SIECIOWY'] = df.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() or 'powiązanie' in str(row['14']).lower() else '', axis=1)
+    df['SIECIOWY'] = df.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['15']).lower() else '', axis=1)
 
     #SPRAWDZENIE CZY DZIAŁA
     #df[df['SIECIOWY'] == 'SIECIOWY']
@@ -1148,16 +1148,14 @@ if sekcja == 'Wsparcie z natury':
 
     
     # Zastosowanie funkcji do kolumn '12' i '14'
-    df['12_percent'] = df['12'].apply(extract_percentage)
-    df['14_percent'] = df['14'].apply(extract_percentage)
+    df['15_percent'] = df['15'].apply(extract_percentage)
 
 
     # Konwersja kolumn '12_percent' i '14_percent' na liczby zmiennoprzecinkowe
-    df['12_percent'] = df['12_percent'].apply(percentage_to_float)
-    df['14_percent'] = df['14_percent'].apply(percentage_to_float)
+    df['15_percent'] = df['15_percent'].apply(percentage_to_float)
 
     # Dodaj nową kolumnę 'max_percent' z maksymalnymi wartościami z kolumn '12_percent' i '14_percent'
-    df['max_percent'] = df[['12_percent', '14_percent']].max(axis=1)
+    df['max_percent'] = df[['15_percent']].max(axis=1)
 
     # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
     filtered_df = df[df['max_percent'] != 0]
@@ -1167,9 +1165,9 @@ if sekcja == 'Wsparcie z natury':
 
     #len(standard), len(powiazanie), len(filtered_df)
 
-    standard_ost = standard[['Kod klienta', 'max_percent']]
+    standard_ost = standard[['KLIENT', 'max_percent']]
 
-    powiazanie = powiazanie[['KLIENT','Kod klienta','max_percent']]
+    powiazanie = powiazanie[['KLIENT', 'max_percent']]
 
 
     #TERAZ IMS
@@ -1195,15 +1193,15 @@ if sekcja == 'Wsparcie z natury':
 
 
     #to są kody SAP
-    wynik_df1 = wynik_df.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_df1 = wynik_df1[['Kod klienta','max_percent']]
+    wynik_df1 = wynik_df.rename(columns={'APD_kod_SAP_apteki': 'KLIENT'})
+    wynik_df1 = wynik_df1[['KLIENT','max_percent']]
     #wynik_df1
 
     #to są kody powiazan
-    wynik_df2 = wynik_df.rename(columns={'KLIENT': 'Kod klienta'})
-    wynik_df2 = wynik_df2[['Kod klienta','max_percent']]
+    wynik_df2 = wynik_df2[['KLIENT','max_percent']]
     #wynik_df2
 
+    '''
     #POŁĄCZYĆ wynik_df z standard_ost
     polaczone = pd.concat([standard_ost, wynik_df1, wynik_df2], axis = 0)
   
