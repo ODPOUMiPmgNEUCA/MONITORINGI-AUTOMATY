@@ -1169,11 +1169,11 @@ if sekcja == 'Wsparcie z natury':
     #powiazanie
 
     dane1 = powiazanie[powiazanie['KLIENT_S'].notna() & (powiazanie['KLIENT_S'] != '')]
-    dane1
+    #dane1
     dane2 = powiazanie[powiazanie['KLIENT_S'].isna() | (powiazanie['KLIENT_S'] == '')]
     dane2 = dane2.rename(columns={'KLIENT':'Kod klienta'})
-    dane2
-    dane2.shape
+    #dane2
+    #dane2.shape
 
 
     ######################################################### TERAZ IMS
@@ -1202,27 +1202,27 @@ if sekcja == 'Wsparcie z natury':
     #to są kody SAP
     wynik_df1 = wynik_df.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
     wynik_df1 = wynik_df1[['Kod klienta','max_percent']]
-    wynik_df1
-    wynik_df1.shape
+    #wynik_df1
+    #wynik_df1.shape
 
     #to są kody powiazan
     wynik_df2 = wynik_df.rename(columns={'KLIENT': 'Kod klienta'})
     wynik_df2 = wynik_df2[['Kod klienta','max_percent']]
-    wynik_df2
-    wynik_df2.shape
+    #wynik_df2
+    #wynik_df2.shape
 
     #POŁĄCZYĆ wynik_df z standard_ost
     polaczone = pd.concat([wynik_df1, wynik_df2], axis = 0)
     posortowane = polaczone.sort_values(by='max_percent', ascending=False)
     ostatecznie1 = posortowane.drop_duplicates(subset='Kod klienta')
-    ostatecznie1
+    #ostatecznie1
 
     dane2 = dane2[['Kod klienta','max_percent']]
 
     ostateczne = pd.concat([ostatecznie1, dane2], axis = 0)
     ostateczne = ostateczne.sort_values(by='max_percent', ascending=False)
     ostateczne = ostateczne.drop_duplicates(subset='Kod klienta')
-    ostateczne.shape
+    #ostateczne.shape
 
     
 
