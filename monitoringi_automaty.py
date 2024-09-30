@@ -1161,7 +1161,7 @@ if sekcja == 'Wsparcie z natury':
     filtered_df = df[df['max_percent'] != 0]
 
     standard = filtered_df[filtered_df['SIECIOWY'] != 'SIECIOWY']
-    standard
+    #standard
     
     powiazanie = filtered_df[filtered_df['SIECIOWY'] == 'SIECIOWY']
 
@@ -1202,6 +1202,10 @@ if sekcja == 'Wsparcie z natury':
     #to są kody powiazan
     wynik_df2 = wynik_df2[['KLIENT','max_percent']]
     #wynik_df2
+
+    standard_ost
+    wynik_df1
+    wynik_df2
 
     '''
     #POŁĄCZYĆ wynik_df z standard_ost
