@@ -127,7 +127,7 @@ if sekcja == 'Soczyste rabaty':
     ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna', 'ZA - Apteka zakładowa', 'KI - Ogólnodostępna sieć handlowa', 
                                                      'GA Gabinet lekarski', 'HB - Hurtownia farmaceutyczna bez psychotropów', 'HU - Hurtownia farmaceutyczna z psychotropami', 'GW - Gabinet weterynaryjny', 'HP - Hurtownia farmaceutyczna apteczna - psychotropy',
                                                       'GP - Gabinet pielęgniarski','UC - Uczelnia','HK - Hurtownia farmaceutyczna apteczna kontrolowane','HO - Hurtownia z ograniczonym asortymentem','DP - Dom pomocy społ.','DR - drogeria hurt',
-                                                      'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.'])]
+                                                      'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.','ZM - Sklep zaopatrzenia medycznego'])]
 
 
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
@@ -415,7 +415,7 @@ if sekcja == 'Paramig Fast Junior 250MG':
     ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna', 'ZA - Apteka zakładowa', 'KI - Ogólnodostępna sieć handlowa', 
                                                      'GA Gabinet lekarski', 'HB - Hurtownia farmaceutyczna bez psychotropów', 'HU - Hurtownia farmaceutyczna z psychotropami', 'GW - Gabinet weterynaryjny', 'HP - Hurtownia farmaceutyczna apteczna - psychotropy',
                                                       'GP - Gabinet pielęgniarski','UC - Uczelnia','HK - Hurtownia farmaceutyczna apteczna kontrolowane','HO - Hurtownia z ograniczonym asortymentem','DP - Dom pomocy społ.','DR - drogeria hurt',
-                                                      'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.'])]
+                                                      'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.','ZM - Sklep zaopatrzenia medycznego'])]
 
 
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
@@ -751,7 +751,7 @@ if sekcja == 'Paramig Fast 500MG':
     ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna', 'ZA - Apteka zakładowa', 'KI - Ogólnodostępna sieć handlowa', 
                                                      'GA Gabinet lekarski', 'HB - Hurtownia farmaceutyczna bez psychotropów', 'HU - Hurtownia farmaceutyczna z psychotropami', 'GW - Gabinet weterynaryjny', 'HP - Hurtownia farmaceutyczna apteczna - psychotropy',
                                                       'GP - Gabinet pielęgniarski','UC - Uczelnia','HK - Hurtownia farmaceutyczna apteczna kontrolowane','HO - Hurtownia z ograniczonym asortymentem','DP - Dom pomocy społ.','DR - drogeria hurt',
-                                                      'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.'])]
+                                                      'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.','ZM - Sklep zaopatrzenia medycznego'])]
 
 
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
@@ -1014,7 +1014,7 @@ if sekcja == 'Paramig MIX':
     ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna', 'ZA - Apteka zakładowa', 'KI - Ogólnodostępna sieć handlowa', 
                                                      'GA Gabinet lekarski', 'HB - Hurtownia farmaceutyczna bez psychotropów', 'HU - Hurtownia farmaceutyczna z psychotropami', 'GW - Gabinet weterynaryjny', 'HP - Hurtownia farmaceutyczna apteczna - psychotropy',
                                                       'GP - Gabinet pielęgniarski','UC - Uczelnia','HK - Hurtownia farmaceutyczna apteczna kontrolowane','HO - Hurtownia z ograniczonym asortymentem','DP - Dom pomocy społ.','DR - drogeria hurt',
-                                                      'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.'])]
+                                                      'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.','ZM - Sklep zaopatrzenia medycznego'])]
 
 
     wynik_df1 = pd.merge(powiazanie1, ims, left_on='KLIENT', right_on='Klient', how='left')
@@ -1189,7 +1189,7 @@ if sekcja == 'Wsparcie z natury':
     ims = ims[~ims['APD_Rodzaj_farmaceutyczny'].isin(['DR - drogeria hurt', 'SZ - Szpital', 'IN - Inni', 'ZO - ZOZ', 'HA - Hurtownia farmaceutyczna apteczna', 'ZA - Apteka zakładowa', 'KI - Ogólnodostępna sieć handlowa', 
                                                      'GA Gabinet lekarski', 'HB - Hurtownia farmaceutyczna bez psychotropów', 'HU - Hurtownia farmaceutyczna z psychotropami', 'GW - Gabinet weterynaryjny', 'HP - Hurtownia farmaceutyczna apteczna - psychotropy',
                                                       'GP - Gabinet pielęgniarski','UC - Uczelnia','HK - Hurtownia farmaceutyczna apteczna kontrolowane','HO - Hurtownia z ograniczonym asortymentem','DP - Dom pomocy społ.','DR - drogeria hurt',
-                                                      'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.'])]
+                                                      'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.','ZM - Sklep zaopatrzenia medycznego'])]
 
 
     #dane1 czyli te co są tylko kody sieciowe
