@@ -412,24 +412,20 @@ if sekcja == 'Brazoflamin':
     # klient na całkowite
     df['KLIENT'] = df['KLIENT'].astype(int)
 
-    # Zmiana nazw kolumn
-    df = df.rename(columns={'0.12.1': '12', '0.14.1': '14'})
-
 
     # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
     df = df[df['pakiet'] != 'brak']
     df
 
-    '''
-    # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY'
-    df['SIECIOWY'] = df.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() or 'powiązanie' in str(row['14']).lower() else '', axis=1)
-
     
+    # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY'
+    df['SIECIOWY'] = 'SIECIOWY
+ 
     
     # Zastosowanie funkcji do kolumn '12' i '14'
-    df['12_percent'] = df['12'].apply(extract_percentage)
-    df['14_percent'] = df['14'].apply(extract_percentage)
+    df['percent'] = df['pakiet'].apply(extract_percentage)
 
+    '''
 
     # Konwersja kolumn '12_percent' i '14_percent' na liczby zmiennoprzecinkowe
     df['12_percent'] = df['12_percent'].apply(percentage_to_float)
