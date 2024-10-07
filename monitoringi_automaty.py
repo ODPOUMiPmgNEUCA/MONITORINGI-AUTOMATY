@@ -28,7 +28,7 @@ st.set_page_config(page_title='Monitoringi AUTOMATY', layout='wide')
 
 sekcja = st.sidebar.radio(
     'Wybierz monitoring:',
-    ('Soczyste rabaty','Paramig Fast Junior 250MG', 'Paramig Fast 500MG','Paramig MIX','Wsparcie z natury','Cykl Q4')
+    ('Soczyste rabaty','Paramig Fast Junior 250MG', 'Paramig Fast 500MG','Paramig MIX','Wsparcie z natury','Cykl Q4','Brazoflamin')
  )
 
 tabs_font_css = """
