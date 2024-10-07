@@ -415,14 +415,16 @@ if sekcja == 'Brazoflamin':
     # Zmiana nazw kolumn
     df = df.rename(columns={'0.12.1': '12', '0.14.1': '14'})
 
+
+    # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
+    df = df[df['pakiet'] != 'brak']
+    df
+
     '''
-    # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnach '12' lub '14' jest słowo 'powiązanie'
+    # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY'
     df['SIECIOWY'] = df.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() or 'powiązanie' in str(row['14']).lower() else '', axis=1)
 
-    #SPRAWDZENIE CZY DZIAŁA
-    #df[df['SIECIOWY'] == 'SIECIOWY']
-    #DZIAŁA :)
-
+    
     
     # Zastosowanie funkcji do kolumn '12' i '14'
     df['12_percent'] = df['12'].apply(extract_percentage)
