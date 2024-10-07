@@ -477,7 +477,6 @@ if sekcja == 'Brazoflamin':
     posortowane = polaczone.sort_values(by='max_percent', ascending=False)
 
     ostatecznie = posortowane.drop_duplicates(subset='Kod klienta')
-    ostatecznie
 
 
     st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
