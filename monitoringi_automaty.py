@@ -459,6 +459,7 @@ if sekcja == 'Brazoflamin':
     # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
     wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'percent']]\
     wynik_df
+    
     '''
 
 
