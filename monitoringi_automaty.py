@@ -453,6 +453,7 @@ if sekcja == 'Brazoflamin':
                                                       'GP - Gabinet pielęgniarski','UC - Uczelnia','HK - Hurtownia farmaceutyczna apteczna kontrolowane','HO - Hurtownia z ograniczonym asortymentem','DP - Dom pomocy społ.','DR - drogeria hurt',
                                                       'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.','ZM - Sklep zaopatrzenia medycznego'])]
 
+    '''
 
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
 
@@ -460,7 +461,7 @@ if sekcja == 'Brazoflamin':
     wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'percent']]\
     wynik_df
     
-    '''
+    
 
 
     #to są kody SAP
