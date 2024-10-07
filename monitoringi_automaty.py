@@ -1437,7 +1437,7 @@ if sekcja == 'Cykl Q4':
         result.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
-    nazwa_pliku = f"CYKL_Q4_{dzisiejsza_data}.xlsx"
+    nazwa_pliku = f"FM_CYKL_Q4_{dzisiejsza_data}.xlsx"
     # Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Pobierz nowy plik FORMUŁA MAX',
