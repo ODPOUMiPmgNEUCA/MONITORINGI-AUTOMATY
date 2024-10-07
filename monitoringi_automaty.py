@@ -457,7 +457,6 @@ if sekcja == 'Brazoflamin':
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
     wynik_df
 
-    '''
 
     # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
     wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]\
@@ -518,7 +517,7 @@ if sekcja == 'Brazoflamin':
         result.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
-    nazwa_pliku1 = f"CYKL_Q4_{dzisiejsza_data}.xlsx"
+    nazwa_pliku1 = f"BRAZOFLAMIN_{dzisiejsza_data}.xlsx"
     # Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Pobierz',
@@ -536,7 +535,7 @@ if sekcja == 'Brazoflamin':
         result.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
-    nazwa_pliku = f"FM_CYKL_Q4_{dzisiejsza_data}.xlsx"
+    nazwa_pliku = f"FM_BRAZOFLAMIN_{dzisiejsza_data}.xlsx"
     # Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Pobierz nowy plik FORMUŁA MAX',
@@ -544,7 +543,7 @@ if sekcja == 'Brazoflamin':
         file_name = nazwa_pliku,
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
-'''
+
 
 
 
