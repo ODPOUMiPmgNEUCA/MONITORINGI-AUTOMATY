@@ -425,26 +425,17 @@ if sekcja == 'Brazoflamin':
     df['percent'] = df['pakiet'].apply(extract_percentage)
     df
 
-    '''
+    # Konwersja kolumny percent na liczby zmiennoprzecinkowe
+    df['percent'] = df['percent'].apply(percentage_to_float)
 
-    # Konwersja kolumn '12_percent' i '14_percent' na liczby zmiennoprzecinkowe
-    df['12_percent'] = df['12_percent'].apply(percentage_to_float)
-    df['14_percent'] = df['14_percent'].apply(percentage_to_float)
-
-    # Dodaj nową kolumnę 'max_percent' z maksymalnymi wartościami z kolumn '12_percent' i '14_percent'
-    df['max_percent'] = df[['12_percent', '14_percent']].max(axis=1)
 
     # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
     filtered_df = df[df['max_percent'] != 0]
 
-    standard = filtered_df[filtered_df['SIECIOWY'] != 'SIECIOWY']
     powiazanie = filtered_df[filtered_df['SIECIOWY'] == 'SIECIOWY']
 
-    #len(standard), len(powiazanie), len(filtered_df)
 
-    standard_ost = standard[['Kod klienta', 'max_percent']]
-
-    powiazanie = powiazanie[['KLIENT','Kod klienta','max_percent']]
+    powiazanie = powiazanie[['KLIENT', 'percent']]
 
 
     #TERAZ IMS
@@ -466,7 +457,9 @@ if sekcja == 'Brazoflamin':
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
 
     # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
-    wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+    wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'percent']]\
+    wynik_df
+    '''
 
 
     #to są kody SAP
