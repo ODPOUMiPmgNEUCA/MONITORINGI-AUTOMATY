@@ -422,20 +422,20 @@ if sekcja == 'Brazoflamin':
  
     
     # Zastosowanie funkcji do kolumn '12' i '14'
-    df['percent'] = df['pakiet'].apply(extract_percentage)
+    df['max_percent'] = df['pakiet'].apply(extract_percentage)
     df
 
     # Konwersja kolumny percent na liczby zmiennoprzecinkowe
-    df['percent'] = df['percent'].apply(percentage_to_float)
+    df['max_percent'] = df['max_percent'].apply(percentage_to_float)
 
 
     # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
-    filtered_df = df[df['percent'] != 0]
+    filtered_df = df[df['max_percent'] != 0]
 
     powiazanie = filtered_df[filtered_df['SIECIOWY'] == 'SIECIOWY']
 
 
-    powiazanie = powiazanie[['KLIENT', 'percent']]
+    powiazanie = powiazanie[['KLIENT', 'max_percent']]
 
 
     #TERAZ IMS
@@ -453,17 +453,14 @@ if sekcja == 'Brazoflamin':
                                                       'GP - Gabinet pielęgniarski','UC - Uczelnia','HK - Hurtownia farmaceutyczna apteczna kontrolowane','HO - Hurtownia z ograniczonym asortymentem','DP - Dom pomocy społ.','DR - drogeria hurt',
                                                       'HN - Hurtownia farmaceutyczna apteczna - narkotyki','BK - Badanie kliniczne','ZB - Typ ZOZ bez REGON14','IW - Izba wytrzeźwień','EX - Odbiorca zagraniczny','RA - Ratownictwo med.','ZM - Sklep zaopatrzenia medycznego'])]
 
-    '''
 
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
 
     # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
-    wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'percent']]\
+    wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]\
     wynik_df
     
     
-
-
     #to są kody SAP
     wynik_df1 = wynik_df.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
     wynik_df1 = wynik_df1[['Kod klienta','max_percent']]
@@ -475,13 +472,15 @@ if sekcja == 'Brazoflamin':
     #wynik_df2
 
     #POŁĄCZYĆ wynik_df z standard_ost
-    polaczone = pd.concat([standard_ost, wynik_df1, wynik_df2], axis = 0)
+    polaczone = pd.concat([wynik_df1, wynik_df2], axis = 0)
   
     posortowane = polaczone.sort_values(by='max_percent', ascending=False)
 
     ostatecznie = posortowane.drop_duplicates(subset='Kod klienta')
+    ostatecznie
 
 
+    '''
     st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
     excel_file = io.BytesIO()
     with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
