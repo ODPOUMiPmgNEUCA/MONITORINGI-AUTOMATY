@@ -415,7 +415,6 @@ if sekcja == 'Brazoflamin':
 
     # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
     df = df[df['pakiet'] != 'brak']
-    df
 
     
     # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY'
@@ -424,6 +423,7 @@ if sekcja == 'Brazoflamin':
     
     # Zastosowanie funkcji do kolumn '12' i '14'
     df['percent'] = df['pakiet'].apply(extract_percentage)
+    df
 
     '''
 
