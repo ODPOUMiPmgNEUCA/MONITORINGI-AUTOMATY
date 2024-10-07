@@ -419,7 +419,7 @@ if sekcja == 'Brazoflamin':
 
     
     # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY'
-    df['SIECIOWY'] = 'SIECIOWY
+    df['SIECIOWY'] = 'SIECIOWY'
  
     
     # Zastosowanie funkcji do kolumn '12' i '14'
