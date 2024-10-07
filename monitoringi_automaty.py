@@ -430,7 +430,7 @@ if sekcja == 'Brazoflamin':
 
 
     # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
-    filtered_df = df[df['max_percent'] != 0]
+    filtered_df = df[df['percent'] != 0]
 
     powiazanie = filtered_df[filtered_df['SIECIOWY'] == 'SIECIOWY']
 
