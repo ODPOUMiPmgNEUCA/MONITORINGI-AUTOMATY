@@ -28,7 +28,7 @@ st.set_page_config(page_title='Monitoringi AUTOMATY', layout='wide')
 
 sekcja = st.sidebar.radio(
     'Wybierz monitoring:',
-    ('Wsparcie z natury','Cykl Q4','Genoptim','Brazoflamin','Diazepam','Escitalopram')
+    ('Wsparcie z natury','Cykl Q4','Genoptim')
  )
 
 tabs_font_css = """
@@ -534,6 +534,7 @@ if sekcja == 'Brazoflamin':
 
 
 
+############################################################################ GENOPTIM #################################################################
 if sekcja == 'Genoptim':
     st.write(tabs_font_css, unsafe_allow_html=True)
 
@@ -649,10 +650,10 @@ if sekcja == 'Genoptim':
     DIAZEPAM = DIAZEPAM.drop_duplicates(subset='Kod klienta')
 
 
-st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
-excel_file = io.BytesIO()
+    st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
+    excel_file = io.BytesIO()
 
-with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
+    with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
     # Jeśli dane BRAZOFLAMIN istnieją, zapisz je w odpowiednim arkuszu
     if 'BRAZOFLAMIN' in locals():
         BRAZOFLAMIN.to_excel(writer, index=False, sheet_name='BRAZOFLAMIN')
@@ -663,23 +664,23 @@ with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
 
     
 
-excel_file.seek(0)  # Resetowanie wskaźnika do początku pliku
+    excel_file.seek(0)  # Resetowanie wskaźnika do początku pliku
 
-# Umożliwienie pobrania pliku Excel
-st.download_button(
-    label='Pobierz, jeśli to pierwszy monitoring',
-    data=excel_file,
-    file_name='czy_dodac.xlsx',
-    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-)
+    # Umożliwienie pobrania pliku Excel
+    st.download_button(
+        label='Pobierz, jeśli to pierwszy monitoring',
+        data=excel_file,
+        file_name='czy_dodac.xlsx',
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
 
-# Plik z poprzedniego monitoringu
-poprzedni = st.file_uploader(
-    label="Wrzuć plik z poprzedniego monitoringu"
-)
+    # Plik z poprzedniego monitoringu
+    poprzedni = st.file_uploader(
+        label="Wrzuć plik z poprzedniego monitoringu"
+    )
 
-if poprzedni:
-    xls = pd.ExcelFile(poprzedni)  # Pobranie pliku z arkuszami
+    if poprzedni:
+        xls = pd.ExcelFile(poprzedni)  # Pobranie pliku z arkuszami
 
     # Wczytanie danych z odpowiednich arkuszy
     if 'BRAZOFLAMIN' in xls.sheet_names:
