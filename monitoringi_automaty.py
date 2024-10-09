@@ -424,7 +424,7 @@ if sekcja == 'Genoptim':
     BRAZOFLAMIN = BRAZOFLAMIN.dropna(subset=['KLIENT']) 
     DIAZEPAM = DIAZEPAM.dropna(subset=['KLIENT'])
     ESCITALOPRAM = ESCITALOPRAM.dropna(subset=['KLIENT'])
-    LEVOFLOXACIN = LEVOFLOXACIN.dropna(subset=['KLIENT']) 
+    #LEVOFLOXACIN = LEVOFLOXACIN.dropna(subset=['KLIENT']) 
 
     # klient na całkowite
     BRAZOFLAMIN['KLIENT'] = BRAZOFLAMIN['KLIENT'].astype(int)
