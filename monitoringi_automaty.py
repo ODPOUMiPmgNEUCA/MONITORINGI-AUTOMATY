@@ -769,6 +769,8 @@ st.download_button(
     file_name=nazwa_pliku,
     mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 )
+
+'''
 ############################################################################### DIAZEPAM  ##############################################################################################
 if sekcja == 'Diazepam':
     st.write(tabs_font_css, unsafe_allow_html=True)
