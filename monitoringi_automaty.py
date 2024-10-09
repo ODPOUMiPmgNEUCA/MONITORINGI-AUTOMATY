@@ -416,7 +416,7 @@ if sekcja == 'Genoptim':
             st.write(ESCITALOPRAM.head())
 
         if 'LEVOFLOXACIN' in xls.sheet_names:
-            LEVO = pd.read_excel(df, sheet_name='LEVOFLOXACIN GENOPTIM 500MG ', skiprows=18, usecols=[1, 8])
+            LEVOFLOXACIN = pd.read_excel(df, sheet_name='LEVOFLOXACIN GENOPTIM 500MG ', skiprows=18, usecols=[1, 8])
             st.write("Dane z arkusza LEVOFLOXACIN GENOPTIM 500MG:")
             st.write(LEVOFLOXACIN.head())
 
