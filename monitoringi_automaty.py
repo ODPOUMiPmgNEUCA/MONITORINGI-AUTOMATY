@@ -733,29 +733,29 @@ if poprzedni:
 
 
 
-st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
+    st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
 
-# Tworzenie pliku Excel w pamięci
-excel_file2 = io.BytesIO()
+    # Tworzenie pliku Excel w pamięci
+    excel_file2 = io.BytesIO()
 
-# Zapis do pliku Excel w pamięci
-with pd.ExcelWriter(excel_file2, engine='xlsxwriter') as writer:
-    result_brazoflamin.to_excel(writer, index=False, sheet_name='BRAZOFLAMIN')
-    result_diazepam.to_excel(writer, index=False, sheet_name='DIAZEPAM')
+    # Zapis do pliku Excel w pamięci
+    with pd.ExcelWriter(excel_file2, engine='xlsxwriter') as writer:
+        result_brazoflamin.to_excel(writer, index=False, sheet_name='BRAZOFLAMIN')
+        result_diazepam.to_excel(writer, index=False, sheet_name='DIAZEPAM')
 
-# Resetowanie wskaźnika do początku pliku
-excel_file2.seek(0)
+    # Resetowanie wskaźnika do początku pliku
+    excel_file2.seek(0)
 
-# Definiowanie nazwy pliku
-nazwa_pliku = f"FM_GENOPTIM_{dzisiejsza_data}.xlsx"
+    # Definiowanie nazwy pliku
+    nazwa_pliku = f"FM_GENOPTIM_{dzisiejsza_data}.xlsx"
 
-# Umożliwienie pobrania pliku Excel
-st.download_button(
-    label='Pobierz nowy plik FORMUŁA MAX',
-    data=excel_file2,
-    file_name=nazwa_pliku,
-    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-)
+    # Umożliwienie pobrania pliku Excel
+    st.download_button(
+        label='Pobierz nowy plik FORMUŁA MAX',
+        data=excel_file2,
+        file_name=nazwa_pliku,
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
 
 '''
 ############################################################################### DIAZEPAM  ##############################################################################################
