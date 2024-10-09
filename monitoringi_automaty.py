@@ -647,8 +647,7 @@ with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
     if 'DIAZEPAM' in locals():
         DIAZEPAM.to_excel(writer, index=False, sheet_name='DIAZEPAM')
 
-    # Zapisujemy plik
-    writer.save()
+    
 
 excel_file.seek(0)  # Resetowanie wskaźnika do początku pliku
 
