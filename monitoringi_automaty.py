@@ -688,7 +688,7 @@ if poprzedni:
     # Przetwarzanie dla DIAZEPAM
     if 'DIAZEPAM' in locals() and 'poprzedni_diazepam' in locals():
         poprzedni_diazepam = poprzedni_diazepam.rename(columns={'max_percent': 'old_percent'})
-        result_diazepam = diazepam.merge(poprzedni_diazepam[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+        result_diazepam = DIAZEPAM.merge(poprzedni_diazepam[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
         result_diazepam['old_percent'] = result_diazepam['old_percent'].fillna(0)
         result_diazepam['Czy dodać'] = result_diazepam.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
 
