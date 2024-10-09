@@ -655,12 +655,12 @@ if sekcja == 'Genoptim':
 
     with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
     # Jeśli dane BRAZOFLAMIN istnieją, zapisz je w odpowiednim arkuszu
-    if 'BRAZOFLAMIN' in locals():
-        BRAZOFLAMIN.to_excel(writer, index=False, sheet_name='BRAZOFLAMIN')
+        if 'BRAZOFLAMIN' in locals():
+            BRAZOFLAMIN.to_excel(writer, index=False, sheet_name='BRAZOFLAMIN')
 
-    # Jeśli dane diazepam istnieją, zapisz je w odpowiednim arkuszu
-    if 'DIAZEPAM' in locals():
-        DIAZEPAM.to_excel(writer, index=False, sheet_name='DIAZEPAM')
+        # Jeśli dane diazepam istnieją, zapisz je w odpowiednim arkuszu
+        if 'DIAZEPAM' in locals():
+            DIAZEPAM.to_excel(writer, index=False, sheet_name='DIAZEPAM')
 
     
 
