@@ -695,7 +695,7 @@ if sekcja == 'Genoptim':
         result_brazoflamin.to_excel(writer, index=False, sheet_name='BRAZOFLAMIN')
         result_diazepam.to_excel(writer, index=False, sheet_name='DIAZEPAM')
         result_escitalopram.to_excel(writer, index=False, sheet_name='ESCITALOPRAM')
-        result_levofloxacin.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN)
+        result_levofloxacin.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN')
 
     # Resetowanie wskaźnika do początku pliku
     excel_file2.seek(0)
