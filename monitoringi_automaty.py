@@ -644,6 +644,7 @@ if sekcja == 'Genoptim':
         result_escitalopram = ESCITALOPRAM.merge(poprzedni_escitalopram[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
         result_escitalopram['old_percent'] = result_escitalopram['old_percent'].fillna(0)
         result_escitalopram['Czy dodać'] = result_escitalopram.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
+        result_escitalopram
 
    # if 'LEVOFLOXACIN' in locals() and 'poprzedni_levofloxacin' in locals():
     #    poprzedni_levofloxacin = poprzedni_levofloxacin.rename(columns={'max_percent': 'old_percent'})
