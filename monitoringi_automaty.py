@@ -415,68 +415,68 @@ if sekcja == 'Genoptim':
             st.write("Dane z arkusza ESCITALOPRAM:")
             st.write(ESCITALOPRAM.head())
 
-        if 'LEVOFLOXACIN' in xls.sheet_names:
-            LEVOFLOXACIN = pd.read_excel(df, skiprows=18, usecols=[1, 8])
-            st.write("Dane z arkusza LEVOFLOXACIN GENOPTIM 500MG:")
-            st.write(LEVOFLOXACIN.head())
+      #  if 'LEVOFLOXACIN' in xls.sheet_names:
+       #     LEVOFLOXACIN = pd.read_excel(df, skiprows=18, usecols=[1, 8])
+        #    st.write("Dane z arkusza LEVOFLOXACIN GENOPTIM 500MG:")
+         #   st.write(LEVOFLOXACIN.head())
 
     #usuń braki danych z Kod klienta
     BRAZOFLAMIN = BRAZOFLAMIN.dropna(subset=['KLIENT']) 
     DIAZEPAM = DIAZEPAM.dropna(subset=['KLIENT'])
     ESCITALOPRAM = ESCITALOPRAM.dropna(subset=['KLIENT'])
-    LEVOFLOXACIN = LEVOFLOXACIN.dropna(subset=['KLIENT']) 
+    #LEVOFLOXACIN = LEVOFLOXACIN.dropna(subset=['KLIENT']) 
 
     # klient na całkowite
     BRAZOFLAMIN['KLIENT'] = BRAZOFLAMIN['KLIENT'].astype(int)
     DIAZEPAM['KLIENT'] = DIAZEPAM['KLIENT'].astype(int)
     ESCITALOPRAM['KLIENT'] = ESCITALOPRAM['KLIENT'].astype(int)
-    LEVOFLOXACIN['KLIENT'] = LEVOFLOXACIN['KLIENT'].astype(int)
+    #LEVOFLOXACIN['KLIENT'] = LEVOFLOXACIN['KLIENT'].astype(int)
 
 
     # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
     BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['pakiet'] != 'brak']
     DIAZEPAM = DIAZEPAM[DIAZEPAM['pakiet'] != 'brak']
     ESCITALOPRAM = ESCITALOPRAM[ESCITALOPRAM['pakiet'] != 'brak']
-    LEVOFLOXACIN = LEVOFLOXACIN[LEVOFLOXACIN['pakiet'] != 'brak']
+    #LEVOFLOXACIN = LEVOFLOXACIN[LEVOFLOXACIN['pakiet'] != 'brak']
 
     
     # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY'
     BRAZOFLAMIN['SIECIOWY'] = 'SIECIOWY'
     DIAZEPAM['SIECIOWY'] = 'SIECIOWY'
     ESCITALOPRAM['SIECIOWY'] = 'SIECIOWY'
-    LEVOFLOXACIN['SIECIOWY'] = 'SIECIOWY'
+    #LEVOFLOXACIN['SIECIOWY'] = 'SIECIOWY'
  
     
     # Zastosowanie funkcji do kolumn '12' i '14'
     BRAZOFLAMIN['max_percent'] = BRAZOFLAMIN['pakiet'].apply(extract_percentage)
     DIAZEPAM['max_percent'] = DIAZEPAM['pakiet'].apply(extract_percentage)
     ESCITALOPRAM['max_percent'] = ESCITALOPRAM['pakiet'].apply(extract_percentage)
-    LEVOFLOXACIN['max_percent'] = LEVOFLOXACIN['pakiet'].apply(extract_percentage)
+    #LEVOFLOXACIN['max_percent'] = LEVOFLOXACIN['pakiet'].apply(extract_percentage)
 
 
     # Konwersja kolumny percent na liczby zmiennoprzecinkowe
     BRAZOFLAMIN['max_percent'] = BRAZOFLAMIN['max_percent'].apply(percentage_to_float)
     DIAZEPAM['max_percent'] = DIAZEPAM['max_percent'].apply(percentage_to_float)
     ESCITALOPRAM['max_percent'] = ESCITALOPRAM['max_percent'].apply(percentage_to_float)
-    LEVOFLOXACIN['max_percent'] = LEVOFLOXACIN['max_percent'].apply(percentage_to_float)
+    #LEVOFLOXACIN['max_percent'] = LEVOFLOXACIN['max_percent'].apply(percentage_to_float)
 
 
     # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
     BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['max_percent'] != 0]
     DIAZEPAM = DIAZEPAM[DIAZEPAM['max_percent'] != 0]
     ESCITALOPRAM = ESCITALOPRAM[ESCITALOPRAM['max_percent'] != 0]
-    LEVOFLOXACIN = LEVOFLOXACIN[LEVOFLOXACIN['max_percent'] != 0]
+    #LEVOFLOXACIN = LEVOFLOXACIN[LEVOFLOXACIN['max_percent'] != 0]
 
     BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['SIECIOWY'] == 'SIECIOWY']
     DIAZEPAM = DIAZEPAM[DIAZEPAM['SIECIOWY'] == 'SIECIOWY']
     ESCITALOPRAM = ESCITALOPRAM[ESCITALOPRAM['SIECIOWY'] == 'SIECIOWY']
-    LEVOFLOXACIN = LEVOFLOXACIN[LEVOFLOXACIN['SIECIOWY'] == 'SIECIOWY']
+    #LEVOFLOXACIN = LEVOFLOXACIN[LEVOFLOXACIN['SIECIOWY'] == 'SIECIOWY']
 
 
     BRAZOFLAMIN = BRAZOFLAMIN[['KLIENT', 'max_percent']]
     DIAZEPAM = DIAZEPAM[['KLIENT', 'max_percent']]
     ESCITALOPRAM = ESCITALOPRAM[['KLIENT', 'max_percent']]
-    LEVOFLOXACIN = LEVOFLOXACIN[['KLIENT', 'max_percent']]
+    #LEVOFLOXACIN = LEVOFLOXACIN[['KLIENT', 'max_percent']]
 
 
     #TERAZ IMS
@@ -495,14 +495,14 @@ if sekcja == 'Genoptim':
     wynik_B = pd.merge(BRAZOFLAMIN, ims, left_on='KLIENT', right_on='Klient', how='left')
     wynik_D = pd.merge(DIAZEPAM, ims, left_on='KLIENT', right_on='Klient', how='left')
     wynik_E = pd.merge(ESCITALOPRAM, ims, left_on='KLIENT', right_on='Klient', how='left')
-    wynik_L = pd.merge(LEVO, ims, left_on='KLIENT', right_on='Klient', how='left')
+    #wynik_L = pd.merge(LEVO, ims, left_on='KLIENT', right_on='Klient', how='left')
 
 
     # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
     wynik_B = wynik_B[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     wynik_D = wynik_D[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     wynik_E = wynik_E[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
-    wynik_L = wynik_L[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+    #wynik_L = wynik_L[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     
     
     #to są kody SAP
@@ -516,8 +516,8 @@ if sekcja == 'Genoptim':
     wynik_E = wynik_E.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
     wynik_E = wynik_E[['Kod klienta','max_percent']]
 
-    wynik_L = wynik_L.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_L = wynik_L[['Kod klienta','max_percent']]
+    #wynik_L = wynik_L.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    #wynik_L = wynik_L[['Kod klienta','max_percent']]
 
     #to są kody powiazan
     wynik_B1 = wynik_B.rename(columns={'KLIENT': 'Kod klienta'})
@@ -530,8 +530,8 @@ if sekcja == 'Genoptim':
     wynik_E1 = wynik_E.rename(columns={'KLIENT': 'Kod klienta'})
     wynik_E1 = wynik_E1[['Kod klienta','max_percent']]
 
-    wynik_L1 = wynik_L.rename(columns={'KLIENT': 'Kod klienta'})
-    wynik_L1 = wynik_L1[['Kod klienta','max_percent']]
+    #wynik_L1 = wynik_L.rename(columns={'KLIENT': 'Kod klienta'})
+    #wynik_L1 = wynik_L1[['Kod klienta','max_percent']]
 
     #POŁĄCZYĆ wynik_df z standard_ost
     BRAZOFLAMIN = pd.concat([wynik_B, wynik_B1], axis = 0)
@@ -555,11 +555,11 @@ if sekcja == 'Genoptim':
     ESCITALOPRAM = ESCITALOPRAM.drop_duplicates(subset='Kod klienta')
     
 
-    LEVOFLOXACIN = pd.concat([wynik_L, wynik_L1], axis = 0)
+    #LEVOFLOXACIN = pd.concat([wynik_L, wynik_L1], axis = 0)
   
-    LEVOFLOXACIN = LEVOFLOXACIN.sort_values(by='max_percent', ascending=False)
+    #LEVOFLOXACIN = LEVOFLOXACIN.sort_values(by='max_percent', ascending=False)
 
-    LEVOFLOXACIN = LEVOFLOXACIN.drop_duplicates(subset='Kod klienta')
+    #LEVOFLOXACIN = LEVOFLOXACIN.drop_duplicates(subset='Kod klienta')
 
 
     st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
@@ -578,8 +578,8 @@ if sekcja == 'Genoptim':
         if 'ESCITALOPRAM' in locals():
             ESCITALOPRAM.to_excel(writer, index=False, sheet_name='ESCITALOPRAM')
 
-        if 'LEVOFLOXACIN' in locals():
-            LEVO.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN')
+       # if 'LEVOFLOXACIN' in locals():
+        #    LEVO.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN')
 
     
     
@@ -618,10 +618,10 @@ if sekcja == 'Genoptim':
         st.write('Poprzedni monitoring - ESCITALOPRAM:')
         st.write(poprzedni_escilopram.head())
 
-    if 'LEVOFLOXACIN' in xls.sheet_names:
-        poprzedni_levofloxacin = pd.read_excel(poprzedni, sheet_name='LEVOFLOXACIN')
-        st.write('Poprzedni monitoring - LEVOFLOXACIN:')
-        st.write(poprzedni_levofloxacin.head())
+   # if 'LEVOFLOXACIN' in xls.sheet_names:
+    #    poprzedni_levofloxacin = pd.read_excel(poprzedni, sheet_name='LEVOFLOXACIN')
+     #   st.write('Poprzedni monitoring - LEVOFLOXACIN:')
+      #  st.write(poprzedni_levofloxacin.head())
 
 
     # Przetwarzanie dla BRAZOFLAMIN
@@ -645,11 +645,11 @@ if sekcja == 'Genoptim':
         result_escitalopram['old_percent'] = result_escitalopram['old_percent'].fillna(0)
         result_escitalopram['Czy dodać'] = result_escitalopram.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
 
-    if 'LEVOFLOXACIN' in locals() and 'poprzedni_levofloxacin' in locals():
-        poprzedni_levofloxacin = poprzedni_levofloxacin.rename(columns={'max_percent': 'old_percent'})
-        result_levofloxacin = LEVOFLOXACIN.merge(poprzedni_levofloxacin[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
-        result_levofloxacin['old_percent'] = result_levofloxacin['old_percent'].fillna(0)
-        result_levofloxacin['Czy dodać'] = result_levofloxacin.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
+   # if 'LEVOFLOXACIN' in locals() and 'poprzedni_levofloxacin' in locals():
+    #    poprzedni_levofloxacin = poprzedni_levofloxacin.rename(columns={'max_percent': 'old_percent'})
+     #   result_levofloxacin = LEVOFLOXACIN.merge(poprzedni_levofloxacin[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+      #  result_levofloxacin['old_percent'] = result_levofloxacin['old_percent'].fillna(0)
+       # result_levofloxacin['Czy dodać'] = result_levofloxacin.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
 
 
     # Zapisywanie plików do Excela
@@ -661,8 +661,8 @@ if sekcja == 'Genoptim':
             result_diazepam.to_excel(writer, index=False, sheet_name='DIAZEPAM')
         if 'result_escitalopram' in locals():
             result_escitalopram.to_excel(writer, index=False, sheet_name='ESCITALOPRAM')
-        if 'result_levofloxacin' in locals():
-            result_levofloxacin.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN')
+      #  if 'result_levofloxacin' in locals():
+       #     result_levofloxacin.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN')
 
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
@@ -681,7 +681,7 @@ if sekcja == 'Genoptim':
     result_brazoflamin = result_brazoflamin.drop(columns=['old_percent', 'Czy dodać'])
     result_diazepam = result_diazepam.drop(columns=['old_percent', 'Czy dodać'])
     result_escitalopram = result_escitalopram.drop(columns=['old_percent', 'Czy dodać'])
-    result_levofloxacin = result_levofloxacin.drop(columns=['old_percent', 'Czy dodać'])
+   # result_levofloxacin = result_levofloxacin.drop(columns=['old_percent', 'Czy dodać'])
 
 
 
@@ -695,7 +695,7 @@ if sekcja == 'Genoptim':
         result_brazoflamin.to_excel(writer, index=False, sheet_name='BRAZOFLAMIN')
         result_diazepam.to_excel(writer, index=False, sheet_name='DIAZEPAM')
         result_escitalopram.to_excel(writer, index=False, sheet_name='ESCITALOPRAM')
-        result_levofloxacin.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN')
+        #result_levofloxacin.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN')
 
     # Resetowanie wskaźnika do początku pliku
     excel_file2.seek(0) 
