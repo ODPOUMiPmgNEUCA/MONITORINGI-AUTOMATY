@@ -616,7 +616,7 @@ if sekcja == 'Genoptim':
     if 'ESCITALOPRAM' in xls.sheet_names:
         poprzedni_escitalopram = pd.read_excel(poprzedni, sheet_name='ESCITALOPRAM')
         st.write('Poprzedni monitoring - ESCITALOPRAM:')
-        st.write(poprzedni_escilopram.head())
+        st.write(poprzedni_escitalopram.head())
 
    # if 'LEVOFLOXACIN' in xls.sheet_names:
     #    poprzedni_levofloxacin = pd.read_excel(poprzedni, sheet_name='LEVOFLOXACIN')
