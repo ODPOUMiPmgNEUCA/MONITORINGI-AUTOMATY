@@ -611,10 +611,12 @@ if sekcja == 'Genoptim':
 
 
     wynik_B = pd.merge(BRAZOFLAMIN, ims, left_on='KLIENT', right_on='Klient', how='left')
+    wynik_D = pd.merge(DIAZEPAM, ims, left_on='KLIENT', right_on='Klient', how='left')
 
 
     # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
     wynik_B = wynik_B[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+    wynik_D = wynik_D[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     
     
     #to są kody SAP
@@ -622,10 +624,16 @@ if sekcja == 'Genoptim':
     wynik_B = wynik_B[['Kod klienta','max_percent']]
     #wynik_df1
 
+    wynik_D = wynik_D.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_D = wynik_D[['Kod klienta','max_percent']]
+
     #to są kody powiazan
     wynik_B1 = wynik_B.rename(columns={'KLIENT': 'Kod klienta'})
     wynik_B1 = wynik_B1[['Kod klienta','max_percent']]
     #wynik_df2
+
+    wynik_D1 = wynik_D.rename(columns={'KLIENT': 'Kod klienta'})
+    wynik_D1 = wynik_D1[['Kod klienta','max_percent']]
 
     #POŁĄCZYĆ wynik_df z standard_ost
     BRAZOFLAMIN = pd.concat([wynik_B, wynik_B1], axis = 0)
@@ -633,6 +641,12 @@ if sekcja == 'Genoptim':
     BRAZOFLAMIN = BRAZOFLAMIN.sort_values(by='max_percent', ascending=False)
 
     BRAZOFLAMIN = BRAZOFLAMIN.drop_duplicates(subset='Kod klienta')
+
+    DIAZEPAM = pd.concat([wynik_D, wynik_D1], axis = 0)
+  
+    DIAZEPAM = DIAZEPAM.sort_values(by='max_percent', ascending=False)
+
+    DIAZEPAM = DIAZEPAM.drop_duplicates(subset='Kod klienta')
 
 
 st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
