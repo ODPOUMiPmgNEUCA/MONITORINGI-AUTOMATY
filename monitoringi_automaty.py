@@ -28,7 +28,7 @@ st.set_page_config(page_title='Monitoringi AUTOMATY', layout='wide')
 
 sekcja = st.sidebar.radio(
     'Wybierz monitoring:',
-    ('Wsparcie z natury','Cykl Q4','Brazoflamin','Diazepam','Escitalopram')
+    ('Wsparcie z natury','Cykl Q4','Genoptim','Brazoflamin','Diazepam','Escitalopram')
  )
 
 tabs_font_css = """
@@ -387,6 +387,7 @@ if sekcja == 'Cykl Q4':
 
 
 ############################################################################### BRAZOFLAMIN  ##############################################################################################
+'''
 if sekcja == 'Brazoflamin':
     st.write(tabs_font_css, unsafe_allow_html=True)
 
@@ -417,6 +418,168 @@ if sekcja == 'Brazoflamin':
     df['max_percent'] = df['pakiet'].apply(extract_percentage)
     df
 
+    # Konwersja kolumny percent na liczby zmiennoprzecinkowe
+    df['max_percent'] = df['max_percent'].apply(percentage_to_float)
+
+
+    # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
+    filtered_df = df[df['max_percent'] != 0]
+
+    powiazanie = filtered_df[filtered_df['SIECIOWY'] == 'SIECIOWY']
+
+
+    powiazanie = powiazanie[['KLIENT', 'max_percent']]
+
+
+    #TERAZ IMS
+    ims = st.file_uploader(
+        label = "Wrzuć plik ims_nhd"
+    )
+
+    if ims:
+        ims = pd.read_excel(ims, usecols=[0,2,19,21])
+        st.write(ims.head())
+
+    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+    ims = ims[ims['APD_Rodzaj_farmaceutyczny'].isin(['AP - Apteka','ME - Sklep zielarsko - medyczny','PU - Punkt apteczny'])]
+
+
+    wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
+
+
+    # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
+    wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+    
+    
+    #to są kody SAP
+    wynik_df1 = wynik_df.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_df1 = wynik_df1[['Kod klienta','max_percent']]
+    #wynik_df1
+
+    #to są kody powiazan
+    wynik_df2 = wynik_df.rename(columns={'KLIENT': 'Kod klienta'})
+    wynik_df2 = wynik_df2[['Kod klienta','max_percent']]
+    #wynik_df2
+
+    #POŁĄCZYĆ wynik_df z standard_ost
+    polaczone = pd.concat([wynik_df1, wynik_df2], axis = 0)
+  
+    posortowane = polaczone.sort_values(by='max_percent', ascending=False)
+
+    ostatecznie = posortowane.drop_duplicates(subset='Kod klienta')
+
+
+    st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
+    excel_file = io.BytesIO()
+    with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
+        ostatecznie.to_excel(writer, index=False, sheet_name='Sheet1')
+    excel_file.seek(0)  # Resetowanie wskaźnika do początku pliku
+
+    # Umożliwienie pobrania pliku Excel
+    st.download_button(
+        label='Pobierz, jeśli to pierwszy monitoring',
+        data=excel_file,
+        file_name='czy_dodac.xlsx',
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+
+    #plik z poprzedniego monitoringu
+    poprzedni = st.file_uploader(
+        label = "Wrzuć plik z poprzedniego monitoringu"
+    )
+
+    if poprzedni:
+        poprzedni = pd.read_excel(poprzedni)
+        st.write(poprzedni.head())
+
+    poprzedni = poprzedni.rename(columns={'max_percent': 'old_percent'})
+    # Wykonanie left join, dodanie 'old_percent' do pliku 'ostatecznie'
+    result = ostatecznie.merge(poprzedni[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+    result['old_percent'] = result['old_percent'].fillna(0)
+    result['Czy dodać'] = result.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
+    st.write('Kliknij aby pobrać plik z kodami, które kody należy dodać')
+
+    excel_file1 = io.BytesIO()
+    with pd.ExcelWriter(excel_file1, engine='xlsxwriter') as writer:
+        result.to_excel(writer, index=False, sheet_name='Sheet1')
+    excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
+
+    nazwa_pliku1 = f"BRAZOFLAMIN_{dzisiejsza_data}.xlsx"
+    # Umożliwienie pobrania pliku Excel
+    st.download_button(
+        label='Pobierz',
+        data=excel_file1,
+        file_name=nazwa_pliku1,
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+
+    result = result.drop(columns=['old_percent', 'Czy dodać'])
+
+
+    st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
+    excel_file2 = io.BytesIO()
+    with pd.ExcelWriter(excel_file2, engine='xlsxwriter') as writer:
+        result.to_excel(writer, index=False, sheet_name='Sheet1')
+    excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
+
+    nazwa_pliku = f"FM_BRAZOFLAMIN_{dzisiejsza_data}.xlsx"
+    # Umożliwienie pobrania pliku Excel
+    st.download_button(
+        label='Pobierz nowy plik FORMUŁA MAX',
+        data=excel_file2,
+        file_name = nazwa_pliku,
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    '''
+
+
+
+if sekcja == 'Genoptim':
+    st.write(tabs_font_css, unsafe_allow_html=True)
+
+    df = st.file_uploader(
+        label="Wrzuć plik Cykl - Genoptim"
+    )
+    
+    if df:
+        # Pobieramy listę dostępnych arkuszy
+        xls = pd.ExcelFile(df)
+        
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'BRAZOFLAMIN' in xls.sheet_names:
+            BRAZOFLAMIN = pd.read_excel(df, sheet_name='BRAZOFLAMIN', skiprows=18, usecols=[1, 8])
+            st.write("Dane z arkusza BRAZOFLAMIN:")
+            st.write(BRAZOFLAMIN.head())
+
+        if 'DIAZEPAM' in xls.sheet_names:
+            diazepam = pd.read_excel(df, sheet_name='DIAZEPAM', skiprows=18, usecols=[1, 8])
+            st.write("Dane z arkusza DIAZEPAM:")
+            st.write(diazepam.head())
+
+    #usuń braki danych z Kod klienta
+    BRAZOFLAMIN = BRAZOFLAMIN.dropna(subset=['KLIENT'])
+    DIAZEPAM = DIAZEPAM.dropna(subset=['KLIENT'])
+
+    # klient na całkowite
+    BRAZOFLAMIN['KLIENT'] = BRAZOFLAMIN['KLIENT'].astype(int)
+    DIAZEPAM['KLIENT'] = DIAZEPAM['KLIENT'].astype(int)
+
+
+    # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
+    BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['pakiet'] != 'brak']
+    DIAZEPAM = DIAZEPAM[DIAZEPAM['pakiet'] != 'brak']
+
+    
+    # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY'
+    BRAZOFLAMIN['SIECIOWY'] = 'SIECIOWY'
+    DIAZEPAM['SIECIOWY'] = 'SIECIOWY'
+ 
+    
+    # Zastosowanie funkcji do kolumn '12' i '14'
+    BRAZOFLAMIN['max_percent'] = BRAZOFLAMIN['pakiet'].apply(extract_percentage)
+    DIAZEPAM['max_percent'] = DIAZEPAM['pakiet'].apply(extract_percentage)
+
+'''
     # Konwersja kolumny percent na liczby zmiennoprzecinkowe
     df['max_percent'] = df['max_percent'].apply(percentage_to_float)
 
@@ -674,6 +837,7 @@ if sekcja == 'Diazepam':
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
+'''
 
 
 
