@@ -712,7 +712,7 @@ if poprzedni:
     )
    
 
- '''
+     '''
 
     result = result.drop(columns=['old_percent', 'Czy dodać'])
 
