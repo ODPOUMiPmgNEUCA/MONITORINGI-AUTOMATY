@@ -420,11 +420,12 @@ if sekcja == 'Genoptim':
             st.write("Dane z arkusza LEVOFLOXACIN GENOPTIM 500MG:")
             st.write(LEVOFLOXACIN.head())
 
+    LEVOFLOXACIN
     #usuń braki danych z Kod klienta
     BRAZOFLAMIN = BRAZOFLAMIN.dropna(subset=['KLIENT']) 
     DIAZEPAM = DIAZEPAM.dropna(subset=['KLIENT'])
     ESCITALOPRAM = ESCITALOPRAM.dropna(subset=['KLIENT'])
-    #LEVOFLOXACIN = LEVOFLOXACIN.dropna(subset=['KLIENT']) 
+    LEVOFLOXACIN = LEVOFLOXACIN.dropna(subset=['KLIENT']) 
 
     # klient na całkowite
     BRAZOFLAMIN['KLIENT'] = BRAZOFLAMIN['KLIENT'].astype(int)
