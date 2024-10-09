@@ -716,6 +716,8 @@ if poprzedni:
     
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
+    # Definiowanie nazwy pliku
+    nazwa_pliku = f"GENOPTIM_{dzisiejsza_data}.xlsx"
     # Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Kliknij aby pobrać plik z kodami, które kody należy dodać',
