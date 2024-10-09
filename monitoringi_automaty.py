@@ -552,7 +552,7 @@ if sekcja == 'Genoptim':
             st.write(BRAZOFLAMIN.head())
 
         if 'DIAZEPAM' in xls.sheet_names:
-            diazepam = pd.read_excel(df, sheet_name='DIAZEPAM', skiprows=18, usecols=[1, 8])
+            DIAZEPAM = pd.read_excel(df, sheet_name='DIAZEPAM', skiprows=18, usecols=[1, 8])
             st.write("Dane z arkusza DIAZEPAM:")
             st.write(diazepam.head())
 
