@@ -554,7 +554,7 @@ if sekcja == 'Genoptim':
         if 'DIAZEPAM' in xls.sheet_names:
             DIAZEPAM = pd.read_excel(df, sheet_name='DIAZEPAM', skiprows=18, usecols=[1, 8])
             st.write("Dane z arkusza DIAZEPAM:")
-            st.write(diazepam.head())
+            st.write(DIAZEPAM.head())
 
     #usuń braki danych z Kod klienta
     BRAZOFLAMIN = BRAZOFLAMIN.dropna(subset=['KLIENT'])
