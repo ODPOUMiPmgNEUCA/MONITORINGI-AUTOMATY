@@ -579,18 +579,22 @@ if sekcja == 'Genoptim':
     BRAZOFLAMIN['max_percent'] = BRAZOFLAMIN['pakiet'].apply(extract_percentage)
     DIAZEPAM['max_percent'] = DIAZEPAM['pakiet'].apply(extract_percentage)
 
-'''
+
     # Konwersja kolumny percent na liczby zmiennoprzecinkowe
-    df['max_percent'] = df['max_percent'].apply(percentage_to_float)
+    BRAZOFLAMIN['max_percent'] = BRAZOFLAMIN['max_percent'].apply(percentage_to_float)
+    DIAZEPAM['max_percent'] = DIAZEPAM['max_percent'].apply(percentage_to_float)
 
 
     # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
-    filtered_df = df[df['max_percent'] != 0]
+    BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['max_percent'] != 0]
+    DIAZEPAM = DIAZEPAM[DIAZEPAM['max_percent'] != 0]
 
-    powiazanie = filtered_df[filtered_df['SIECIOWY'] == 'SIECIOWY']
+    BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['SIECIOWY'] == 'SIECIOWY']
+    DIAZEPAM = DIAZEPAM[DIAZEPAM['SIECIOWY'] == 'SIECIOWY']
 
 
-    powiazanie = powiazanie[['KLIENT', 'max_percent']]
+    BRAZOFLAMIN = BRAZOFLAMIN[['KLIENT', 'max_percent']]
+    DIAZEPAM = DIAZEPAM[['KLIENT', 'max_percent']]
 
 
     #TERAZ IMS
@@ -606,74 +610,109 @@ if sekcja == 'Genoptim':
     ims = ims[ims['APD_Rodzaj_farmaceutyczny'].isin(['AP - Apteka','ME - Sklep zielarsko - medyczny','PU - Punkt apteczny'])]
 
 
-    wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
+    wynik_B = pd.merge(BRAZOFLAMIN, ims, left_on='KLIENT', right_on='Klient', how='left')
 
 
     # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
-    wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+    wynik_B = wynik_B[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     
     
     #to są kody SAP
-    wynik_df1 = wynik_df.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_df1 = wynik_df1[['Kod klienta','max_percent']]
+    wynik_B = wynik_B.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_B = wynik_B[['Kod klienta','max_percent']]
     #wynik_df1
 
     #to są kody powiazan
-    wynik_df2 = wynik_df.rename(columns={'KLIENT': 'Kod klienta'})
-    wynik_df2 = wynik_df2[['Kod klienta','max_percent']]
+    wynik_B1 = wynik_B.rename(columns={'KLIENT': 'Kod klienta'})
+    wynik_B1 = wynik_B1[['Kod klienta','max_percent']]
     #wynik_df2
 
     #POŁĄCZYĆ wynik_df z standard_ost
-    polaczone = pd.concat([wynik_df1, wynik_df2], axis = 0)
+    BRAZOFLAMIN = pd.concat([wynik_B, wynik_B1], axis = 0)
   
-    posortowane = polaczone.sort_values(by='max_percent', ascending=False)
+    BRAZOFLAMIN = BRAZOFLAMIN.sort_values(by='max_percent', ascending=False)
 
-    ostatecznie = posortowane.drop_duplicates(subset='Kod klienta')
+    BRAZOFLAMIN = BRAZOFLAMIN.drop_duplicates(subset='Kod klienta')
 
 
-    st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
-    excel_file = io.BytesIO()
-    with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
-        ostatecznie.to_excel(writer, index=False, sheet_name='Sheet1')
-    excel_file.seek(0)  # Resetowanie wskaźnika do początku pliku
+st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
+excel_file = io.BytesIO()
 
-    # Umożliwienie pobrania pliku Excel
-    st.download_button(
-        label='Pobierz, jeśli to pierwszy monitoring',
-        data=excel_file,
-        file_name='czy_dodac.xlsx',
-        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    )
+with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
+    # Jeśli dane BRAZOFLAMIN istnieją, zapisz je w odpowiednim arkuszu
+    if 'BRAZOFLAMIN' in locals():
+        BRAZOFLAMIN.to_excel(writer, index=False, sheet_name='BRAZOFLAMIN')
 
-    #plik z poprzedniego monitoringu
-    poprzedni = st.file_uploader(
-        label = "Wrzuć plik z poprzedniego monitoringu"
-    )
+    # Jeśli dane diazepam istnieją, zapisz je w odpowiednim arkuszu
+    if 'DIAZEPAM' in locals():
+        DIAZEPAM.to_excel(writer, index=False, sheet_name='DIAZEPAM')
 
-    if poprzedni:
-        poprzedni = pd.read_excel(poprzedni)
-        st.write(poprzedni.head())
+    # Zapisujemy plik
+    writer.save()
 
-    poprzedni = poprzedni.rename(columns={'max_percent': 'old_percent'})
-    # Wykonanie left join, dodanie 'old_percent' do pliku 'ostatecznie'
-    result = ostatecznie.merge(poprzedni[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
-    result['old_percent'] = result['old_percent'].fillna(0)
-    result['Czy dodać'] = result.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
-    st.write('Kliknij aby pobrać plik z kodami, które kody należy dodać')
+excel_file.seek(0)  # Resetowanie wskaźnika do początku pliku
 
+# Umożliwienie pobrania pliku Excel
+st.download_button(
+    label='Pobierz, jeśli to pierwszy monitoring',
+    data=excel_file,
+    file_name='czy_dodac.xlsx',
+    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+)
+
+# Plik z poprzedniego monitoringu
+poprzedni = st.file_uploader(
+    label="Wrzuć plik z poprzedniego monitoringu"
+)
+
+if poprzedni:
+    xls = pd.ExcelFile(poprzedni)  # Pobranie pliku z arkuszami
+
+    # Wczytanie danych z odpowiednich arkuszy
+    if 'BRAZOFLAMIN' in xls.sheet_names:
+        poprzedni_brazoflamin = pd.read_excel(poprzedni, sheet_name='BRAZOFLAMIN')
+        st.write('Poprzedni monitoring - BRAZOFLAMIN:')
+        st.write(poprzedni_brazoflamin.head())
+    
+    if 'DIAZEPAM' in xls.sheet_names:
+        poprzedni_diazepam = pd.read_excel(poprzedni, sheet_name='DIAZEPAM')
+        st.write('Poprzedni monitoring - DIAZEPAM:')
+        st.write(poprzedni_diazepam.head())
+
+    # Przetwarzanie dla BRAZOFLAMIN
+    if 'BRAZOFLAMIN' in locals() and 'poprzedni_brazoflamin' in locals():
+        poprzedni_brazoflamin = poprzedni_brazoflamin.rename(columns={'max_percent': 'old_percent'})
+        result_brazoflamin = BRAZOFLAMIN.merge(poprzedni_brazoflamin[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+        result_brazoflamin['old_percent'] = result_brazoflamin['old_percent'].fillna(0)
+        result_brazoflamin['Czy dodać'] = result_brazoflamin.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
+    
+    # Przetwarzanie dla DIAZEPAM
+    if 'DIAZEPAM' in locals() and 'poprzedni_diazepam' in locals():
+        poprzedni_diazepam = poprzedni_diazepam.rename(columns={'max_percent': 'old_percent'})
+        result_diazepam = diazepam.merge(poprzedni_diazepam[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+        result_diazepam['old_percent'] = result_diazepam['old_percent'].fillna(0)
+        result_diazepam['Czy dodać'] = result_diazepam.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
+
+    # Zapisywanie plików do Excela
     excel_file1 = io.BytesIO()
     with pd.ExcelWriter(excel_file1, engine='xlsxwriter') as writer:
-        result.to_excel(writer, index=False, sheet_name='Sheet1')
+        if 'result_brazoflamin' in locals():
+            result_brazoflamin.to_excel(writer, index=False, sheet_name='BRAZOFLAMIN')
+        if 'result_diazepam' in locals():
+            result_diazepam.to_excel(writer, index=False, sheet_name='DIAZEPAM')
+    
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
-    nazwa_pliku1 = f"BRAZOFLAMIN_{dzisiejsza_data}.xlsx"
     # Umożliwienie pobrania pliku Excel
     st.download_button(
-        label='Pobierz',
+        label='Kliknij aby pobrać plik z kodami, które kody należy dodać',
         data=excel_file1,
-        file_name=nazwa_pliku1,
+        file_name='wyniki_monitoringu.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
+   
+
+ '''
 
     result = result.drop(columns=['old_percent', 'Czy dodać'])
 
