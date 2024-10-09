@@ -531,14 +531,14 @@ if sekcja == 'Brazoflamin':
     )
 
 ############################################################################### DIAZEPAM  ##############################################################################################
-if sekcja == 'Brazoflamin':
+if sekcja == 'Diazepam':
     st.write(tabs_font_css, unsafe_allow_html=True)
 
     df = st.file_uploader(
         label = "Wrzuć plik Cykl - Genoptim"
     )
     if df:
-        df = pd.read_excel(df, sheet_name = 'BRAZOFLAMIN', skiprows = 18, usecols = [1,8])
+        df = pd.read_excel(df, sheet_name = 'DIAZEPAM', skiprows = 18, usecols = [1,8])
         st.write(df.head())
 
 
@@ -647,7 +647,7 @@ if sekcja == 'Brazoflamin':
         result.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
-    nazwa_pliku1 = f"BRAZOFLAMIN_{dzisiejsza_data}.xlsx"
+    nazwa_pliku1 = f"DIAZEPAM_{dzisiejsza_data}.xlsx"
     # Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Pobierz',
@@ -665,7 +665,7 @@ if sekcja == 'Brazoflamin':
         result.to_excel(writer, index=False, sheet_name='Sheet1')
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
-    nazwa_pliku = f"FM_BRAZOFLAMIN_{dzisiejsza_data}.xlsx"
+    nazwa_pliku = f"FM_DIAZEPAM_{dzisiejsza_data}.xlsx"
     # Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Pobierz nowy plik FORMUŁA MAX',
