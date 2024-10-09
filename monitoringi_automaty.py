@@ -731,6 +731,7 @@ if poprzedni:
         file_name = nazwa_pliku,
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
+    '''
 
 ############################################################################### DIAZEPAM  ##############################################################################################
 if sekcja == 'Diazepam':
