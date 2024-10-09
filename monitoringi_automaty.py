@@ -698,7 +698,7 @@ if sekcja == 'Genoptim':
         result_levofloxacin.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN')
 
     # Resetowanie wskaźnika do początku pliku
-    excel_file2.seek(0)
+    excel_file2.seek(0) 
 
     # Definiowanie nazwy pliku
     nazwa_pliku = f"FM_GENOPTIM_{dzisiejsza_data}.xlsx"
