@@ -723,7 +723,7 @@ if sekcja == 'Genoptim':
     st.download_button(
         label='Kliknij aby pobrać plik z kodami, które kody należy dodać',
         data=excel_file1,
-        file_name='wyniki_monitoringu.xlsx',
+        file_name=nazwa_pliku,
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
    
