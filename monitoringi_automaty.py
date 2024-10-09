@@ -730,21 +730,6 @@ if poprzedni:
     result_diazepam = result_diazepam.drop(columns=['old_percent', 'Czy dodać'])
 
 
-    st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
-    excel_file2 = io.BytesIO()
-    with pd.ExcelWriter(excel_file2, engine='xlsxwriter') as writer:
-        result.to_excel(writer, index=False, sheet_name='Sheet1')
-    excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
-
-    nazwa_pliku = f"FM_BRAZOFLAMIN_{dzisiejsza_data}.xlsx"
-    # Umożliwienie pobrania pliku Excel
-    st.download_button(
-        label='Pobierz nowy plik FORMUŁA MAX',
-        data=excel_file2,
-        file_name = nazwa_pliku,
-        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    )
-    
 
 st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
 
