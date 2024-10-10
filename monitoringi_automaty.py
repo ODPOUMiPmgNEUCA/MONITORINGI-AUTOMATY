@@ -638,7 +638,7 @@ if sekcja == 'Genoptim':
         result_diazepam['old_percent'] = result_diazepam['old_percent'].fillna(0)
         result_diazepam['Czy dodać'] = result_diazepam.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
 
-    # Przetwarzanie dla DIAZEPAM
+    # Przetwarzanie dla ESCITALOPRAM
     if 'ESCITALOPRAM' in locals() and 'poprzedni_escilopram' in locals():
         poprzedni_escitalopram = poprzedni_escitalopram.rename(columns={'max_percent': 'old_percent'})
         result_escitalopram = ESCITALOPRAM.merge(poprzedni_escitalopram[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
@@ -677,6 +677,7 @@ if sekcja == 'Genoptim':
         file_name=nazwa_pliku,
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
+    result_escitalopram
    
 
 
