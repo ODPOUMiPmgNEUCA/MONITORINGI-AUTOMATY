@@ -417,7 +417,7 @@ if sekcja == 'Genoptim':
 
         if 'LEVOFLOXACIN' in xls.sheet_names:
             LEVOFLOXACIN = pd.read_excel(df, skiprows=18, usecols=[1, 8])
-            st.write("Dane z arkusza LEVOFLOXACIN GENOPTIM 500MG:")
+            st.write("Dane z arkusza LEVOFLOXACIN GENOPTIM 500MG: ")
             st.write(LEVOFLOXACIN.head())
 
     #usuń braki danych z Kod klienta
