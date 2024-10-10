@@ -415,69 +415,72 @@ if sekcja == 'Genoptim':
             st.write("Dane z arkusza ESCITALOPRAM:")
             st.write(ESCITALOPRAM.head())
 
-        if 'LEVOFLOXACIN' in xls.sheet_names:
-            LEVOFLOXACIN = pd.read_excel(df, skiprows=18, usecols=[1, 8])
-            st.write("Dane z arkusza LEVOFLOXACIN GENOPTIM 500MG: ")
-            st.write(LEVOFLOXACIN.head())
+        if 'RUPATADINE' in xls.sheet_names:
+            RUPATADINE = pd.read_excel(df, sheet_name='RUPATADINE', skiprows=18, usecols=[1, 8])
+            st.write("Dane z arkusza RUPATADINE:")
+            st.write(RUPATADINE.head())
+
 
     #usuń braki danych z Kod klienta
     BRAZOFLAMIN = BRAZOFLAMIN.dropna(subset=['KLIENT']) 
     DIAZEPAM = DIAZEPAM.dropna(subset=['KLIENT'])
     ESCITALOPRAM = ESCITALOPRAM.dropna(subset=['KLIENT'])
-    LEVOFLOXACIN = LEVOFLOXACIN.dropna(subset=['KLIENT']) 
-    LEVOFLOXACIN
+    RUPATADINE = RUPATADINE.dropna(subset=['KLIENT'])
+
 
     # klient na całkowite
     BRAZOFLAMIN['KLIENT'] = BRAZOFLAMIN['KLIENT'].astype(int)
     DIAZEPAM['KLIENT'] = DIAZEPAM['KLIENT'].astype(int)
     ESCITALOPRAM['KLIENT'] = ESCITALOPRAM['KLIENT'].astype(int)
-    LEVOFLOXACIN['KLIENT'] = LEVOFLOXACIN['KLIENT'].astype(int)
+    RUPATADINE['KLIENT'] = RUPATADINE['KLIENT'].astype(int)
 
 
     # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
     BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['pakiet'] != 'brak']
     DIAZEPAM = DIAZEPAM[DIAZEPAM['pakiet'] != 'brak']
     ESCITALOPRAM = ESCITALOPRAM[ESCITALOPRAM['pakiet'] != 'brak']
-    LEVOFLOXACIN = LEVOFLOXACIN[LEVOFLOXACIN['pakiet'] != 'brak']
-
+    RUPATADINE = RUPATADINE[RUPATADINE['pakiet'] != 'brak']
+ 
     
     # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY'
     BRAZOFLAMIN['SIECIOWY'] = 'SIECIOWY'
     DIAZEPAM['SIECIOWY'] = 'SIECIOWY'
     ESCITALOPRAM['SIECIOWY'] = 'SIECIOWY'
-    LEVOFLOXACIN['SIECIOWY'] = 'SIECIOWY'
- 
+    RUPATADINE['SIECIOWY'] = 'SIECIOWY'
+
     
     # Zastosowanie funkcji do kolumn '12' i '14'
     BRAZOFLAMIN['max_percent'] = BRAZOFLAMIN['pakiet'].apply(extract_percentage)
     DIAZEPAM['max_percent'] = DIAZEPAM['pakiet'].apply(extract_percentage)
     ESCITALOPRAM['max_percent'] = ESCITALOPRAM['pakiet'].apply(extract_percentage)
-    LEVOFLOXACIN['max_percent'] = LEVOFLOXACIN['pakiet'].apply(extract_percentage)
+    RUPATADINE['max_percent'] = RUPATADINE['pakiet'].apply(extract_percentage)
+
 
 
     # Konwersja kolumny percent na liczby zmiennoprzecinkowe
     BRAZOFLAMIN['max_percent'] = BRAZOFLAMIN['max_percent'].apply(percentage_to_float)
     DIAZEPAM['max_percent'] = DIAZEPAM['max_percent'].apply(percentage_to_float)
     ESCITALOPRAM['max_percent'] = ESCITALOPRAM['max_percent'].apply(percentage_to_float)
-    LEVOFLOXACIN['max_percent'] = LEVOFLOXACIN['max_percent'].apply(percentage_to_float)
+    RUPATADINE['max_percent'] = RUPATADINE['max_percent'].apply(percentage_to_float)
 
 
     # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
     BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['max_percent'] != 0]
     DIAZEPAM = DIAZEPAM[DIAZEPAM['max_percent'] != 0]
     ESCITALOPRAM = ESCITALOPRAM[ESCITALOPRAM['max_percent'] != 0]
-    LEVOFLOXACIN = LEVOFLOXACIN[LEVOFLOXACIN['max_percent'] != 0]
+    RUPATADINE = RUPATADINE[RUPATADINE['max_percent'] != 0]
+
 
     BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['SIECIOWY'] == 'SIECIOWY']
     DIAZEPAM = DIAZEPAM[DIAZEPAM['SIECIOWY'] == 'SIECIOWY']
     ESCITALOPRAM = ESCITALOPRAM[ESCITALOPRAM['SIECIOWY'] == 'SIECIOWY']
-    LEVOFLOXACIN = LEVOFLOXACIN[LEVOFLOXACIN['SIECIOWY'] == 'SIECIOWY']
+    RUPATADINE = RUPATADINE[RUPATADINE['SIECIOWY'] == 'SIECIOWY']
 
 
     BRAZOFLAMIN = BRAZOFLAMIN[['KLIENT', 'max_percent']]
     DIAZEPAM = DIAZEPAM[['KLIENT', 'max_percent']]
     ESCITALOPRAM = ESCITALOPRAM[['KLIENT', 'max_percent']]
-    LEVOFLOXACIN = LEVOFLOXACIN[['KLIENT', 'max_percent']]
+    RUPATADINE = RUPATADINE[['KLIENT', 'max_percent']]
 
 
     #TERAZ IMS
