@@ -415,16 +415,17 @@ if sekcja == 'Genoptim':
             st.write("Dane z arkusza ESCITALOPRAM:")
             st.write(ESCITALOPRAM.head())
 
-      #  if 'LEVOFLOXACIN' in xls.sheet_names:
-       #     LEVOFLOXACIN = pd.read_excel(df, skiprows=18, usecols=[1, 8])
-        #    st.write("Dane z arkusza LEVOFLOXACIN GENOPTIM 500MG:")
-         #   st.write(LEVOFLOXACIN.head())
+        if 'LEVOFLOXACIN' in xls.sheet_names:
+            LEVOFLOXACIN = pd.read_excel(df, skiprows=18, usecols=[1, 8])
+            st.write("Dane z arkusza LEVOFLOXACIN GENOPTIM 500MG:")
+            st.write(LEVOFLOXACIN.head())
 
     #usuń braki danych z Kod klienta
     BRAZOFLAMIN = BRAZOFLAMIN.dropna(subset=['KLIENT']) 
     DIAZEPAM = DIAZEPAM.dropna(subset=['KLIENT'])
     ESCITALOPRAM = ESCITALOPRAM.dropna(subset=['KLIENT'])
-    #LEVOFLOXACIN = LEVOFLOXACIN.dropna(subset=['KLIENT']) 
+    LEVOFLOXACIN = LEVOFLOXACIN.dropna(subset=['KLIENT']) 
+    LEVOFLOXACIN
 
     # klient na całkowite
     BRAZOFLAMIN['KLIENT'] = BRAZOFLAMIN['KLIENT'].astype(int)
