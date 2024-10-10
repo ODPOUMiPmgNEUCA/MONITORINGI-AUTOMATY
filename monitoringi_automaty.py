@@ -586,6 +586,7 @@ if sekcja == 'Genoptim':
     RUPATADINE = RUPATADINE.sort_values(by='max_percent', ascending=False)
 
     RUPATADINE = RUPATADINE.drop_duplicates(subset='Kod klienta')
+    RUPATADINE
 
 
     SILDENAFIL = pd.concat([wynik_S, wynik_S1], axis = 0)
