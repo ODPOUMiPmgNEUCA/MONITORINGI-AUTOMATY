@@ -69,7 +69,7 @@ if sekcja == 'Wsparcie z natury':
     st.write(tabs_font_css, unsafe_allow_html=True)
 
     df = st.file_uploader(
-        label = "Wrzuć plik Cykl - soczyste rabaty"
+        label = "Wrzuć plik Cykl - Wsparcie z natury"
     )
     if df:
         df = pd.read_excel(df, sheet_name = 'Promocje na utrzymanie', skiprows = 19, usecols = [1, 9])
