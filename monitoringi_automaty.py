@@ -715,7 +715,7 @@ if sekcja == 'Genoptim':
         if 'result_escitalopram' in locals():
             result_escitalopram.to_excel(writer, index=False, sheet_name='ESCITALOPRAM')
         if 'result_rupatadine' in locals():
-            result_rupatadine.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN')
+            result_rupatadine.to_excel(writer, index=False, sheet_name='RUPATADINE')
         if 'result_sildenafil' in locals():
             result_sildenafil.to_excel(writer, index=False, sheet_name='SILDENAFIL')
 
