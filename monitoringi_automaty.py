@@ -637,6 +637,8 @@ if sekcja == 'Genoptim':
         result_diazepam = DIAZEPAM.merge(poprzedni_diazepam[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
         result_diazepam['old_percent'] = result_diazepam['old_percent'].fillna(0)
         result_diazepam['Czy dodać'] = result_diazepam.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
+        st.write(result_diazepam.head())
+
 
     # Przetwarzanie dla ESCITALOPRAM
     if 'ESCITALOPRAM' in locals() and 'poprzedni_escitalopram' in locals():
