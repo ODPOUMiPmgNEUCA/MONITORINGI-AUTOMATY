@@ -425,6 +425,11 @@ if sekcja == 'Genoptim':
             st.write("Dane z arkusza SILDENAFIL:")
             st.write(SILDENAFIL.head())
 
+        if 'TADAXIN  5MG' in xls.sheet_names:
+            TADAXIN = pd.read_excel(df, sheet_name='TADAXIN  5MG', skiprows=18, usecols=[1, 8])
+            st.write("Dane z arkusza TADAXIN  5MG:")
+            st.write(TADAXIN.head())
+
 
     #usuń braki danych z Kod klienta
     BRAZOFLAMIN = BRAZOFLAMIN.dropna(subset=['KLIENT']) 
