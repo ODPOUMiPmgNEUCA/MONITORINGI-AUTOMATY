@@ -437,6 +437,7 @@ if sekcja == 'Genoptim':
     ESCITALOPRAM = ESCITALOPRAM.dropna(subset=['KLIENT'])
     RUPATADINE = RUPATADINE.dropna(subset=['KLIENT'])
     SILDENAFIL = SILDENAFIL.dropna(subset=['KLIENT'])
+    TADAXIN = TADAXIN.dropna(subset=['KLIENT'])
 
 
     # klient na całkowite
@@ -445,6 +446,7 @@ if sekcja == 'Genoptim':
     ESCITALOPRAM['KLIENT'] = ESCITALOPRAM['KLIENT'].astype(int)
     RUPATADINE['KLIENT'] = RUPATADINE['KLIENT'].astype(int)
     SILDENAFIL['KLIENT'] = SILDENAFIL['KLIENT'].astype(int)
+    TADAXIN['KLIENT'] = TADAXIN['KLIENT'].astype(int)
 
 
     # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
@@ -453,6 +455,7 @@ if sekcja == 'Genoptim':
     ESCITALOPRAM = ESCITALOPRAM[ESCITALOPRAM['pakiet'] != 'brak']
     RUPATADINE = RUPATADINE[RUPATADINE['pakiet'] != 'brak']
     SILDENAFIL = SILDENAFIL[SILDENAFIL['pakiet'] != 'brak']
+    TADAXIN = TADAXIN[TADAXIN['pakiet'] != 'brak']
  
     
     # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY'
@@ -461,6 +464,7 @@ if sekcja == 'Genoptim':
     ESCITALOPRAM['SIECIOWY'] = 'SIECIOWY'
     RUPATADINE['SIECIOWY'] = 'SIECIOWY'
     SILDENAFIL['SIECIOWY'] = 'SIECIOWY'
+    TADAXIN['SIECIOWY'] = 'SIECIOWY'
 
     
     # Zastosowanie funkcji do kolumn '12' i '14'
@@ -469,6 +473,7 @@ if sekcja == 'Genoptim':
     ESCITALOPRAM['max_percent'] = ESCITALOPRAM['pakiet'].apply(extract_percentage)
     RUPATADINE['max_percent'] = RUPATADINE['pakiet'].apply(extract_percentage)
     SILDENAFIL['max_percent'] = SILDENAFIL['pakiet'].apply(extract_percentage)
+    TADAXIN['max_percent'] = TADAXIN['pakiet'].apply(extract_percentage)
 
 
 
@@ -478,6 +483,7 @@ if sekcja == 'Genoptim':
     ESCITALOPRAM['max_percent'] = ESCITALOPRAM['max_percent'].apply(percentage_to_float)
     RUPATADINE['max_percent'] = RUPATADINE['max_percent'].apply(percentage_to_float)
     SILDENAFIL['max_percent'] = SILDENAFIL['max_percent'].apply(percentage_to_float)
+    TADAXIN['max_percent'] = TADAXIN['max_percent'].apply(percentage_to_float)
 
 
     # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
@@ -486,6 +492,7 @@ if sekcja == 'Genoptim':
     ESCITALOPRAM = ESCITALOPRAM[ESCITALOPRAM['max_percent'] != 0]
     RUPATADINE = RUPATADINE[RUPATADINE['max_percent'] != 0]
     SILDENAFIL = SILDENAFIL[SILDENAFIL['max_percent'] != 0]
+    TADAXIN = TADAXIN[TADAXIN['max_percent'] != 0]
 
 
     BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['SIECIOWY'] == 'SIECIOWY']
@@ -493,6 +500,7 @@ if sekcja == 'Genoptim':
     ESCITALOPRAM = ESCITALOPRAM[ESCITALOPRAM['SIECIOWY'] == 'SIECIOWY']
     RUPATADINE = RUPATADINE[RUPATADINE['SIECIOWY'] == 'SIECIOWY']
     SILDENAFIL = SILDENAFIL[SILDENAFIL['SIECIOWY'] == 'SIECIOWY']
+    TADAXIN = TADAXIN[TADAXIN['SIECIOWY'] == 'SIECIOWY']
 
 
     BRAZOFLAMIN = BRAZOFLAMIN[['KLIENT', 'max_percent']]
@@ -500,6 +508,7 @@ if sekcja == 'Genoptim':
     ESCITALOPRAM = ESCITALOPRAM[['KLIENT', 'max_percent']]
     RUPATADINE = RUPATADINE[['KLIENT', 'max_percent']]
     SILDENAFIL = SILDENAFIL[['KLIENT', 'max_percent']]
+    TADAXIN = TADAXIN[['KLIENT', 'max_percent']]
 
 
     #TERAZ IMS
@@ -520,6 +529,7 @@ if sekcja == 'Genoptim':
     wynik_E = pd.merge(ESCITALOPRAM, ims, left_on='KLIENT', right_on='Klient', how='left')
     wynik_R = pd.merge(RUPATADINE, ims, left_on='KLIENT', right_on='Klient', how='left')
     wynik_S = pd.merge(SILDENAFIL, ims, left_on='KLIENT', right_on='Klient', how='left')
+    wynik_T = pd.merge(TADAXIN, ims, left_on='KLIENT', right_on='Klient', how='left')
 
 
     # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
@@ -528,6 +538,7 @@ if sekcja == 'Genoptim':
     wynik_E = wynik_E[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     wynik_R = wynik_R[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     wynik_S = wynik_S[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+    wynik_T = wynik_T[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     
     
     #to są kody SAP
@@ -547,6 +558,9 @@ if sekcja == 'Genoptim':
     wynik_S = wynik_S.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
     wynik_S = wynik_S[['Kod klienta','max_percent']]
 
+    wynik_T = wynik_T.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_T = wynik_T[['Kod klienta','max_percent']]
+
     #to są kody powiazan
     wynik_B1 = wynik_B.rename(columns={'KLIENT': 'Kod klienta'})
     wynik_B1 = wynik_B1[['Kod klienta','max_percent']]
@@ -564,41 +578,38 @@ if sekcja == 'Genoptim':
     wynik_S1 = wynik_S.rename(columns={'KLIENT': 'Kod klienta'})
     wynik_S1 = wynik_S1[['Kod klienta','max_percent']]
 
+    wynik_T1 = wynik_T.rename(columns={'KLIENT': 'Kod klienta'})
+    wynik_T1 = wynik_T1[['Kod klienta','max_percent']]
+
     #POŁĄCZYĆ wynik_df z standard_ost
     BRAZOFLAMIN = pd.concat([wynik_B, wynik_B1], axis = 0)
-  
     BRAZOFLAMIN = BRAZOFLAMIN.sort_values(by='max_percent', ascending=False)
-
     BRAZOFLAMIN = BRAZOFLAMIN.drop_duplicates(subset='Kod klienta')
     
 
     DIAZEPAM = pd.concat([wynik_D, wynik_D1], axis = 0)
-  
     DIAZEPAM = DIAZEPAM.sort_values(by='max_percent', ascending=False)
-
     DIAZEPAM = DIAZEPAM.drop_duplicates(subset='Kod klienta')
 
 
     ESCITALOPRAM = pd.concat([wynik_E, wynik_E1], axis = 0)
-  
     ESCITALOPRAM = ESCITALOPRAM.sort_values(by='max_percent', ascending=False)
-
     ESCITALOPRAM = ESCITALOPRAM.drop_duplicates(subset='Kod klienta')
     
 
     RUPATADINE = pd.concat([wynik_R, wynik_R1], axis = 0)
-  
     RUPATADINE = RUPATADINE.sort_values(by='max_percent', ascending=False)
-
     RUPATADINE = RUPATADINE.drop_duplicates(subset='Kod klienta')
-    RUPATADINE
 
 
     SILDENAFIL = pd.concat([wynik_S, wynik_S1], axis = 0)
-  
     SILDENAFIL = SILDENAFIL.sort_values(by='max_percent', ascending=False)
-
     SILDENAFIL = SILDENAFIL.drop_duplicates(subset='Kod klienta')
+
+
+    TADAXIN = pd.concat([wynik_T, wynik_T1], axis = 0)
+    TADAXIN = TADAXIN.sort_values(by='max_percent', ascending=False)
+    TADAXIN = TADAXIN.drop_duplicates(subset='Kod klienta')
 
 
     st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
@@ -622,6 +633,10 @@ if sekcja == 'Genoptim':
 
         if 'SILDENAFIL' in locals():
             SILDENAFIL.to_excel(writer, index=False, sheet_name='SILDENAFIL')
+
+        if 'TADAXIN' in locals():
+            TADAXIN.to_excel(writer, index=False, sheet_name='TADAXIN  5MG')
+
 
 
     
@@ -671,6 +686,11 @@ if sekcja == 'Genoptim':
         st.write('Poprzedni monitoring - SILDENAFIL:')
         st.write(poprzedni_sildenafil.head())
 
+    if 'TADAXIN' in xls.sheet_names:
+        poprzedni_tadaxin = pd.read_excel(poprzedni, sheet_name='TADAXIN 5MG')
+        st.write('Poprzedni monitoring - TADAXIN 5MG:')
+        st.write(poprzedni_tadaxin.head())
+
 
 
     # Przetwarzanie dla BRAZOFLAMIN
@@ -710,6 +730,12 @@ if sekcja == 'Genoptim':
         result_sildenafil['old_percent'] = result_sildenafil['old_percent'].fillna(0)
         result_sildenafil['Czy dodać'] = result_sildenafil.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
 
+    if 'TADAXIN' in locals() and 'poprzedni_tadaxin' in locals():
+        poprzedni_tadaxin = poprzedni_tadaxin.rename(columns={'max_percent': 'old_percent'})
+        result_tadaxin = TADAXIN.merge(result_tadaxin[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+        result_tadaxin['old_percent'] = result_tadaxin['old_percent'].fillna(0)
+        result_tadaxin['Czy dodać'] = result_tadaxin.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
+
 
 
     # Zapisywanie plików do Excela
@@ -725,6 +751,8 @@ if sekcja == 'Genoptim':
             result_rupatadine.to_excel(writer, index=False, sheet_name='RUPATADINE')
         if 'result_sildenafil' in locals():
             result_sildenafil.to_excel(writer, index=False, sheet_name='SILDENAFIL')
+        if 'result_tadaxin' in locals():
+            result_tadaxin.to_excel(writer, index=False, sheet_name='TADAXIN 5MG')
 
 
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
@@ -746,6 +774,7 @@ if sekcja == 'Genoptim':
     result_escitalopram = result_escitalopram.drop(columns=['old_percent', 'Czy dodać'])
     result_rupatadine = result_rupatadine.drop(columns=['old_percent', 'Czy dodać'])
     result_sildenafil = result_sildenafil.drop(columns=['old_percent', 'Czy dodać'])
+    result_tadaxin = result_tadaxin.drop(columns=['old_percent', 'Czy dodać'])
 
 
 
@@ -761,6 +790,7 @@ if sekcja == 'Genoptim':
         result_escitalopram.to_excel(writer, index=False, sheet_name='ESCITALOPRAM')
         result_rupatadine.to_excel(writer, index=False, sheet_name='RUPATADINE')
         result_sildenafil.to_excel(writer, index=False, sheet_name='SILDENAFIL')
+        result_tadaxin.to_excel(writer, index=False, sheet_name='TADAXIN 5MG')
 
     # Resetowanie wskaźnika do początku pliku
     excel_file2.seek(0) 
