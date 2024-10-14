@@ -731,7 +731,7 @@ if sekcja == 'Genoptim':
 
     if 'TADAXIN' in locals() and 'poprzedni_tadaxin' in locals():
         poprzedni_tadaxin = poprzedni_tadaxin.rename(columns={'max_percent': 'old_percent'})
-        result_tadaxin = TADAXIN.merge(result_tadaxin[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+        result_tadaxin = TADAXIN.merge(poprzedni_tadaxin[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
         result_tadaxin['old_percent'] = result_tadaxin['old_percent'].fillna(0)
         result_tadaxin['Czy dodać'] = result_tadaxin.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
 
