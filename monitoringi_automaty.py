@@ -721,7 +721,6 @@ if sekcja == 'Genoptim':
         result_rupatadine = RUPATADINE.merge(poprzedni_rupatadine[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
         result_rupatadine['old_percent'] = result_rupatadine['old_percent'].fillna(0)
         result_rupatadine['Czy dodać'] = result_rupatadine.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
-        result_rupatadine
 
     
     if 'SILDENAFIL' in locals() and 'poprzedni_sildenafil' in locals():
