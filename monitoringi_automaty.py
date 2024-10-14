@@ -415,6 +415,11 @@ if sekcja == 'Genoptim':
             st.write("Dane z arkusza ESCITALOPRAM:")
             st.write(ESCITALOPRAM.head())
 
+        if 'LEVOFLOXACIN GENOPTIM 500MG ' in xls.sheet_names:
+            LEVOFLOXACIN = pd.read_excel(df, sheet_name='LEVOFLOXACIN GENOPTIM 500MG ', skiprows=18, usecols=[1, 8])
+            st.write("Dane z arkusza LEVOFLOXACIN GENOPTIM 500MG :")
+            st.write(LEVOFLOXACIN.head())
+            
         if 'RUPATADINE' in xls.sheet_names:
             RUPATADINE = pd.read_excel(df, sheet_name='RUPATADINE', skiprows=18, usecols=[1, 8])
             st.write("Dane z arkusza RUPATADINE:")
@@ -440,6 +445,7 @@ if sekcja == 'Genoptim':
     BRAZOFLAMIN = BRAZOFLAMIN.dropna(subset=['KLIENT']) 
     DIAZEPAM = DIAZEPAM.dropna(subset=['KLIENT'])
     ESCITALOPRAM = ESCITALOPRAM.dropna(subset=['KLIENT'])
+    LEVOFLOXACIN = LEVOFLOXACIN.dropna(subset=['KLIENT'])
     RUPATADINE = RUPATADINE.dropna(subset=['KLIENT'])
     SILDENAFIL = SILDENAFIL.dropna(subset=['KLIENT'])
     TADAXIN = TADAXIN.dropna(subset=['KLIENT'])
@@ -450,6 +456,7 @@ if sekcja == 'Genoptim':
     BRAZOFLAMIN['KLIENT'] = BRAZOFLAMIN['KLIENT'].astype(int)
     DIAZEPAM['KLIENT'] = DIAZEPAM['KLIENT'].astype(int)
     ESCITALOPRAM['KLIENT'] = ESCITALOPRAM['KLIENT'].astype(int)
+    LEVOFLOXACIN['KLIENT'] = LEVOFLOXACIN['KLIENT'].astype(int)
     RUPATADINE['KLIENT'] = RUPATADINE['KLIENT'].astype(int)
     SILDENAFIL['KLIENT'] = SILDENAFIL['KLIENT'].astype(int)
     TADAXIN['KLIENT'] = TADAXIN['KLIENT'].astype(int)
@@ -460,6 +467,7 @@ if sekcja == 'Genoptim':
     BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['pakiet'] != 'brak']
     DIAZEPAM = DIAZEPAM[DIAZEPAM['pakiet'] != 'brak']
     ESCITALOPRAM = ESCITALOPRAM[ESCITALOPRAM['pakiet'] != 'brak']
+    LEVOFLOXACIN = LEVOFLOXACIN[LEVOFLOXACIN['pakiet'] != 'brak']
     RUPATADINE = RUPATADINE[RUPATADINE['pakiet'] != 'brak']
     SILDENAFIL = SILDENAFIL[SILDENAFIL['pakiet'] != 'brak']
     TADAXIN = TADAXIN[TADAXIN['pakiet'] != 'brak']
@@ -470,6 +478,7 @@ if sekcja == 'Genoptim':
     BRAZOFLAMIN['SIECIOWY'] = 'SIECIOWY'
     DIAZEPAM['SIECIOWY'] = 'SIECIOWY'
     ESCITALOPRAM['SIECIOWY'] = 'SIECIOWY'
+    LEVOFLOXACIN['SIECIOWY'] = 'SIECIOWY'
     RUPATADINE['SIECIOWY'] = 'SIECIOWY'
     SILDENAFIL['SIECIOWY'] = 'SIECIOWY'
     TADAXIN['SIECIOWY'] = 'SIECIOWY'
@@ -480,6 +489,7 @@ if sekcja == 'Genoptim':
     BRAZOFLAMIN['max_percent'] = BRAZOFLAMIN['pakiet'].apply(extract_percentage)
     DIAZEPAM['max_percent'] = DIAZEPAM['pakiet'].apply(extract_percentage)
     ESCITALOPRAM['max_percent'] = ESCITALOPRAM['pakiet'].apply(extract_percentage)
+    LEVOFLOXACIN['max_percent'] = LEVOFLOXACIN['pakiet'].apply(extract_percentage)
     RUPATADINE['max_percent'] = RUPATADINE['pakiet'].apply(extract_percentage)
     SILDENAFIL['max_percent'] = SILDENAFIL['pakiet'].apply(extract_percentage)
     TADAXIN['max_percent'] = TADAXIN['pakiet'].apply(extract_percentage)
@@ -491,6 +501,7 @@ if sekcja == 'Genoptim':
     BRAZOFLAMIN['max_percent'] = BRAZOFLAMIN['max_percent'].apply(percentage_to_float)
     DIAZEPAM['max_percent'] = DIAZEPAM['max_percent'].apply(percentage_to_float)
     ESCITALOPRAM['max_percent'] = ESCITALOPRAM['max_percent'].apply(percentage_to_float)
+    LEVOFLOXACIN['max_percent'] = LEVOFLOXACIN['max_percent'].apply(percentage_to_float)
     RUPATADINE['max_percent'] = RUPATADINE['max_percent'].apply(percentage_to_float)
     SILDENAFIL['max_percent'] = SILDENAFIL['max_percent'].apply(percentage_to_float)
     TADAXIN['max_percent'] = TADAXIN['max_percent'].apply(percentage_to_float)
@@ -501,6 +512,7 @@ if sekcja == 'Genoptim':
     BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['max_percent'] != 0]
     DIAZEPAM = DIAZEPAM[DIAZEPAM['max_percent'] != 0]
     ESCITALOPRAM = ESCITALOPRAM[ESCITALOPRAM['max_percent'] != 0]
+    LEVOFLOXACIN = LEVOFLOXACIN[LEVOFLOXACIN['max_percent'] != 0]
     RUPATADINE = RUPATADINE[RUPATADINE['max_percent'] != 0]
     SILDENAFIL = SILDENAFIL[SILDENAFIL['max_percent'] != 0]
     TADAXIN = TADAXIN[TADAXIN['max_percent'] != 0]
@@ -510,6 +522,7 @@ if sekcja == 'Genoptim':
     BRAZOFLAMIN = BRAZOFLAMIN[BRAZOFLAMIN['SIECIOWY'] == 'SIECIOWY']
     DIAZEPAM = DIAZEPAM[DIAZEPAM['SIECIOWY'] == 'SIECIOWY']
     ESCITALOPRAM = ESCITALOPRAM[ESCITALOPRAM['SIECIOWY'] == 'SIECIOWY']
+    LEVOFLOXACIN = LEVOFLOXACIN[LEVOFLOXACIN['SIECIOWY'] == 'SIECIOWY']
     RUPATADINE = RUPATADINE[RUPATADINE['SIECIOWY'] == 'SIECIOWY']
     SILDENAFIL = SILDENAFIL[SILDENAFIL['SIECIOWY'] == 'SIECIOWY']
     TADAXIN = TADAXIN[TADAXIN['SIECIOWY'] == 'SIECIOWY']
@@ -519,6 +532,7 @@ if sekcja == 'Genoptim':
     BRAZOFLAMIN = BRAZOFLAMIN[['KLIENT', 'max_percent']]
     DIAZEPAM = DIAZEPAM[['KLIENT', 'max_percent']]
     ESCITALOPRAM = ESCITALOPRAM[['KLIENT', 'max_percent']]
+    LEVOFLOXACIN = LEVOFLOXACIN[['KLIENT', 'max_percent']]
     RUPATADINE = RUPATADINE[['KLIENT', 'max_percent']]
     SILDENAFIL = SILDENAFIL[['KLIENT', 'max_percent']]
     TADAXIN = TADAXIN[['KLIENT', 'max_percent']]
@@ -541,6 +555,7 @@ if sekcja == 'Genoptim':
     wynik_B = pd.merge(BRAZOFLAMIN, ims, left_on='KLIENT', right_on='Klient', how='left')
     wynik_D = pd.merge(DIAZEPAM, ims, left_on='KLIENT', right_on='Klient', how='left')
     wynik_E = pd.merge(ESCITALOPRAM, ims, left_on='KLIENT', right_on='Klient', how='left')
+    wynik_L = pd.merge(LEVOFLOXACIN, ims, left_on='KLIENT', right_on='Klient', how='left')
     wynik_R = pd.merge(RUPATADINE, ims, left_on='KLIENT', right_on='Klient', how='left')
     wynik_S = pd.merge(SILDENAFIL, ims, left_on='KLIENT', right_on='Klient', how='left')
     wynik_T = pd.merge(TADAXIN, ims, left_on='KLIENT', right_on='Klient', how='left')
@@ -551,6 +566,7 @@ if sekcja == 'Genoptim':
     wynik_B = wynik_B[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     wynik_D = wynik_D[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     wynik_E = wynik_E[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+    wynik_L = wynik_L[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     wynik_R = wynik_R[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     wynik_S = wynik_S[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
     wynik_T = wynik_T[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
@@ -567,6 +583,9 @@ if sekcja == 'Genoptim':
 
     wynik_E = wynik_E.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
     wynik_E = wynik_E[['Kod klienta','max_percent']]
+
+    wynik_L = wynik_L.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_L = wynik_L[['Kod klienta','max_percent']]
 
     wynik_R = wynik_R.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
     wynik_R = wynik_R[['Kod klienta','max_percent']]
@@ -590,6 +609,9 @@ if sekcja == 'Genoptim':
 
     wynik_E1 = wynik_E.rename(columns={'KLIENT': 'Kod klienta'})
     wynik_E1 = wynik_E1[['Kod klienta','max_percent']]
+
+    wynik_L1 = wynik_L.rename(columns={'KLIENT': 'Kod klienta'})
+    wynik_L1 = wynik_L1[['Kod klienta','max_percent']]
 
     wynik_R1 = wynik_R.rename(columns={'KLIENT': 'Kod klienta'})
     wynik_R1 = wynik_R1[['Kod klienta','max_percent']]
@@ -617,6 +639,11 @@ if sekcja == 'Genoptim':
     ESCITALOPRAM = pd.concat([wynik_E, wynik_E1], axis = 0)
     ESCITALOPRAM = ESCITALOPRAM.sort_values(by='max_percent', ascending=False)
     ESCITALOPRAM = ESCITALOPRAM.drop_duplicates(subset='Kod klienta')
+
+
+    LEVOFLOXACIN = pd.concat([wynik_L, wynik_L1], axis = 0)
+    LEVOFLOXACIN = LEVOFLOXACIN.sort_values(by='max_percent', ascending=False)
+    LEVOFLOXACIN = LEVOFLOXACIN.drop_duplicates(subset='Kod klienta')
     
 
     RUPATADINE = pd.concat([wynik_R, wynik_R1], axis = 0)
@@ -653,6 +680,10 @@ if sekcja == 'Genoptim':
         # Jeśli dane diazepam istnieją, zapisz je w odpowiednim arkuszu
         if 'ESCITALOPRAM' in locals():
             ESCITALOPRAM.to_excel(writer, index=False, sheet_name='ESCITALOPRAM')
+
+        # Jeśli dane diazepam istnieją, zapisz je w odpowiednim arkuszu
+        if 'LEVOFLOXACIN' in locals():
+            LEVOFLOXACIN.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN GENOPTIM 500MG ')
 
         if 'RUPATADINE' in locals():
             RUPATADINE.to_excel(writer, index=False, sheet_name='RUPATADINE')
@@ -703,6 +734,11 @@ if sekcja == 'Genoptim':
         st.write('Poprzedni monitoring - ESCITALOPRAM:')
         st.write(poprzedni_escitalopram.head())
 
+    if 'LEVOFLOXACIN GENOPTIM 500MG ' in xls.sheet_names:
+        poprzedni_levofloxacin = pd.read_excel(poprzedni, sheet_name='LEVOFLOXACIN GENOPTIM 500MG ')
+        st.write('Poprzedni monitoring - LEVOFLOXACIN GENOPTIM 500MG :')
+        st.write(poprzedni_levofloxacin.head())
+
     if 'RUPATADINE' in xls.sheet_names:
         poprzedni_rupatadine = pd.read_excel(poprzedni, sheet_name='RUPATADINE')
         st.write('Poprzedni monitoring - RUPATADINE:')
@@ -747,6 +783,12 @@ if sekcja == 'Genoptim':
         result_escitalopram['old_percent'] = result_escitalopram['old_percent'].fillna(0)
         result_escitalopram['Czy dodać'] = result_escitalopram.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
 
+    # Przetwarzanie dla ESCITALOPRAM
+    if 'LEVOFLOXACIN' in locals() and 'poprzedni_levofloxacin' in locals():
+        poprzedni_levofloxacin = poprzedni_levofloxacin.rename(columns={'max_percent': 'old_percent'})
+        result_levofloxacin = LEVOFLOXACIN.merge(poprzedni_levofloxacin[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+        result_levofloxacin['old_percent'] = result_levofloxacin['old_percent'].fillna(0)
+        result_levofloxacin['Czy dodać'] = result_levofloxacin.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
 
     if 'RUPATADINE' in locals() and 'poprzedni_rupatadine' in locals():
         poprzedni_rupatadine = poprzedni_rupatadine.rename(columns={'max_percent': 'old_percent'})
@@ -784,6 +826,8 @@ if sekcja == 'Genoptim':
             result_diazepam.to_excel(writer, index=False, sheet_name='DIAZEPAM')
         if 'result_escitalopram' in locals():
             result_escitalopram.to_excel(writer, index=False, sheet_name='ESCITALOPRAM')
+        if 'result_levofloxacin' in locals():
+            result_levofloxacin.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN GENOPTIM 500MG ')
         if 'result_rupatadine' in locals():
             result_rupatadine.to_excel(writer, index=False, sheet_name='RUPATADINE')
         if 'result_sildenafil' in locals():
@@ -811,6 +855,7 @@ if sekcja == 'Genoptim':
     result_brazoflamin = result_brazoflamin.drop(columns=['old_percent', 'Czy dodać'])
     result_diazepam = result_diazepam.drop(columns=['old_percent', 'Czy dodać'])
     result_escitalopram = result_escitalopram.drop(columns=['old_percent', 'Czy dodać'])
+    result_levofloxacin = result_levofloxacin.drop(columns=['old_percent', 'Czy dodać'])
     result_rupatadine = result_rupatadine.drop(columns=['old_percent', 'Czy dodać'])
     result_sildenafil = result_sildenafil.drop(columns=['old_percent', 'Czy dodać'])
     result_tadaxin = result_tadaxin.drop(columns=['old_percent', 'Czy dodać'])
@@ -828,6 +873,7 @@ if sekcja == 'Genoptim':
         result_brazoflamin.to_excel(writer, index=False, sheet_name='BRAZOFLAMIN')
         result_diazepam.to_excel(writer, index=False, sheet_name='DIAZEPAM')
         result_escitalopram.to_excel(writer, index=False, sheet_name='ESCITALOPRAM')
+        result_levofloxacin.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN GENOPTIM 500MG ')
         result_rupatadine.to_excel(writer, index=False, sheet_name='RUPATADINE')
         result_sildenafil.to_excel(writer, index=False, sheet_name='SILDENAFIL')
         result_tadaxin.to_excel(writer, index=False, sheet_name='TADAXIN 5MG')
