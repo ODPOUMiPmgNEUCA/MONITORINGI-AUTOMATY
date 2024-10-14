@@ -634,7 +634,7 @@ if sekcja == 'Genoptim':
         if 'SILDENAFIL' in locals():
             SILDENAFIL.to_excel(writer, index=False, sheet_name='SILDENAFIL')
 
-        if 'TADAXIN' in locals():
+        if 'TADAXIN 5MG' in locals():
             TADAXIN.to_excel(writer, index=False, sheet_name='TADAXIN  5MG')
 
 
