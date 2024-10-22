@@ -638,42 +638,42 @@ if sekcja == 'Genoptim':
     
     
     #to są kody SAP
-    wynik_B = wynik_B.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_B = wynik_B[['Kod klienta','max_percent']]
+    wynik_B2 = wynik_B.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_B2 = wynik_B2[['Kod klienta','max_percent']]
     #wynik_df1
 
-    wynik_D = wynik_D.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_D = wynik_D[['Kod klienta','max_percent']]
+    wynik_D2 = wynik_D.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_D2 = wynik_D2[['Kod klienta','max_percent']]
 
-    wynik_E = wynik_E.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_E = wynik_E[['Kod klienta','max_percent']]
+    wynik_E2 = wynik_E.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_E2 = wynik_E2[['Kod klienta','max_percent']]
 
-    wynik_L = wynik_L.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_L = wynik_L[['Kod klienta','max_percent']]
+    wynik_L2 = wynik_L.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_L2 = wynik_L2[['Kod klienta','max_percent']]
 
-    wynik_LL = wynik_LL.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_LL = wynik_LL[['Kod klienta','max_percent']]
+    wynik_LL2 = wynik_LL.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_LL2 = wynik_LL2[['Kod klienta','max_percent']]
 
-    wynik_R = wynik_R.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_R = wynik_R[['Kod klienta','max_percent']]
+    wynik_R2 = wynik_R.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_R2 = wynik_R2[['Kod klienta','max_percent']]
 
-    wynik_S = wynik_S.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_S = wynik_S[['Kod klienta','max_percent']]
+    wynik_S2 = wynik_S.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_S2 = wynik_S2[['Kod klienta','max_percent']]
 
-    wynik_T = wynik_T.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_T = wynik_T[['Kod klienta','max_percent']]
+    wynik_T2 = wynik_T.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_T2 = wynik_T2[['Kod klienta','max_percent']]
 
-    wynik_TT = wynik_TT.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_TT = wynik_TT[['Kod klienta','max_percent']]
+    wynik_TT2 = wynik_TT.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_TT2 = wynik_TT2[['Kod klienta','max_percent']]
 
-    wynik_Z = wynik_Z.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_Z = wynik_Z[['Kod klienta','max_percent']]
+    wynik_Z2 = wynik_Z.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_Z2 = wynik_Z2[['Kod klienta','max_percent']]
 
-    wynik_ZZ = wynik_ZZ.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_ZZ = wynik_ZZ[['Kod klienta','max_percent']]
+    wynik_ZZ2 = wynik_ZZ.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_ZZ2 = wynik_ZZ2[['Kod klienta','max_percent']]
 
-    wynik_P = wynik_P.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
-    wynik_P = wynik_P[['Kod klienta','max_percent']]
+    wynik_P2 = wynik_P.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_P2 = wynik_P2[['Kod klienta','max_percent']]
 
     #to są kody powiazan
     wynik_B1 = wynik_B.rename(columns={'KLIENT': 'Kod klienta'})
@@ -714,58 +714,58 @@ if sekcja == 'Genoptim':
     wynik_P1 = wynik_P1[['Kod klienta','max_percent']]
 
     #POŁĄCZYĆ wynik_df z standard_ost
-    BRAZOFLAMIN = pd.concat([wynik_B, wynik_B1], axis = 0)
+    BRAZOFLAMIN = pd.concat([wynik_B2, wynik_B1], axis = 0)
     BRAZOFLAMIN = BRAZOFLAMIN.sort_values(by='max_percent', ascending=False)
     BRAZOFLAMIN = BRAZOFLAMIN.drop_duplicates(subset='Kod klienta')
     
 
-    DIAZEPAM = pd.concat([wynik_D, wynik_D1], axis = 0)
+    DIAZEPAM = pd.concat([wynik_D2, wynik_D1], axis = 0)
     DIAZEPAM = DIAZEPAM.sort_values(by='max_percent', ascending=False)
     DIAZEPAM = DIAZEPAM.drop_duplicates(subset='Kod klienta')
 
 
-    ESCITALOPRAM = pd.concat([wynik_E, wynik_E1], axis = 0)
+    ESCITALOPRAM = pd.concat([wynik_E2, wynik_E1], axis = 0)
     ESCITALOPRAM = ESCITALOPRAM.sort_values(by='max_percent', ascending=False)
     ESCITALOPRAM = ESCITALOPRAM.drop_duplicates(subset='Kod klienta')
 
 
-    LEVOFLOXACIN = pd.concat([wynik_L, wynik_L1], axis = 0)
+    LEVOFLOXACIN = pd.concat([wynik_L2, wynik_L1], axis = 0)
     LEVOFLOXACIN = LEVOFLOXACIN.sort_values(by='max_percent', ascending=False)
     LEVOFLOXACIN = LEVOFLOXACIN.drop_duplicates(subset='Kod klienta')
 
     
-    LEVOFLOXACIN1 = pd.concat([wynik_LL, wynik_LL1], axis = 0)
+    LEVOFLOXACIN1 = pd.concat([wynik_LL2, wynik_LL1], axis = 0)
     LEVOFLOXACIN1 = LEVOFLOXACIN1.sort_values(by='max_percent', ascending=False)
     LEVOFLOXACIN1 = LEVOFLOXACIN1.drop_duplicates(subset='Kod klienta')
     
 
-    RUPATADINE = pd.concat([wynik_R, wynik_R1], axis = 0)
+    RUPATADINE = pd.concat([wynik_R2, wynik_R1], axis = 0)
     RUPATADINE = RUPATADINE.sort_values(by='max_percent', ascending=False)
     RUPATADINE = RUPATADINE.drop_duplicates(subset='Kod klienta')
 
 
-    SILDENAFIL = pd.concat([wynik_S, wynik_S1], axis = 0)
+    SILDENAFIL = pd.concat([wynik_S2, wynik_S1], axis = 0)
     SILDENAFIL = SILDENAFIL.sort_values(by='max_percent', ascending=False)
     SILDENAFIL = SILDENAFIL.drop_duplicates(subset='Kod klienta')
 
 
-    TADAXIN = pd.concat([wynik_T, wynik_T1], axis = 0)
+    TADAXIN = pd.concat([wynik_T2, wynik_T1], axis = 0)
     TADAXIN = TADAXIN.sort_values(by='max_percent', ascending=False)
     TADAXIN = TADAXIN.drop_duplicates(subset='Kod klienta')
 
-    TADAXIN1 = pd.concat([wynik_TT, wynik_TT1], axis = 0)
+    TADAXIN1 = pd.concat([wynik_TT2, wynik_TT1], axis = 0)
     TADAXIN1 = TADAXIN1.sort_values(by='max_percent', ascending=False)
     TADAXIN1 = TADAXIN1.drop_duplicates(subset='Kod klienta')
 
-    ZOLPIDEM = pd.concat([wynik_Z, wynik_Z1], axis = 0)
+    ZOLPIDEM = pd.concat([wynik_Z2, wynik_Z1], axis = 0)
     ZOLPIDEM = ZOLPIDEM.sort_values(by='max_percent', ascending=False)
     ZOLPIDEM = ZOLPIDEM.drop_duplicates(subset='Kod klienta')
 
-    ZOLPIDEM1 = pd.concat([wynik_ZZ, wynik_ZZ1], axis = 0)
+    ZOLPIDEM1 = pd.concat([wynik_ZZ2, wynik_ZZ1], axis = 0)
     ZOLPIDEM1 = ZOLPIDEM1.sort_values(by='max_percent', ascending=False)
     ZOLPIDEM1 = ZOLPIDEM1.drop_duplicates(subset='Kod klienta')
 
-    PROMO = pd.concat([wynik_P, wynik_P1], axis = 0)
+    PROMO = pd.concat([wynik_P2, wynik_P1], axis = 0)
     PROMO = PROMO.sort_values(by='max_percent', ascending=False)
     PROMO = PROMO.drop_duplicates(subset='Kod klienta')
 
