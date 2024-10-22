@@ -872,13 +872,13 @@ if sekcja == 'Genoptim':
         st.write('Poprzedni monitoring - SILDENAFIL:')
         st.write(poprzedni_sildenafil.head())
 
-    if 'TADAXIN 5MG' in xls.sheet_names:
-        poprzedni_tadaxin = pd.read_excel(poprzedni, sheet_name='TADAXIN 5MG')
+    if 'TADAXIN  5MG' in xls.sheet_names:
+        poprzedni_tadaxin = pd.read_excel(poprzedni, sheet_name='TADAXIN  5MG')
         st.write('Poprzedni monitoring - TADAXIN 5MG:')
         st.write(poprzedni_tadaxin.head())
 
-    if 'TADAXIN 20MG' in xls.sheet_names:
-        poprzedni_tadaxin1 = pd.read_excel(poprzedni, sheet_name='TADAXIN 20MG')
+    if 'TADAXIN  20MG' in xls.sheet_names:
+        poprzedni_tadaxin1 = pd.read_excel(poprzedni, sheet_name='TADAXIN  20MG')
         st.write('Poprzedni monitoring - TADAXIN 20MG:')
         st.write(poprzedni_tadaxin1.head())
 
