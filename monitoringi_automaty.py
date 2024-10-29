@@ -997,7 +997,7 @@ if sekcja == 'Genoptim':
         if 'result_sildenafil' in locals():
             result_sildenafil.to_excel(writer, index=False, sheet_name='SILDENAFIL')
         if 'result_tadaxin' in locals():
-            result_tadaxin.to_excel(writer, index=False, sheet_name='TADAXIN 5MG')
+            result_tadaxin.to_excel(writer, index=False, sheet_name='TADAXIN  5MG')
         if 'result_tadaxin1' in locals():
             result_tadaxin1.to_excel(writer, index=False, sheet_name='TADAXIN 20MG')
         if 'result_zolpidem' in locals():
@@ -1051,7 +1051,7 @@ if sekcja == 'Genoptim':
         result_levofloxacin1.to_excel(writer, index=False, sheet_name='LEVOFLOXACIN GENOPTIM KR.5MG')
         result_rupatadine.to_excel(writer, index=False, sheet_name='RUPATADINE')
         result_sildenafil.to_excel(writer, index=False, sheet_name='SILDENAFIL')
-        result_tadaxin.to_excel(writer, index=False, sheet_name='TADAXIN 5MG')
+        result_tadaxin.to_excel(writer, index=False, sheet_name='TADAXIN  5MG')
         result_tadaxin1.to_excel(writer, index=False, sheet_name='TADAXIN 20MG')
         result_zolpidem.to_excel(writer, index=False, sheet_name='ZOLPIDEM GENOPTIM 10MG 20TABL.')
         result_zolpidem1.to_excel(writer, index=False, sheet_name='ZOLPIDEM 10MG 30TABL.')
