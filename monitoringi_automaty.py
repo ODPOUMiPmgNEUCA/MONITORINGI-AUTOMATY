@@ -803,7 +803,7 @@ if sekcja == 'Genoptim':
             TADAXIN.to_excel(writer, index=False, sheet_name='TADAXIN  5MG')
 
         if 'TADAXIN1' in locals():
-            TADAXIN1.to_excel(writer, index=False, sheet_name='TADAXIN  20MG')
+            TADAXIN1.to_excel(writer, index=False, sheet_name='TADAXIN 20MG')
 
         if 'ZOLPIDEM' in locals():
             ZOLPIDEM.to_excel(writer, index=False, sheet_name='ZOLPIDEM GENOPTIM 10MG 20TABL.')
@@ -877,8 +877,8 @@ if sekcja == 'Genoptim':
         st.write('Poprzedni monitoring - TADAXIN 5MG:')
         st.write(poprzedni_tadaxin.head())
 
-    if 'TADAXIN  20MG' in xls.sheet_names:
-        poprzedni_tadaxin1 = pd.read_excel(poprzedni, sheet_name='TADAXIN  20MG')
+    if 'TADAXIN 20MG' in xls.sheet_names:
+        poprzedni_tadaxin1 = pd.read_excel(poprzedni, sheet_name='TADAXIN 20MG')
         st.write('Poprzedni monitoring - TADAXIN 20MG:')
         st.write(poprzedni_tadaxin1.head())
 
@@ -1052,7 +1052,7 @@ if sekcja == 'Genoptim':
         result_rupatadine.to_excel(writer, index=False, sheet_name='RUPATADINE')
         result_sildenafil.to_excel(writer, index=False, sheet_name='SILDENAFIL')
         result_tadaxin.to_excel(writer, index=False, sheet_name='TADAXIN  5MG')
-        result_tadaxin1.to_excel(writer, index=False, sheet_name='TADAXIN  20MG')
+        result_tadaxin1.to_excel(writer, index=False, sheet_name='TADAXIN 20MG')
         result_zolpidem.to_excel(writer, index=False, sheet_name='ZOLPIDEM GENOPTIM 10MG 20TABL.')
         result_zolpidem1.to_excel(writer, index=False, sheet_name='ZOLPIDEM 10MG 30TABL.')
         result_promo.to_excel(writer, index=False, sheet_name='Promocja 100478879')
