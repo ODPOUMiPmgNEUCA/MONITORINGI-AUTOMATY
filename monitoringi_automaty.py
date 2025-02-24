@@ -414,6 +414,97 @@ if sekcja == 'Musy':
             file_name = nazwa_pliku,
             mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
+
+
+
+############################################################################# PLASTRY #####################################################################################
+
+if sekcja == 'Plastry':
+    st.write(tabs_font_css, unsafe_allow_html=True)
+
+    df = st.file_uploader(
+        label="Wrzuć plik Cykl - Plastry"
+    )
+    
+    if df:
+        # Pobieramy listę dostępnych arkuszy
+        xls = pd.ExcelFile(df)
+        
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'Rabat' in xls.sheet_names:
+            Rabat = pd.read_excel(df, sheet_name='Rabat', skiprows=15, usecols=[1, 2, 19, 20, 21, 22])
+            st.write("Dane z arkusza Rabat:")
+            st.write(Rabat.head())
+
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'Ekspozytor, rabat' in xls.sheet_names:
+            Eksp = pd.read_excel(df, sheet_name='Ekspozytor, rabat', skiprows=12, usecols=[1, 2, 11])
+            st.write("Dane z arkusza Ekspozytor, rabat:")
+            st.write(Eksp.head())
+
+        #usuń braki danych z Kod klienta
+        Rabat = Rabat.dropna(subset=['KLIENT']) 
+        Eksp = Eksp.dropna(subset=['KLIENT'])
+
+        # klient na całkowite
+        Rabat['KLIENT'] = Rabat['KLIENT'].astype(int)
+        Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
+
+
+        Rabat.columns=['KLIENT','Kod klienta','9','14','18','20']
+        
+        """"
+        Eksp = Eksp.rename(columns={'0.13.1': '13', '0.16.1' : '16'})
+
+        
+        # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnach '12' lub '14' jest słowo 'powiązanie'
+        Rabat['SIECIOWY'] = Rabat.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() or 'powiązanie' in str(row['16']).lower() or 'powiązanie' in str(row['18']).lower() else '', axis=1)
+        Gratisy['SIECIOWY'] = Gratisy.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['18']).lower() else '', axis=1)
+        Eksp['SIECIOWY'] = Eksp.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['13']).lower() or 'powiązanie' in str(row['16']).lower() else '', axis=1)
+
+        Rabat['12_percent'] = Rabat['12'].apply(extract_percentage)
+        Rabat['16_percent'] = Rabat['16'].apply(extract_percentage)
+        Rabat['18_percent'] = Rabat['18'].apply(extract_percentage)
+        Gratisy['18_percent'] = Gratisy['18'].apply(extract_percentage)
+        Eksp['13_percent'] = Eksp['13'].apply(extract_percentage)
+        Eksp['16_percent'] = Eksp['16'].apply(extract_percentage)
+
+        # na zmiennoprzecinkowe
+        Rabat['12_percent'] = Rabat['12_percent'].apply(percentage_to_float)
+        Rabat['16_percent'] = Rabat['16_percent'].apply(percentage_to_float)
+        Rabat['18_percent'] = Rabat['18_percent'].apply(percentage_to_float)
+        Gratisy['18_percent'] = Gratisy['18_percent'].apply(percentage_to_float)
+        Eksp['13_percent'] = Eksp['13_percent'].apply(percentage_to_float)
+        Eksp['16_percent'] = Eksp['16_percent'].apply(percentage_to_float)
+    
+        # Dodaj nową kolumnę 'max_percent'
+        Rabat1 = Rabat[Rabat['SIECIOWY'] == 'SIECIOWY']
+        Rabat2 = Rabat[Rabat['SIECIOWY'] != 'SIECIOWY']
+        Rabat1['max_percent'] = Rabat1[['12_percent', '16_percent', '18_percent']].max(axis=1)
+        Rabat2['max_percent'] = Rabat2[['12_percent', '16_percent', '18_percent']].max(axis=1)
+
+        Gratisy1 = Gratisy[Gratisy['SIECIOWY'] == 'SIECIOWY']
+        Gratisy2 = Gratisy[Gratisy['SIECIOWY'] != 'SIECIOWY']
+        Gratisy1['max_percent'] = Gratisy1[['18_percent']].max(axis=1)
+        Gratisy2['max_percent'] = Gratisy2[['18_percent']].max(axis=1)
+
+        Eksp1 = Eksp[Eksp['SIECIOWY'] == 'SIECIOWY']
+        Eksp2 = Eksp[Eksp['SIECIOWY'] != 'SIECIOWY']
+        Eksp1['max_percent'] = Eksp1[['13_percent', '16_percent']].max(axis=1)
+        Eksp2['max_percent'] = Eksp2[['13_percent', '16_percent']].max(axis=1)
+
+        ###### 1 to SIECIOWI, 2 to punkt dostaw
+        Rabat1 = Rabat1[['Kod klienta','max_percent']]
+        Gratisy1 = Gratisy1[['Kod klienta','max_percent']]
+        Eksp1 = Eksp1[['Kod klienta','max_percent']]
+
+        Rabat2 = Rabat2[['KLIENT','Kod klienta','max_percent']]
+        Gratisy2 = Gratisy2[['KLIENT','Kod klienta','max_percent']]
+        Eksp2 = Eksp2[['KLIENT','Kod klienta','max_percent']]
+        
+        stand = pd.concat([Rabat1, Gratisy1, Eksp1], ignore_index=True)
+        pow = pd.concat([Rabat2, Gratisy2, Eksp2], ignore_index=True)
+
     
     
 
