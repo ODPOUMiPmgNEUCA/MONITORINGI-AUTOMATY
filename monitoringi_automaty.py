@@ -267,7 +267,7 @@ if sekcja == 'Musy':
     Gratisy = Gratisy.rename(columns={'0.18':'18'})
     Eksp = Eksp.rename(columns={'0.13.1': '13'})
 
-    Rabat
+    Rabat.columns()
 
     # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
     Rabat = Rabat[Rabat['12'] != 'brak']
