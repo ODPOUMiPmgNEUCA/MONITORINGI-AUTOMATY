@@ -305,13 +305,13 @@ if sekcja == 'Musy':
         Eksp2['max_percent'] = Eksp2[['13_percent', '16_percent']].max(axis=1)
 
         ###### 1 to SIECIOWI, 2 to punkt dostaw
-        Rabat1 = Rabat1['Kod klienta','max_percent']
-        Gratisy1 = Gratisy1['Kod klienta','max_percent']
-        Eksp1 = Eksp1['Kod klienta','max_percent']
+        Rabat1 = Rabat1[['Kod klienta','max_percent']]
+        Gratisy1 = Gratisy1[['Kod klienta','max_percent']]
+        Eksp1 = Eksp1[['Kod klienta','max_percent']]
 
-        Rabat2 = Rabat2['KLIENT','Kod klienta','max_percent']
-        Gratisy2 = Gratisy2['KLIENT','Kod klienta','max_percent']
-        Eksp2 = Eksp2['KLIENT','Kod klienta','max_percent']
+        Rabat2 = Rabat2[['KLIENT','Kod klienta','max_percent']]
+        Gratisy2 = Gratisy2[['KLIENT','Kod klienta','max_percent']]
+        Eksp2 = Eksp2[['KLIENT','Kod klienta','max_percent']]
         
         stand = pd.concat([Rabat1, Gratisy1, Eksp1], ignore_index=True)
         pow = pd.concat([Rabat2, Gratisy2, Eksp2], ignore_index=True)
