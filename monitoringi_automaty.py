@@ -268,7 +268,7 @@ if sekcja == 'Musy':
 
 
 
-
+        Rabat
         Gratisy
         Eksp
 
