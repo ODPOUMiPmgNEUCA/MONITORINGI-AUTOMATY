@@ -264,9 +264,7 @@ if sekcja == 'Musy':
 
 
     # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
-    Rabat = Rabat[Rabat.iloc[:, 2] != 'brak']
-    Rabat = Rabat[Rabat.iloc[:, 3] != 'brak']
-    Rabat = Rabat[Rabat.iloc[:, 4] != 'brak']
+    Rabat = Rabat[~Rabat.iloc[:, 1:4].isin(['brak']).any(axis=1)]
     Gratisy = Gratisy[Gratisy.iloc[:, 2] != 'brak']
     Eksp = Eksp[Eksp.iloc[:, 2] != 'brak']
 
