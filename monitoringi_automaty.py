@@ -282,13 +282,23 @@ if sekcja == 'Musy':
 
         # Dodaj nową kolumnę 'max_percent'
         Rabat1 = Rabat[Rabat['SIECIOWY'] == 'SIECIOWY']
+        Rabat2 = Rabat[Rabat['SIECIOWY'] != 'SIECIOWY']
+        Rabat1['max_percent'] = Rabat1[['12_percent', '16_percent', '18_percent']].max(axis=1)
+        Rabat2['max_percent'] = Rabat2[['12_percent', '16_percent', '18_percent']].max(axis=1)
+
+        Gratisy1 = Gratisy[Gratisy['SIECIOWY'] == 'SIECIOWY']
+        Gratisy2 = Gratisy[Gratisy['SIECIOWY'] != 'SIECIOWY']
+        Gratisy1['max_percent'] = Gratisy1[['18_percent']].max(axis=1)
+        Gratisy2['max_percent'] = Gratisy2[['18_percent']].max(axis=1)
+
+        Eksp1 = Eksp[Eksp['SIECIOWY'] == 'SIECIOWY']
+        Eksp2 = Eksp[Eksp['SIECIOWY'] != 'SIECIOWY']
+        Eksp1['max_percent'] = Eksp1[['13_percent', '16_percent']].max(axis=1)
+        Eksp2['max_percent'] = Eksp2[['13_percent', '16_percent']].max(axis=1)
+
+
         Rabat1
-        Rabat['max_percent'] = Rabat[['12_percent', '16_percent', '18_percent']].max(axis=1)
-        Gratisy['max_percent'] = Gratisy[['18_percent']].max(axis=1)
-        Eksp['max_percent'] = Eksp[['13_percent', '16_percent']].max(axis=1)
-
-
-        Rabat
+        Rabat2
         Gratisy
         Eksp
 
