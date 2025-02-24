@@ -269,7 +269,7 @@ if sekcja == 'Musy':
         # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnach '12' lub '14' jest słowo 'powiązanie'
         Rabat['SIECIOWY'] = Rabat.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() or 'powiązanie' in str(row['16']).lower() or 'powiązanie' in str(row['18']).lower() else '', axis=1)
         Gratisy['SIECIOWY'] = Gratisy.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['18']).lower() else '', axis=1)
-        Eksp['SIECIOWY'] = Eksp.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['13']).lower() or 'powiązanie' in str(row['16']).lower() or 'powiązanie' in str(row['18']).lower() else '', axis=1)
+        Eksp['SIECIOWY'] = Eksp.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['13']).lower() or 'powiązanie' in str(row['16']).lower() else '', axis=1)
 
 
         Rabat
