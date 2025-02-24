@@ -266,10 +266,10 @@ if sekcja == 'Musy':
 
     # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
     Rabat = Rabat[Rabat[0.12] != 'brak']
-    Rabat = Rabat[Rabat['0.16'] != 'brak']
-    Rabat = Rabat[Rabat['0.18'] != 'brak']
-    Gratisy = Gratisy[Gratisy['0.18'] != 'brak']
-    Eksp = Eksp[Eksp['0.13.1'] != 'brak']
+    Rabat = Rabat[Rabat[0.16] != 'brak']
+    Rabat = Rabat[Rabat[0.18] != 'brak']
+    Gratisy = Gratisy[Gratisy[0.18] != 'brak']
+    Eksp = Eksp[Eksp["0.13.1"] != 'brak']
 
 
 
