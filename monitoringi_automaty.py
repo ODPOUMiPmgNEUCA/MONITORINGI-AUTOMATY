@@ -432,13 +432,13 @@ if sekcja == 'Plastry':
         
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Rabat' in xls.sheet_names:
-            Rabat = pd.read_excel(df, sheet_name='Rabat', skiprows=15, usecols=[1, 2, 19, 20, 21, 22])
+            Rabat = pd.read_excel(df, sheet_name='Rabat', skiprows=18, usecols=[1, 2, 19, 20, 21, 22])
             st.write("Dane z arkusza Rabat:")
             st.write(Rabat.head())
 
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Ekspozytor, rabat' in xls.sheet_names:
-            Eksp = pd.read_excel(df, sheet_name='Ekspozytor, rabat', skiprows=12, usecols=[1, 2, 11])
+            Eksp = pd.read_excel(df, sheet_name='Ekspozytor, rabat', skiprows=15, usecols=[1, 2, 11])
             st.write("Dane z arkusza Ekspozytor, rabat:")
             st.write(Eksp.head())
 
