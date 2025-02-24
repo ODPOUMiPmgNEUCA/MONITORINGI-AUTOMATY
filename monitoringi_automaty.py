@@ -240,17 +240,17 @@ if sekcja == 'Musy':
 
 
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
-        if 'Rabat' in xls.sheet_names:
-            Rabat = pd.read_excel(df, sheet_name='Rabat', skiprows=15, usecols=[1, 2, 13, 14, 15])
-            st.write("Dane z arkusza Rabat:")
-            st.write(Rabat.head())
-
-
-        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Gratisy, rabat' in xls.sheet_names:
             Gratisy = pd.read_excel(df, sheet_name='Rabat', skiprows=15, usecols=[1, 2, 15])
             st.write("Dane z arkusza Gratisy, rabat:")
             st.write(Gratisy.head())
+
+
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'Ekspozytor z gratisem, rabat' in xls.sheet_names:
+            Eksp = pd.read_excel(df, sheet_name='Ekspozytor z gratisem, rabat', skiprows=15, usecols=[1, 2, 13, 14])
+            st.write("Dane z arkusza Ekspozytor z gratisem, rabat:")
+            st.write(Eksp.head())
 
 
 
