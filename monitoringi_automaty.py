@@ -272,6 +272,9 @@ if sekcja == 'Musy':
     Eksp = Eksp[Eksp["0.13.1"] != 'brak']
 
 
+    Rabat
+
+
 
 
 
