@@ -263,6 +263,9 @@ if sekcja == 'Musy':
         Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
 
         Rabat = Rabat.rename(columns={'0.12': '12', '0.16': '16', '0.18': '18'})
+        Gratisy = Gratisy.rename(columns={'0.18': '18'})
+        Eksp = Eksp.rename(columns={'0.13.1': '13', '0.16.1' : '16'})
+
 
 
 
