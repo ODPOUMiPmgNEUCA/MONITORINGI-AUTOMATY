@@ -350,6 +350,7 @@ if sekcja == 'Musy':
         posortowane = polaczone.sort_values(by='max_percent', ascending=False)
 
         ostatecznie = posortowane.drop_duplicates(subset='Kod klienta')
+        ostatecznie = ostatecznie[ostatecznie['max_percent'] != 0]
 
         st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
 
