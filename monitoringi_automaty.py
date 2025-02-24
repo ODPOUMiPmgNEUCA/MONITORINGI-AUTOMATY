@@ -262,7 +262,7 @@ if sekcja == 'Musy':
     Gratisy['KLIENT'] = Gratisy['KLIENT'].astype(int)
     Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
 
-    Rabat
+    Rabat.columns
 
     # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
     Rabat = Rabat[Rabat['0.12'] != 'brak']
