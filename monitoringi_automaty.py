@@ -278,7 +278,7 @@ if sekcja == 'Musy':
         Rabat['18_percent'] = Rabat['18'].apply(extract_percentage)
         Gratisy['18_percent'] = Gratisy['18'].apply(extract_percentage)
         Eksp['13_percent'] = Rabat['13'].apply(extract_percentage)
-        Eksp['16_percent'] = Rabat['16'].apply(extract_percentage)
+        Eksp['16_percent'] = Eksp['16'].apply(extract_percentage)
 
 
         Rabat
