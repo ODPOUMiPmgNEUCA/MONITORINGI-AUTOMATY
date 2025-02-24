@@ -272,7 +272,6 @@ if sekcja == 'Musy':
         Eksp['SIECIOWY'] = Eksp.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['13']).lower() or 'powiązanie' in str(row['16']).lower() or 'powiązanie' in str(row['18']).lower() else '', axis=1)
 
 
-
         Rabat
         Gratisy
         Eksp
