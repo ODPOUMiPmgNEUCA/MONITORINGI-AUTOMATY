@@ -263,7 +263,7 @@ if sekcja == 'Musy':
     Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
 
     Rabat
-    Rabat.columns
+    print(Rabat.columns)
 
     # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
     Rabat = Rabat[Rabat['0.12'] != 'brak']
