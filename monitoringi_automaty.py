@@ -252,24 +252,24 @@ if sekcja == 'Musy':
             st.write("Dane z arkusza Ekspozytor z gratisem, rabat:")
             st.write(Eksp.head())
 
-    #usuń braki danych z Kod klienta
-    Rabat = Rabat.dropna(subset=['KLIENT']) 
-    Gratisy = Gratisy.dropna(subset=['KLIENT'])
-    Eksp = Eksp.dropna(subset=['KLIENT'])
+        #usuń braki danych z Kod klienta
+        Rabat = Rabat.dropna(subset=['KLIENT']) 
+        Gratisy = Gratisy.dropna(subset=['KLIENT'])
+        Eksp = Eksp.dropna(subset=['KLIENT'])
 
-    # klient na całkowite
-    Rabat['KLIENT'] = Rabat['KLIENT'].astype(int)
-    Gratisy['KLIENT'] = Gratisy['KLIENT'].astype(int)
-    Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
-
-
-    # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
-    Rabat = Rabat[~Rabat.iloc[:, 1:4].isin(['brak']).any(axis=1)]
-    Gratisy = Gratisy[Gratisy.iloc[:, 2] != 'brak']
-    Eksp = Eksp[Eksp.iloc[:, 2] != 'brak']
+        # klient na całkowite
+        Rabat['KLIENT'] = Rabat['KLIENT'].astype(int)
+        Gratisy['KLIENT'] = Gratisy['KLIENT'].astype(int)
+        Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
 
 
-    Rabat
+        # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
+        Rabat = Rabat[~Rabat.iloc[:, 1:4].isin(['brak']).any(axis=1)]
+        Gratisy = Gratisy[Gratisy.iloc[:, 2] != 'brak']
+        Eksp = Eksp[Eksp.iloc[:, 2] != 'brak']
+
+
+        Rabat
 
 
 
