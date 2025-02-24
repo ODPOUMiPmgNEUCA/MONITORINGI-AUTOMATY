@@ -269,7 +269,7 @@ if sekcja == 'Musy':
         Eksp = Eksp[Eksp.iloc[:, 2] != 'brak']
 
 
-        Rabat
+        Gratisy
 
 
 
