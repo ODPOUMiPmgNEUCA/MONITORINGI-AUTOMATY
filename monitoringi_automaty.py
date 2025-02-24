@@ -241,7 +241,7 @@ if sekcja == 'Musy':
 
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Gratisy, rabat' in xls.sheet_names:
-            Gratisy = pd.read_excel(df, sheet_name='Gratisy', skiprows=15, usecols=[1, 2, 15])
+            Gratisy = pd.read_excel(df, sheet_name='Gratisy', skiprows=15, usecols=[1, 2, 9])
             st.write("Dane z arkusza Gratisy, rabat:")
             st.write(Gratisy.head())
 
