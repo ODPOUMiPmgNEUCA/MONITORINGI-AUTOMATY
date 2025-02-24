@@ -262,7 +262,6 @@ if sekcja == 'Musy':
     Gratisy['KLIENT'] = Gratisy['KLIENT'].astype(int)
     Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
 
-    Rabat.columns
 
     # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
     Rabat = Rabat[Rabat.iloc[:, 2] != 'brak']
@@ -270,6 +269,9 @@ if sekcja == 'Musy':
     Rabat = Rabat[Rabat.iloc[:, 4] != 'brak']
     Gratisy = Gratisy[Gratisy.iloc[:, 2] != 'brak']
     Eksp = Eksp[Eksp.iloc[:, 2] != 'brak']
+
+
+    Rabat
 
 
 
