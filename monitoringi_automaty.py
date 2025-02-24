@@ -280,6 +280,11 @@ if sekcja == 'Musy':
         Eksp['13_percent'] = Eksp['13'].apply(extract_percentage)
         Eksp['16_percent'] = Eksp['16'].apply(extract_percentage)
 
+        # Dodaj nową kolumnę 'max_percent' z maksymalnymi wartościami z kolumn '12_percent' i '14_percent'
+        Rabat['max_percent'] = Rabat[['12_percent', '16_percent', '18_percent']].max(axis=1)
+        Gratisy['max_percent'] = Gratisy[['18_percent']].max(axis=1)
+        Eksp['max_percent'] = Eksp[['13_percent', '16_percent']].max(axis=1)
+
 
         Rabat
         Gratisy
