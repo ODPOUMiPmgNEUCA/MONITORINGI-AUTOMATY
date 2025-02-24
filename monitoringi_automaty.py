@@ -316,6 +316,35 @@ if sekcja == 'Musy':
         stand = pd.concat([Rabat1, Gratisy1, Eksp1], ignore_index=True)
         pow = pd.concat([Rabat2, Gratisy2, Eksp2], ignore_index=True)
 
+
+         #TERAZ IMS
+    ims = st.file_uploader(
+        label = "Wrzuć plik ims_nhd"
+    )
+
+    if ims:
+        ims = pd.read_excel(ims, usecols=[0,2,19,21])
+        st.write(ims.head())
+
+    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+    ims = ims[ims['APD_Rodzaj_farmaceutyczny'].isin(['AP - Apteka','ME - Sklep zielarsko - medyczny','PU - Punkt apteczny'])]
+
+    wynik_df = pd.merge(pow, ims, left_on='KLIENT', right_on='Klient', how='left')
+
+    # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
+    wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+
+    #to są kody SAP
+    wynik_df1 = wynik_df.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_df1 = wynik_df1[['Kod klienta','max_percent']]
+    #wynik_df1
+
+    #to są kody powiazan
+    wynik_df2 = wynik_df.rename(columns={'KLIENT': 'Kod klienta'})
+    wynik_df2 = wynik_df2[['Kod klienta','max_percent']]
+    #wynik_df2
+
+
         
 
 
