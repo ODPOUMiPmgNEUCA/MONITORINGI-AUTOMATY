@@ -248,7 +248,7 @@ if sekcja == 'Musy':
 
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Ekspozytor z gratisem, rabat' in xls.sheet_names:
-            Eksp = pd.read_excel(df, sheet_name='Ekspozytor z gratisem, rabat', skiprows=12, usecols=[1, 2, 9])
+            Eksp = pd.read_excel(df, sheet_name='Ekspozytor z gratisem, rabat', skiprows=12, usecols=[1, 2, 9, 10])
             st.write("Dane z arkusza Ekspozytor z gratisem, rabat:")
             st.write(Eksp.head())
 
