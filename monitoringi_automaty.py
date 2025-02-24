@@ -270,6 +270,7 @@ if sekcja == 'Musy':
 
 
         Gratisy
+        Eksp
 
 
 
