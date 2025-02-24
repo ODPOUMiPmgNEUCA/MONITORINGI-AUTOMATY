@@ -453,7 +453,7 @@ if sekcja == 'Plastry':
 
         Rabat.columns=['KLIENT','Kod klienta','9','14','18','20']
         
-        """"
+        '''
         Eksp = Eksp.rename(columns={'0.13.1': '13', '0.16.1' : '16'})
 
         
@@ -508,7 +508,7 @@ if sekcja == 'Plastry':
     
     
 
-
+'''
         
 
 
