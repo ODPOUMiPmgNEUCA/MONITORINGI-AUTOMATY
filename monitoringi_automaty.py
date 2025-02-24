@@ -344,6 +344,78 @@ if sekcja == 'Musy':
         wynik_df2 = wynik_df2[['Kod klienta','max_percent']]
         #wynik_df2
 
+        #POŁĄCZYĆ wynik_df z standard_ost
+        polaczone = pd.concat([stand, wynik_df1, wynik_df2], axis = 0)
+  
+        posortowane = polaczone.sort_values(by='max_percent', ascending=False)
+
+        ostatecznie = posortowane.drop_duplicates(subset='Kod klienta')
+
+        st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
+
+        excel_file = io.BytesIO()
+        with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
+            ostatecznie.to_excel(writer, index=False, sheet_name='Sheet1')
+        excel_file.seek(0)  # Resetowanie wskaźnika do początku pliku
+    
+        # Umożliwienie pobrania pliku Excel
+        st.download_button(
+            label='Pobierz, jeśli to pierwszy monitoring',
+            data=excel_file,
+            file_name='czy_dodac.xlsx',
+            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+    
+        #plik z poprzedniego monitoringu
+        poprzedni = st.file_uploader(
+            label = "Wrzuć plik z poprzedniego monitoringu"
+        )
+    
+        if poprzedni:
+            poprzedni = pd.read_excel(poprzedni)
+            st.write(poprzedni.head())
+    
+        poprzedni = poprzedni.rename(columns={'max_percent': 'old_percent'})
+        # Wykonanie left join, dodanie 'old_percent' do pliku 'ostatecznie'
+        result = ostatecznie.merge(poprzedni[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+        result['old_percent'] = result['old_percent'].fillna(0)
+        result['Czy dodać'] = result.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
+        st.write('Kliknij aby pobrać plik z kodami, które kody należy dodać')
+    
+        excel_file1 = io.BytesIO()
+        with pd.ExcelWriter(excel_file1, engine='xlsxwriter') as writer:
+            result.to_excel(writer, index=False, sheet_name='Sheet1')
+        excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
+    
+        nazwa_pliku1 = f"CYKL_Q1_{dzisiejsza_data}.xlsx"
+        # Umożliwienie pobrania pliku Excel
+        st.download_button(
+            label='Pobierz',
+            data=excel_file1,
+            file_name=nazwa_pliku1,
+            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+    
+        result = result.drop(columns=['old_percent', 'Czy dodać'])
+    
+    
+        st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
+        excel_file2 = io.BytesIO()
+        with pd.ExcelWriter(excel_file2, engine='xlsxwriter') as writer:
+            result.to_excel(writer, index=False, sheet_name='Sheet1')
+        excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
+    
+        nazwa_pliku = f"FM_CYKL_Q1_{dzisiejsza_data}.xlsx"
+        # Umożliwienie pobrania pliku Excel
+        st.download_button(
+            label='Pobierz nowy plik FORMUŁA MAX',
+            data=excel_file2,
+            file_name = nazwa_pliku,
+            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+    
+    
+
 
         
 
