@@ -219,7 +219,7 @@ if sekcja == 'Cykl Q1':
 
 
 
-############################################################################# PLASTRY #####################################################################################
+############################################################################# MUSY #####################################################################################
 
 if sekcja == 'Musy':
     st.write(tabs_font_css, unsafe_allow_html=True)
@@ -252,6 +252,15 @@ if sekcja == 'Musy':
             st.write("Dane z arkusza Ekspozytor z gratisem, rabat:")
             st.write(Eksp.head())
 
+        #usuń braki danych z Kod klienta
+        Rabat = Rabat.dropna(subset=['KLIENT']) 
+        Gratisy = Gratisy.dropna(subset=['KLIENT'])
+        Eksp = Eksp.dropna(subset=['KLIENT'])
+
+        # klient na całkowite
+        Rabat['KLIENT'] = Rabat['KLIENT'].astype(int)
+        Gratisy['KLIENT'] = Gratisy['KLIENT'].astype(int)
+        Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
 
 
 
