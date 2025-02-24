@@ -234,21 +234,21 @@ if sekcja == 'Musy':
         
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Rabat' in xls.sheet_names:
-            Rabat = pd.read_excel(df, sheet_name='Rabat', skiprows=15, usecols=[1, 2, 13, 14, 15])
+            Rabat = pd.read_excel(df, sheet_name='Rabat', skiprows=15, usecols=[1, 2, 13, 14, 15], header = True)
             st.write("Dane z arkusza Rabat:")
             st.write(Rabat.head())
 
 
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Gratisy, rabat' in xls.sheet_names:
-            Gratisy = pd.read_excel(df, sheet_name='Rabat', skiprows=15, usecols=[1, 2, 15])
+            Gratisy = pd.read_excel(df, sheet_name='Rabat', skiprows=15, usecols=[1, 2, 15], header = True)
             st.write("Dane z arkusza Gratisy, rabat:")
             st.write(Gratisy.head())
 
 
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Ekspozytor z gratisem, rabat' in xls.sheet_names:
-            Eksp = pd.read_excel(df, sheet_name='Ekspozytor z gratisem, rabat', skiprows=12, usecols=[1, 2, 9])
+            Eksp = pd.read_excel(df, sheet_name='Ekspozytor z gratisem, rabat', skiprows=12, usecols=[1, 2, 9], header = True)
             st.write("Dane z arkusza Ekspozytor z gratisem, rabat:")
             st.write(Eksp.head())
 
@@ -262,7 +262,7 @@ if sekcja == 'Musy':
     Gratisy['KLIENT'] = Gratisy['KLIENT'].astype(int)
     Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
 
-        Rabat.columns
+    Rabat.columns
 
     # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
     Rabat = Rabat[Rabat['0.12'] != 'brak']
