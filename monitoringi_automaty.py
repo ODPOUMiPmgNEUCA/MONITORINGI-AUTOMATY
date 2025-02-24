@@ -252,29 +252,29 @@ if sekcja == 'Musy':
             st.write("Dane z arkusza Ekspozytor z gratisem, rabat:")
             st.write(Eksp.head())
 
-        #usuń braki danych z Kod klienta
-        Rabat = Rabat.dropna(subset=['KLIENT']) 
-        Gratisy = Gratisy.dropna(subset=['KLIENT'])
-        Eksp = Eksp.dropna(subset=['KLIENT'])
+    #usuń braki danych z Kod klienta
+    Rabat = Rabat.dropna(subset=['KLIENT']) 
+    Gratisy = Gratisy.dropna(subset=['KLIENT'])
+    Eksp = Eksp.dropna(subset=['KLIENT'])
 
-        # klient na całkowite
-        Rabat['KLIENT'] = Rabat['KLIENT'].astype(int)
-        Gratisy['KLIENT'] = Gratisy['KLIENT'].astype(int)
-        Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
+    # klient na całkowite
+    Rabat['KLIENT'] = Rabat['KLIENT'].astype(int)
+    Gratisy['KLIENT'] = Gratisy['KLIENT'].astype(int)
+    Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
 
-        # Zmiana nazw kolumn
-        Rabat = Rabat.rename(columns={'0.12': '12', '0.16': '16', '0.18':'18'})
-        Gratisy = Gratisy.rename(columns={'0.18':'18'})
-        Eksp = Eksp.rename(columns={'0.13.1': '13'})
+    # Zmiana nazw kolumn
+    Rabat = Rabat.rename(columns={'0.12': '12', '0.16': '16', '0.18':'18'})
+    Gratisy = Gratisy.rename(columns={'0.18':'18'})
+    Eksp = Eksp.rename(columns={'0.13.1': '13'})
 
-        Rabat
+    Rabat
 
-        # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
-        Rabat = Rabat[Rabat['12'] != 'brak']
-        Rabat = Rabat[Rabat['16'] != 'brak']
-        Rabat = Rabat[Rabat['18'] != 'brak']
-        Gratisy = Gratisy[Gratisy['18'] != 'brak']
-        Eksp = Eksp[Eksp['13'] != 'brak']
+    # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
+    Rabat = Rabat[Rabat['12'] != 'brak']
+    Rabat = Rabat[Rabat['16'] != 'brak']
+    Rabat = Rabat[Rabat['18'] != 'brak']
+    Gratisy = Gratisy[Gratisy['18'] != 'brak']
+    Eksp = Eksp[Eksp['13'] != 'brak']
 
 
 
