@@ -28,7 +28,7 @@ st.set_page_config(page_title='Monitoringi AUTOMATY', layout='wide')
 
 sekcja = st.sidebar.radio(
     'Wybierz monitoring:',
-    ('Cykl Q1','Musy')
+    ('Cykl Q1','Musy','Plastry')
  )
 
 tabs_font_css = """
