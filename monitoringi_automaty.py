@@ -234,7 +234,7 @@ if sekcja == 'Musy':
         
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Rabat' in xls.sheet_names:
-            Rabat = pd.read_excel(df, sheet_name='Rabat', skiprows=15, usecols=[1, 2, 11, 12, 13])
+            Rabat = pd.read_excel(df, sheet_name='Rabat', skiprows=15, usecols=[1, 2, 13, 14, 15])
             st.write("Dane z arkusza Rabat:")
             st.write(Rabat.head())
 
