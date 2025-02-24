@@ -262,6 +262,16 @@ if sekcja == 'Musy':
         Gratisy['KLIENT'] = Gratisy['KLIENT'].astype(int)
         Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
 
+        # Zmiana nazw kolumn
+        Rabat = Rabat.rename(columns={'0.12': '12', '0.16': '16', '0.18':'18'})
+        Gratisy = Gratisy.rename(columns={'0.18':'18'})
+        Eksp = Eksp.rename(columns={'0.13.1': '13'})
+
+        # Usuwanie wierszy, gdzie w kolumnie 'pakiet' znajduje się słowo 'brak'
+        Rabat = Rabat[Rabat['pakiet'] != 'brak']
+        Gratisy = Gratisy[Gratisy['pakiet'] != 'brak']
+        Eksp = Eksp[Eksp['pakiet'] != 'brak']
+
 
 
 
