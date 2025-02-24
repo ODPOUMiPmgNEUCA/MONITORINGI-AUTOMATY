@@ -28,7 +28,7 @@ st.set_page_config(page_title='Monitoringi AUTOMATY', layout='wide')
 
 sekcja = st.sidebar.radio(
     'Wybierz monitoring:',
-    ('Cykl Q1')
+    ('Cykl Q1','Musy')
  )
 
 tabs_font_css = """
@@ -215,6 +215,28 @@ if sekcja == 'Cykl Q1':
         file_name = nazwa_pliku,
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
+
+
+
+
+############################################################################# PLASTRY #####################################################################################
+
+if sekcja == 'Musy':
+    st.write(tabs_font_css, unsafe_allow_html=True)
+
+    df = st.file_uploader(
+        label="Wrzuć plik Cykl - Musy"
+    )
+    
+    if df:
+        # Pobieramy listę dostępnych arkuszy
+        xls = pd.ExcelFile(df)
+        
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'Rabat' in xls.sheet_names:
+            Rabat = pd.read_excel(df, sheet_name='Rabat', skiprows=16, usecols=[1, 2, 11, 12, 13])
+            st.write("Dane z arkusza Rabat:")
+            st.write(Rabat.head())
 
 
 
