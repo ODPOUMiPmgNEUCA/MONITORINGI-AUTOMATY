@@ -262,9 +262,17 @@ if sekcja == 'Musy':
         Gratisy['KLIENT'] = Gratisy['KLIENT'].astype(int)
         Eksp['KLIENT'] = Eksp['KLIENT'].astype(int)
 
+
         Rabat.columns=['KLIENT','Kod klienta','12','16','18']
         Gratisy.columns=['KLIENT','Kod klienta','18']
         Eksp = Eksp.rename(columns={'0.13.1': '13', '0.16.1' : '16'})
+
+        Rabat['12'] = Rabat['12'].astype(str)
+        Rabat['16'] = Rabat['16'].astype(str)
+        Rabat['18'] = Rabat['18'].astype(str)
+        Gratisy['18'] = Gratisy['18'].astype(str)
+        Eksp['13'] = Eksp['13'].astype(str)
+        Eksp['16'] = Eksp['16'].astype(str)
         
         # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnach '12' lub '14' jest słowo 'powiązanie'
         Rabat['SIECIOWY'] = Rabat.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() or 'powiązanie' in str(row['16']).lower() or 'powiązanie' in str(row['18']).lower() else '', axis=1)
