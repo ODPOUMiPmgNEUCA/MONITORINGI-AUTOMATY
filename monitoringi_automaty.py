@@ -273,6 +273,13 @@ if sekcja == 'Musy':
         Gratisy['SIECIOWY'] = Gratisy.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['18']).lower() else '', axis=1)
         Eksp['SIECIOWY'] = Eksp.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['13']).lower() or 'powiązanie' in str(row['16']).lower() else '', axis=1)
 
+        Rabat['12_percent'] = Rabat['12'].apply(extract_percentage)
+        Rabat['16_percent'] = Rabat['16'].apply(extract_percentage)
+        Rabat['18_percent'] = Rabat['18'].apply(extract_percentage)
+        Gratisy['18_percent'] = Gratisy['18'].apply(extract_percentage)
+        Eksp['13_percent'] = Rabat['13'].apply(extract_percentage)
+        Eksp['16_percent'] = Rabat['16'].apply(extract_percentage)
+
 
         Rabat
         Gratisy
