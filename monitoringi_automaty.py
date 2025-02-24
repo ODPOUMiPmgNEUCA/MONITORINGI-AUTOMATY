@@ -280,6 +280,14 @@ if sekcja == 'Musy':
         Eksp['13_percent'] = Eksp['13'].apply(extract_percentage)
         Eksp['16_percent'] = Eksp['16'].apply(extract_percentage)
 
+        # na zmiennoprzecinkowe
+        Rabat['12_percent'] = Rabat['12_percent'].apply(percentage_to_float)
+        Rabat['16_percent'] = Rabat['16_percent'].apply(percentage_to_float)
+        Rabat['18_percent'] = Rabat['18_percent'].apply(percentage_to_float)
+        Gratisy['18_percent'] = Gratisy['18_percent'].apply(percentage_to_float)
+        Eksp['13_percent'] = Eksp['13_percent'].apply(percentage_to_float)
+        Eksp['16_percent'] = Eksp['16_percent'].apply(percentage_to_float)
+    
         # Dodaj nową kolumnę 'max_percent'
         Rabat1 = Rabat[Rabat['SIECIOWY'] == 'SIECIOWY']
         Rabat2 = Rabat[Rabat['SIECIOWY'] != 'SIECIOWY']
@@ -296,12 +304,7 @@ if sekcja == 'Musy':
         Eksp1['max_percent'] = Eksp1[['13_percent', '16_percent']].max(axis=1)
         Eksp2['max_percent'] = Eksp2[['13_percent', '16_percent']].max(axis=1)
 
-
-        Rabat1
-        Rabat2
-        Gratisy
-        Eksp
-
+        ###### 1 to SIECIOWI, 2 to punkt dostaw
 
 
 
