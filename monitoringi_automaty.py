@@ -313,8 +313,8 @@ if sekcja == 'Musy':
         Gratisy2 = Gratisy2[['KLIENT','Kod klienta','max_percent']]
         Eksp2 = Eksp2[['KLIENT','Kod klienta','max_percent']]
         
-        stand = pd.concat([Rabat1, Gratisy1, Eksp1], ignore_index=True)
-        pow = pd.concat([Rabat2, Gratisy2, Eksp2], ignore_index=True)
+        stand = pd.concat([Rabat2, Gratisy2, Eksp2], ignore_index=True)
+        pow = pd.concat([Rabat1, Gratisy1, Eksp1], ignore_index=True)
 
 
         #TERAZ IMS
@@ -491,8 +491,8 @@ if sekcja == 'Plastry':
         Rabat2 = Rabat2[['KLIENT','Kod klienta','max_percent']]
         Eksp2 = Eksp2[['KLIENT','Kod klienta','max_percent']]
         
-        stand = pd.concat([Rabat1, Eksp1], ignore_index=True)
-        pow = pd.concat([Rabat2, Eksp2], ignore_index=True)
+        stand = pd.concat([Rabat2, Eksp2], ignore_index=True)
+        pow = pd.concat([Rabat1, Eksp1], ignore_index=True)
 
         
         #TERAZ IMS
