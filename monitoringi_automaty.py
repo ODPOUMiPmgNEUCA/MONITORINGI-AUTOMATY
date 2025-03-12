@@ -886,18 +886,9 @@ if sekcja == 'Alergia':
         if 'ostatecznie_lg' in locals() and 'poprzedni_lg' in locals():
             poprzedni_lg = poprzedni_lg.rename(columns={'pakiet': 'old_pakiet'})
             # Merge ostatecznie_lr z poprzedni_lr na podstawie 'Kod klienta' oraz 'PAKIET'
-            result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'old_pakiet']], 
-                                             on=['Kod klienta', 'pakiet'], 
-                                             how='left')
-        
-            # Tworzenie kolumny 'Czy dodać' na podstawie tego, czy w poprzednim pliku nie ma tego samego 'Kod klienta' i 'PAKIET'
-            result_lg['Czy dodać'] = result_lg.apply(
-                lambda row: 'DODAJ' if row['_merge'] == 'left_only' else '',
-                axis=1
-            )
-            
-            # Usuwamy kolumnę '_merge' (jeśli nie chcesz jej mieć)
-            result_lg = result_lg.drop(columns=['_merge'])
+            result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'old_pakiet']], on='Kod klienta', how='left')
+            result_lg['old_pakiet'] - result_lg['old_pakiet'].fillna(0)
+            result_lg['Czy dodać'] = result_lg.apply(lambda row: 'DODAJ' if pd.notna(row['pakiet']) and row['old_pakiet'] == 0 else '', axis=1)
 
        
         # Zapisywanie plików do Excela
