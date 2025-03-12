@@ -621,13 +621,13 @@ if sekcja == 'Alergia':
 
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Levalergedd_gratis' in xls.sheet_names:
-            Lg = pd.read_excel(df, sheet_name='Levalergedd_gratis', skiprows=15, usecols=[1, 2, 9])
+            Lg = pd.read_excel(df, sheet_name='Levalergedd_gratis', skiprows=16, usecols=[1, 2, 9])
             st.write("Dane z arkusza Levalergedd_gratis:")
             st.write(Lg.head())
 
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Cetalergedd_gratis' in xls.sheet_names:
-            Cg = pd.read_excel(df, sheet_name='Cetalergedd_gratis', skiprows=15, usecols=[1, 2, 9])
+            Cg = pd.read_excel(df, sheet_name='Cetalergedd_gratis', skiprows=16, usecols=[1, 2, 9])
             st.write("Dane z arkusza Cetalergedd_gratis")
             st.write(Cg.head())
 
