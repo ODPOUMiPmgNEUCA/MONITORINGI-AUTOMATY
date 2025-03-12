@@ -616,8 +616,132 @@ if sekcja == 'Alergia':
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Cetalergedd_rabat' in xls.sheet_names:
             Cr = pd.read_excel(df, sheet_name='Cetalergedd_rabat', skiprows=15, usecols=[1, 2, 12, 13, 14, 15, 16])
-            st.write("Dane z arkusza 12, 13, 14, 15, 16:")
+            st.write("Dane z arkusza Cetalergedd_rabat")
             st.write(Cr.head())
+
+
+        #usuń braki danych z Kod klienta
+        Lr = Lr.dropna(subset=['KLIENT']) 
+        Cr = Cr.dropna(subset=['KLIENT'])
+
+        # klient na całkowite
+        Lr['KLIENT'] = Lr['KLIENT'].astype(int)
+        Cr['KLIENT'] = Cr['KLIENT'].astype(int)
+
+
+        Lr.columns=['KLIENT','Kod klienta','15','18','20','22','25']
+        Cr.columns=['KLIENT','Kod klienta','15','18','20','22','25']
+ 
+        
+        # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnach '12' lub '14' jest słowo 'powiązanie'
+        Lr['SIECIOWY'] = Lr.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['15']).lower() or 'powiązanie' in str(row['18']).lower() 
+                                        or 'powiązanie' in str(row['20']).lower() or 'powiązanie' in str(row['22']).lower() or 'powiązanie' in str(row['25']).lower() else '', axis=1)
+        Cr['SIECIOWY'] = Cr.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['15']).lower() or 'powiązanie' in str(row['18']).lower() 
+                                        or 'powiązanie' in str(row['20']).lower() or 'powiązanie' in str(row['22']).lower() or 'powiązanie' in str(row['25']).lower() else '', axis=1)
+
+        Lr['15_percent'] = Lr['15'].apply(extract_percentage)
+        Lr['18_percent'] = Lr['18'].apply(extract_percentage)
+        Lr['20_percent'] = Lr['20'].apply(extract_percentage)
+        Lr['22_percent'] = Lr['22'].apply(extract_percentage)
+        Lr['25_percent'] = Lr['25'].apply(extract_percentage)
+
+        Cr['15_percent'] = Cr['15'].apply(extract_percentage)
+        Cr['18_percent'] = Cr['18'].apply(extract_percentage)
+        Cr['20_percent'] = Cr['20'].apply(extract_percentage)
+        Cr['22_percent'] = Cr['22'].apply(extract_percentage)
+        Cr['25_percent'] = Cr['25'].apply(extract_percentage)
+
+
+        # na zmiennoprzecinkowe
+        Lr['15_percent'] = Lr['15_percent'].apply(percentage_to_float)
+        Lr['18_percent'] = Lr['18_percent'].apply(percentage_to_float)
+        Lr['20_percent'] = Lr['20_percent'].apply(percentage_to_float)
+        Lr['22_percent'] = Lr['22_percent'].apply(percentage_to_float)
+        Lr['25_percent'] = Lr['25_percent'].apply(percentage_to_float)
+        
+        Cr['15_percent'] = Cr['15_percent'].apply(percentage_to_float)
+        Cr['18_percent'] = Cr['18_percent'].apply(percentage_to_float)
+        Cr['20_percent'] = Cr['20_percent'].apply(percentage_to_float)
+        Cr['22_percent'] = Cr['22_percent'].apply(percentage_to_float)
+        Cr['25_percent'] = Cr['25_percent'].apply(percentage_to_float)
+
+    
+        # Dodaj nową kolumnę 'max_percent'
+        Lr1 = Lr[Lr['SIECIOWY'] == 'SIECIOWY']
+        Lr2 = Lr[Lr['SIECIOWY'] != 'SIECIOWY']
+        Lr1['max_percent'] = Lr1[['15_percent', '18_percent', '20_percent','22_percent','25_percent']].max(axis=1)
+        Lr2['max_percent'] = Lr2[['15_percent', '18_percent', '20_percent','22_percent','25_percent']].max(axis=1)
+
+        Cr1 = Cr[Cr['SIECIOWY'] == 'SIECIOWY']
+        Cr2 = Cr[Cr['SIECIOWY'] != 'SIECIOWY']
+        Cr1['max_percent'] = Cr1[['15_percent', '18_percent', '20_percent','22_percent','25_percent']].max(axis=1)
+        Cr2['max_percent'] = Cr2[['15_percent', '18_percent', '20_percent','22_percent','25_percent']].max(axis=1)
+
+        ###### 1 to SIECIOWI, 2 to punkt dostaw
+        Lr1 = Lr1[['KLIENT','Kod klienta','max_percent']]
+        Cr1 = Cr1[['KLIENT','Kod klienta','max_percent']]
+
+        Lr2 = Lr2[['Kod klienta','max_percent']]
+        Cr2 = Cr2[['Kod klienta','max_percent']]
+        
+        stand_lr = lr2
+        stand_cr= cr2
+        pow_lr = lr1
+        pow_cr = cr2
+
+
+
+        
+        #TERAZ IMS
+        ims = st.file_uploader(
+            label = "Wrzuć plik ims_nhd"
+        )
+    
+        if ims:
+            ims = pd.read_excel(ims, usecols=[0,2,19,21])
+            st.write(ims.head())
+    
+        ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+        ims = ims[ims['APD_Rodzaj_farmaceutyczny'].isin(['AP - Apteka','ME - Sklep zielarsko - medyczny','PU - Punkt apteczny'])]
+    
+        wynik_df_lr = pd.merge(pow_lr, ims, left_on='KLIENT', right_on='Klient', how='left')
+        ynik_df_cr = pd.merge(pow_cr, ims, left_on='KLIENT', right_on='Klient', how='left')
+    
+        # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
+        wynik_df_lr = wynik_df_lr[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+        wynik_df_cr = wynik_df_cr[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+    
+        #to są kody SAP
+        wynik_df1_lr = wynik_df_lr.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+        wynik_df1_lr = wynik_df1_lr[['Kod klienta','max_percent']]
+
+        wynik_df1_cr = wynik_df_cr.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+        wynik_df1_cr = wynik_df1_cr[['Kod klienta','max_percent']]
+        #wynik_df1
+    
+        #to są kody powiazan
+        wynik_df2_lr = wynik_df_lr.rename(columns={'KLIENT': 'Kod klienta'})
+        wynik_df2_lr = wynik_df2_lr[['Kod klienta','max_percent']]
+
+        wynik_df2_cr = wynik_df_cr.rename(columns={'KLIENT': 'Kod klienta'})
+        wynik_df2_cr = wynik_df2_cr[['Kod klienta','max_percent']]
+        #wynik_df2
+
+        #POŁĄCZYĆ wynik_df z standard_ost
+        polaczone_lr = pd.concat([stand_lr, wynik_df1_lr, wynik_df2_lr], axis = 0)
+        polaczone_cr = pd.concat([stand_cr, wynik_df1_cr, wynik_df2_cr], axis = 0)
+  
+        posortowane_lr = polaczone_lr.sort_values(by='max_percent', ascending=False)
+        posortowane_cr = polaczone_cr.sort_values(by='max_percent', ascending=False)
+
+        ostatecznie_lr = posortowane_lr.drop_duplicates(subset='Kod klienta')
+        ostatecznie_lr = ostatecznie_lr[ostatecznie_lr['max_percent'] != 0]
+
+        ostatecznie_cr = posortowane_cr.drop_duplicates(subset='Kod klienta')
+        ostatecznie_cr = ostatecznie_cr[ostatecznie_cr['max_percent'] != 0]
+
+
+        
 
     
 
