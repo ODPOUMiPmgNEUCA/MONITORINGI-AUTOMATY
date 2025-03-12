@@ -884,8 +884,9 @@ if sekcja == 'Alergia':
             result_cr['Czy dodać'] = result_cr.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
 
         if 'ostatecznie_lg' in locals() and 'poprzedni_lg' in locals():
+            poprzedni_lg = poprzedni_lg.rename(columns={'pakiet': 'old_pakiet'})
             # Merge ostatecznie_lr z poprzedni_lr na podstawie 'Kod klienta' oraz 'PAKIET'
-            result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'pakiet']], 
+            result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'old_pakiet']], 
                                              on=['Kod klienta', 'pakiet'], 
                                              how='left', indicator=True)
         
