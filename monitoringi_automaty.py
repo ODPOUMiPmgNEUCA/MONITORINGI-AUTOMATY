@@ -684,10 +684,10 @@ if sekcja == 'Alergia':
         Lr2 = Lr2[['Kod klienta','max_percent']]
         Cr2 = Cr2[['Kod klienta','max_percent']]
         
-        stand_lr = lr2
-        stand_cr= cr2
-        pow_lr = lr1
-        pow_cr = cr2
+        stand_lr = Lr2
+        stand_cr= Cr2
+        pow_lr = Lr1
+        pow_cr = Cr2
 
 
 
