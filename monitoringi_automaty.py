@@ -28,7 +28,7 @@ st.set_page_config(page_title='Monitoringi AUTOMATY', layout='wide')
 
 sekcja = st.sidebar.radio(
     'Wybierz monitoring:',
-    ('Cykl Q1','Musy','Plastry')
+    ('Cykl Q1','Musy','Plastry','Alergia')
  )
 
 tabs_font_css = """
@@ -594,7 +594,31 @@ if sekcja == 'Plastry':
         )
 
 
+############################################################################# ALERGIA #####################################################################################
+
+if sekcja == 'Alergia':
+    st.write(tabs_font_css, unsafe_allow_html=True)
+
+    df = st.file_uploader(
+        label="Wrzuć plik Cykl - Alergia"
+    )
     
+    if df:
+        # Pobieramy listę dostępnych arkuszy
+        xls = pd.ExcelFile(df)
+        
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'Levalergedd_rabat' in xls.sheet_names:
+            Lr = pd.read_excel(df, sheet_name='Levalergedd_rabat', skiprows=15, usecols=[1, 2, 12, 13, 14, 15, 16])
+            st.write("Dane z arkusza Levalergedd_rabat:")
+            st.write(Lr.head())
+
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'Cetalergedd_rabat' in xls.sheet_names:
+            Cr = pd.read_excel(df, sheet_name='Cetalergedd_rabat', skiprows=15, usecols=[1, 2, 12, 13, 14, 15, 16])
+            st.write("Dane z arkusza 12, 13, 14, 15, 16:")
+            st.write(Cr.head())
+
     
 
         
