@@ -819,7 +819,7 @@ if sekcja == 'Alergia':
         result_lr = result_lr.drop(columns=['old_percent', 'Czy dodać'])
         result_cr = result_cr.drop(columns=['old_percent', 'Czy dodać'])
 
-       st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
+        st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
 
         # Tworzenie pliku Excel w pamięci
         excel_file2 = io.BytesIO()
