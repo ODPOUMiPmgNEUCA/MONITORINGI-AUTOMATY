@@ -619,14 +619,31 @@ if sekcja == 'Alergia':
             st.write("Dane z arkusza Cetalergedd_rabat")
             st.write(Cr.head())
 
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'Levalergedd_gratis' in xls.sheet_names:
+            Lg = pd.read_excel(df, sheet_name='Levalergedd_gratis', skiprows=15, usecols=[1, 2, 9])
+            st.write("Dane z arkusza Levalergedd_gratis:")
+            st.write(Lg.head())
+
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'Cetalergedd_gratis' in xls.sheet_names:
+            Cg = pd.read_excel(df, sheet_name='Cetalergedd_gratis', skiprows=15, usecols=[1, 2, 9])
+            st.write("Dane z arkusza Cetalergedd_gratis")
+            st.write(Cg.head())
+
 
         #usuń braki danych z Kod klienta
         Lr = Lr.dropna(subset=['KLIENT']) 
         Cr = Cr.dropna(subset=['KLIENT'])
+        Lg = Lg.dropna(subset=['KLIENT']) 
+        Cg = Cg.dropna(subset=['KLIENT'])
 
         # klient na całkowite
         Lr['KLIENT'] = Lr['KLIENT'].astype(int)
         Cr['KLIENT'] = Cr['KLIENT'].astype(int)
+        Lg['KLIENT'] = Lg['KLIENT'].astype(int)
+        Cg['KLIENT'] = Cg['KLIENT'].astype(int)
+
 
 
         Lr.columns=['KLIENT','Kod klienta','15','18','20','22','25']
