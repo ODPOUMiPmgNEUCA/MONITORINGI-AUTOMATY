@@ -705,7 +705,7 @@ if sekcja == 'Alergia':
         ims = ims[ims['APD_Rodzaj_farmaceutyczny'].isin(['AP - Apteka','ME - Sklep zielarsko - medyczny','PU - Punkt apteczny'])]
     
         wynik_df_lr = pd.merge(pow_lr, ims, left_on='KLIENT', right_on='Klient', how='left')
-        ynik_df_cr = pd.merge(pow_cr, ims, left_on='KLIENT', right_on='Klient', how='left')
+        wynik_df_cr = pd.merge(pow_cr, ims, left_on='KLIENT', right_on='Klient', how='left')
     
         # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
         wynik_df_lr = wynik_df_lr[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
