@@ -739,9 +739,119 @@ if sekcja == 'Alergia':
 
         ostatecznie_cr = posortowane_cr.drop_duplicates(subset='Kod klienta')
         ostatecznie_cr = ostatecznie_cr[ostatecznie_cr['max_percent'] != 0]
-
-
         
+        st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
+        excel_file = io.BytesIO()
+
+        with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
+        # Jeśli dane BRAZOFLAMIN istnieją, zapisz je w odpowiednim arkuszu
+            if 'ostatecznie_lr' in locals():
+                ostatecznie_lr.to_excel(writer, index=False, sheet_name='Levalergedd_rabat')
+
+        # Jeśli dane diazepam istnieją, zapisz je w odpowiednim arkuszu
+            if 'ostatecznie_cr' in locals():
+                ostatecznie_cr.to_excel(writer, index=False, sheet_name='Cetalergedd_rabat')
+
+        excel_file.seek(0)  # Resetowanie wskaźnika do początku pliku
+
+         # Umożliwienie pobrania pliku Excel
+        st.download_button(
+            label='Pobierz, jeśli to pierwszy monitoring',
+            data=excel_file,
+            file_name='czy_dodac.xlsx',
+            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+    
+        # Plik z poprzedniego monitoringu
+        poprzedni = st.file_uploader(
+            label="Wrzuć plik z poprzedniego monitoringu"
+        )
+    
+        if poprzedni:
+            xls = pd.ExcelFile(poprzedni)  # Pobranie pliku z arkuszami
+    
+        # Wczytanie danych z odpowiednich arkuszy
+        if 'Levalergedd_rabat' in xls.sheet_names:
+            poprzedni_lr = pd.read_excel(poprzedni, sheet_name='Levalergedd_rabat')
+            st.write('Poprzedni monitoring - Levalergedd_rabat:')
+            st.write(poprzedni_lr.head())
+        
+        if 'Cetalergedd_rabat' in xls.sheet_names:
+            poprzedni_cr = pd.read_excel(poprzedni, sheet_name='Cetalergedd_rabat')
+            st.write('Poprzedni monitoring - Cetalergedd_rabat:')
+            st.write(poprzedni_cr.head())
+
+        # Przetwarzanie 
+        if 'ostatecznie_lr' in locals() and 'poprzedni_lr' in locals():
+            poprzedni_lr = poprzedni_lr.rename(columns={'max_percent': 'old_percent'})
+            result_lr = ostatecznie_lr.merge(poprzedni_lr[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+            result_lr['old_percent'] = result_lr['old_percent'].fillna(0)
+            result_lr['Czy dodać'] = result_lr.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
+        
+            # Przetwarzanie 
+        if 'ostatecznie_cr' in locals() and 'poprzedni_cr' in locals():
+            poprzedni_cr = poprzedni_cr.rename(columns={'max_percent': 'old_percent'})
+            result_cr = ostatecznie_cr.merge(poprzedni_cr[['Kod klienta', 'old_percent']], on='Kod klienta', how='left')
+            result_cr['old_percent'] = result_cr['old_percent'].fillna(0)
+            result_cr['Czy dodać'] = result_cr.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
+
+        # Zapisywanie plików do Excela
+        excel_file1 = io.BytesIO()
+        with pd.ExcelWriter(excel_file1, engine='xlsxwriter') as writer:
+            if 'result_lr' in locals():
+                result_lr.to_excel(writer, index=False, sheet_name='Levalergedd_rabat')
+            if 'result_cr' in locals():
+                result_cr.to_excel(writer, index=False, sheet_name='Cetalergedd_rabat')
+
+
+        excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
+
+        # Definiowanie nazwy pliku
+        nazwa_pliku = f"ALERGIA_{dzisiejsza_data}.xlsx"
+        # Umożliwienie pobrania pliku Excel
+        st.download_button(
+            label='Kliknij aby pobrać plik z kodami, które kody należy dodać',
+            data=excel_file1,
+            file_name=nazwa_pliku,
+            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+
+        result_lr = result_lr.drop(columns=['old_percent', 'Czy dodać'])
+        result_cr = result_cr.drop(columns=['old_percent', 'Czy dodać'])
+
+       st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
+
+        # Tworzenie pliku Excel w pamięci
+        excel_file2 = io.BytesIO()
+    
+        # Zapis do pliku Excel w pamięci
+        with pd.ExcelWriter(excel_file2, engine='xlsxwriter') as writer:
+            result_lr.to_excel(writer, index=False, sheet_name='Levalergedd_rabat')
+            result_cr.to_excel(writer, index=False, sheet_name='Cetalergedd_rabat')
+
+
+        # Resetowanie wskaźnika do początku pliku
+        excel_file2.seek(0) 
+    
+        # Definiowanie nazwy pliku
+        nazwa_pliku = f"FM_ALERGIA_{dzisiejsza_data}.xlsx"
+    
+        # Umożliwienie pobrania pliku Excel
+        st.download_button(
+            label='Pobierz nowy plik FORMUŁA MAX',
+            data=excel_file2,
+            file_name=nazwa_pliku,
+            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+
+
+              
+                
+                
+            
+    
+    
+            
 
     
 
