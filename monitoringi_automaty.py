@@ -884,20 +884,19 @@ if sekcja == 'Alergia':
             result_cr['Czy dodać'] = result_cr.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
 
         if 'ostatecznie_lg' in locals() and 'poprzedni_lg' in locals():
-            poprzedni_lg = poprzedni_lg.rename(columns={'pakiet': 'old_pakiet'})
-            # Merge ostatecznie_lr z poprzedni_lr, ale na podstawie dwóch kolumn: 'Kod klienta' i 'PAKIET'
-            result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'pakiet', 'old_pakiet']], 
+            # Merge ostatecznie_lr z poprzedni_lr na podstawie 'Kod klienta' oraz 'PAKIET'
+            result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'pakiet']], 
                                              on=['Kod klienta', 'pakiet'], 
-                                             how='left')
-
-    # Wypełnij NaN w kolumnie 'old_percent' zerami
-    result_lr['old_percent'] = result_lr['old_percent'].fillna(0)
-    
-    # Ustaw 'Czy dodać' na 'DODAJ' jeśli w poprzednim pliku nie ma tego samego 'Kod klienta' i 'PAKIET'
-    result_lr['Czy dodać'] = result_lr.apply(
-        lambda row: 'DODAJ' if row['old_percent'] == 0 else ('DODAJ' if row['max_percent'] > row['old_percent'] else ''),
-        axis=1
-    )
+                                             how='left', indicator=True)
+        
+            # Tworzenie kolumny 'Czy dodać' na podstawie tego, czy w poprzednim pliku nie ma tego samego 'Kod klienta' i 'PAKIET'
+            result_lg['Czy dodać'] = result_lg.apply(
+                lambda row: 'DODAJ' if row['_merge'] == 'left_only' else '',
+                axis=1
+            )
+            
+            # Usuwamy kolumnę '_merge' (jeśli nie chcesz jej mieć)
+            result_lg = result_lg.drop(columns=['_merge'])
 
        
         # Zapisywanie plików do Excela
@@ -907,6 +906,8 @@ if sekcja == 'Alergia':
                 result_lr.to_excel(writer, index=False, sheet_name='Levalergedd_rabat')
             if 'result_cr' in locals():
                 result_cr.to_excel(writer, index=False, sheet_name='Cetalergedd_rabat')
+            if 'result_lg' in locals():
+                result_lg.to_excel(writer, index=False, sheet_name='Levalergedd_gratis')
 
 
         excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
@@ -923,6 +924,7 @@ if sekcja == 'Alergia':
 
         result_lr = result_lr.drop(columns=['old_percent', 'Czy dodać'])
         result_cr = result_cr.drop(columns=['old_percent', 'Czy dodać'])
+        result_lg = result_lg.drop(columns=['old_pakiet', 'Czy dodać'])
 
         st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
 
@@ -933,6 +935,7 @@ if sekcja == 'Alergia':
         with pd.ExcelWriter(excel_file2, engine='xlsxwriter') as writer:
             result_lr.to_excel(writer, index=False, sheet_name='Levalergedd_rabat')
             result_cr.to_excel(writer, index=False, sheet_name='Cetalergedd_rabat')
+            result_lg.to_excel(writer, index=False, sheet_name='Levalergedd_gratis')
 
 
         # Resetowanie wskaźnika do początku pliku
