@@ -680,7 +680,7 @@ if sekcja == 'Alergia':
 
         Lg['pakiet'] = Lg['PAKIET'].apply(extract_numbers_as_text)
         Cg['pakiet'] = Cg['PAKIET'].apply(extract_numbers_as_text)
-        Lg
+        #Lg
 
         # na zmiennoprzecinkowe
         Lr['15_percent'] = Lr['15_percent'].apply(percentage_to_float)
@@ -710,14 +710,30 @@ if sekcja == 'Alergia':
         ###### 1 to SIECIOWI, 2 to punkt dostaw
         Lr1 = Lr1[['KLIENT','Kod klienta','max_percent']]
         Cr1 = Cr1[['KLIENT','Kod klienta','max_percent']]
-
         Lr2 = Lr2[['Kod klienta','max_percent']]
         Cr2 = Cr2[['Kod klienta','max_percent']]
+
+
+        Lg1 = Lg[Lg['SIECIOWY'] == 'SIECIOWY']
+        Lg2 = Lg[Lg['SIECIOWY'] != 'SIECIOWY']
+        Cg1 = Cg[Cg['SIECIOWY'] == 'SIECIOWY']
+        Cg2 = Cg[Cg['SIECIOWY'] != 'SIECIOWY']
+        
+        #### p
+        Lg1 = Lg1[['KLIENT','Kod klienta','pakiet']]
+        Cg1 = Cg1[['KLIENT','Kod klienta','pakiet']]
+        Lg2 = Lg2[['Kod klienta','pakiet']]
+        Cg2 = Cg2[['Kod klienta','pakiet']]
         
         stand_lr = Lr2
         stand_cr= Cr2
         pow_lr = Lr1
         pow_cr = Cr1
+
+        stand_lg = Lg2
+        stand_cg= Cg2
+        pow_lg = Lg1
+        pow_cg = Cg1
 
 
 
@@ -736,17 +752,27 @@ if sekcja == 'Alergia':
     
         wynik_df_lr = pd.merge(pow_lr, ims, left_on='KLIENT', right_on='Klient', how='left')
         wynik_df_cr = pd.merge(pow_cr, ims, left_on='KLIENT', right_on='Klient', how='left')
+        wynik_df_lg = pd.merge(pow_lg, ims, left_on='KLIENT', right_on='Klient', how='left')
+        wynik_df_cg = pd.merge(pow_cg, ims, left_on='KLIENT', right_on='Klient', how='left')
     
         # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
         wynik_df_lr = wynik_df_lr[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
         wynik_df_cr = wynik_df_cr[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+        wynik_df_lg = wynik_df_lg[['KLIENT','APD_kod_SAP_apteki', 'pakiet']]
+        wynik_df_cg = wynik_df_cg[['KLIENT','APD_kod_SAP_apteki', 'pakiet']]
     
         #to są kody SAP
         wynik_df1_lr = wynik_df_lr.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
         wynik_df1_lr = wynik_df1_lr[['Kod klienta','max_percent']]
 
+        wynik_df1_lg = wynik_df_lg.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+        wynik_df1_lg = wynik_df1_lg[['Kod klienta','pakiet']]
+
         wynik_df1_cr = wynik_df_cr.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
         wynik_df1_cr = wynik_df1_cr[['Kod klienta','max_percent']]
+
+        wynik_df1_cg = wynik_df_cg.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+        wynik_df1_cg = wynik_df1_cg[['Kod klienta','pakiet']]
         #wynik_df1
     
         #to są kody powiazan
@@ -755,11 +781,20 @@ if sekcja == 'Alergia':
 
         wynik_df2_cr = wynik_df_cr.rename(columns={'KLIENT': 'Kod klienta'})
         wynik_df2_cr = wynik_df2_cr[['Kod klienta','max_percent']]
+
+        wynik_df2_lg = wynik_df_lg.rename(columns={'KLIENT': 'Kod klienta'})
+        wynik_df2_lg = wynik_df2_lg[['Kod klienta','pakiet']]
+
+        wynik_df2_cg = wynik_df_cg.rename(columns={'KLIENT': 'Kod klienta'})
+        wynik_df2_cg = wynik_df2_cg[['Kod klienta','pakiet']]
         #wynik_df2
 
         #POŁĄCZYĆ wynik_df z standard_ost
         polaczone_lr = pd.concat([stand_lr, wynik_df1_lr, wynik_df2_lr], axis = 0)
         polaczone_cr = pd.concat([stand_cr, wynik_df1_cr, wynik_df2_cr], axis = 0)
+
+        polaczone_lg = pd.concat([stand_lg, wynik_df1_lg, wynik_df2_lg], axis = 0)
+        polaczone_cg = pd.concat([stand_cg, wynik_df1_cg, wynik_df2_cg], axis = 0)
   
         posortowane_lr = polaczone_lr.sort_values(by='max_percent', ascending=False)
         posortowane_cr = polaczone_cr.sort_values(by='max_percent', ascending=False)
@@ -767,8 +802,14 @@ if sekcja == 'Alergia':
         ostatecznie_lr = posortowane_lr.drop_duplicates(subset='Kod klienta')
         ostatecznie_lr = ostatecznie_lr[ostatecznie_lr['max_percent'] != 0]
 
+
         ostatecznie_cr = posortowane_cr.drop_duplicates(subset='Kod klienta')
         ostatecznie_cr = ostatecznie_cr[ostatecznie_cr['max_percent'] != 0]
+
+        ostatecznie_lg = polaczone_lg..drop_duplicates(subset=['Kod klienta', 'pakiet'])
+        ostatecznie_cg = polaczone_cg..drop_duplicates(subset=['Kod klienta', 'pakiet'])
+
+        ostatecznie_lg
         
         st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
         excel_file = io.BytesIO()
