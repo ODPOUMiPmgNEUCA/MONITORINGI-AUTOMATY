@@ -655,6 +655,8 @@ if sekcja == 'Alergia':
                                         or 'powiązanie' in str(row['20']).lower() or 'powiązanie' in str(row['22']).lower() or 'powiązanie' in str(row['25']).lower() else '', axis=1)
         Cr['SIECIOWY'] = Cr.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['15']).lower() or 'powiązanie' in str(row['18']).lower() 
                                         or 'powiązanie' in str(row['20']).lower() or 'powiązanie' in str(row['22']).lower() or 'powiązanie' in str(row['25']).lower() else '', axis=1)
+        Lg['SIECIOWY'] = Lg.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['PAKIET']).lower() else '', axis=1)
+        Cg['SIECIOWY'] = Cg.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['PAKIET']).lower() else '', axis=1)
 
         Lr['15_percent'] = Lr['15'].apply(extract_percentage)
         Lr['18_percent'] = Lr['18'].apply(extract_percentage)
