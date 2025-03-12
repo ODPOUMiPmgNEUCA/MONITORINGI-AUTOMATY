@@ -57,6 +57,10 @@ def percentage_to_float(percentage_str):
     # Zamiana przecinka na kropkę, usunięcie znaku '%'
     return float(percentage_str.replace(',', '.').replace('%', ''))
 
+def extract_numbers_as_text(text):
+    numbers = re.findall(r'\d+', text)
+    return f"{numbers[0]}+{numbers[1]}" if len(numbers) >= 2 else None
+
 
 dzisiejsza_data = datetime.datetime.now().strftime("%d.%m.%Y")
 
@@ -670,6 +674,8 @@ if sekcja == 'Alergia':
         Cr['22_percent'] = Cr['22'].apply(extract_percentage)
         Cr['25_percent'] = Cr['25'].apply(extract_percentage)
 
+        Lg['pakiet'] = Lg['PAKIET'].apply(extract_numbers_as_text)
+        Cg['pakiet'] = Cg['PAKIET'].apply(extract_numbers_as_text)
 
         # na zmiennoprzecinkowe
         Lr['15_percent'] = Lr['15_percent'].apply(percentage_to_float)
