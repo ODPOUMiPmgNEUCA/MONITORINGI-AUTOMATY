@@ -888,7 +888,7 @@ if sekcja == 'Alergia':
             # Merge ostatecznie_lr z poprzedni_lr na podstawie 'Kod klienta' oraz 'PAKIET'
             result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'old_pakiet']], 
                                              on=['Kod klienta', 'pakiet'], 
-                                             how='left', indicator=True)
+                                             how='left')
         
             # Tworzenie kolumny 'Czy dodać' na podstawie tego, czy w poprzednim pliku nie ma tego samego 'Kod klienta' i 'PAKIET'
             result_lg['Czy dodać'] = result_lg.apply(
