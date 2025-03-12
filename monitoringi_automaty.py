@@ -823,6 +823,13 @@ if sekcja == 'Alergia':
             if 'ostatecznie_cr' in locals():
                 ostatecznie_cr.to_excel(writer, index=False, sheet_name='Cetalergedd_rabat')
 
+
+            if 'ostatecznie_lg' in locals():
+                ostatecznie_lg.to_excel(writer, index=False, sheet_name='Levalergedd_gratis')
+
+            if 'ostatecznie_cg' in locals():
+                ostatecznie_cg.to_excel(writer, index=False, sheet_name='Cetalergedd_gratis ')
+
         excel_file.seek(0)  # Resetowanie wskaźnika do początku pliku
 
          # Umożliwienie pobrania pliku Excel
@@ -852,6 +859,16 @@ if sekcja == 'Alergia':
             st.write('Poprzedni monitoring - Cetalergedd_rabat:')
             st.write(poprzedni_cr.head())
 
+        if 'Levalergedd_gratis' in xls.sheet_names:
+            poprzedni_lg = pd.read_excel(poprzedni, sheet_name='Levalergedd_gratis')
+            st.write('Poprzedni monitoring - Levalergedd_gratis :')
+            st.write(poprzedni_lg.head())
+        
+        if 'Cetalergedd_gratis' in xls.sheet_names:
+            poprzedni_cg = pd.read_excel(poprzedni, sheet_name='Cetalergedd_gratis ')
+            st.write('Poprzedni monitoring - Cetalergedd_gratis :')
+            st.write(poprzedni_cg.head())
+
         # Przetwarzanie 
         if 'ostatecznie_lr' in locals() and 'poprzedni_lr' in locals():
             poprzedni_lr = poprzedni_lr.rename(columns={'max_percent': 'old_percent'})
@@ -866,6 +883,23 @@ if sekcja == 'Alergia':
             result_cr['old_percent'] = result_cr['old_percent'].fillna(0)
             result_cr['Czy dodać'] = result_cr.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
 
+        if 'ostatecznie_lg' in locals() and 'poprzedni_lg' in locals():
+            poprzedni_lg = poprzedni_lg.rename(columns={'pakiet': 'old_pakiet'})
+            # Merge ostatecznie_lr z poprzedni_lr, ale na podstawie dwóch kolumn: 'Kod klienta' i 'PAKIET'
+            result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'pakiet', 'old_pakiet']], 
+                                             on=['Kod klienta', 'pakiet'], 
+                                             how='left')
+
+    # Wypełnij NaN w kolumnie 'old_percent' zerami
+    result_lr['old_percent'] = result_lr['old_percent'].fillna(0)
+    
+    # Ustaw 'Czy dodać' na 'DODAJ' jeśli w poprzednim pliku nie ma tego samego 'Kod klienta' i 'PAKIET'
+    result_lr['Czy dodać'] = result_lr.apply(
+        lambda row: 'DODAJ' if row['old_percent'] == 0 else ('DODAJ' if row['max_percent'] > row['old_percent'] else ''),
+        axis=1
+    )
+
+       
         # Zapisywanie plików do Excela
         excel_file1 = io.BytesIO()
         with pd.ExcelWriter(excel_file1, engine='xlsxwriter') as writer:
