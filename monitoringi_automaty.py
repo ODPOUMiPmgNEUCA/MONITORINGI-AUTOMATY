@@ -806,8 +806,8 @@ if sekcja == 'Alergia':
         ostatecznie_cr = posortowane_cr.drop_duplicates(subset='Kod klienta')
         ostatecznie_cr = ostatecznie_cr[ostatecznie_cr['max_percent'] != 0]
 
-        ostatecznie_lg = polaczone_lg..drop_duplicates(subset=['Kod klienta', 'pakiet'])
-        ostatecznie_cg = polaczone_cg..drop_duplicates(subset=['Kod klienta', 'pakiet'])
+        ostatecznie_lg = polaczone_lg.drop_duplicates(subset=['Kod klienta', 'pakiet'])
+        ostatecznie_cg = polaczone_cg.drop_duplicates(subset=['Kod klienta', 'pakiet'])
 
         ostatecznie_lg
         
