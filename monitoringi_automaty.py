@@ -676,6 +676,7 @@ if sekcja == 'Alergia':
 
         Lg['pakiet'] = Lg['PAKIET'].apply(extract_numbers_as_text)
         Cg['pakiet'] = Cg['PAKIET'].apply(extract_numbers_as_text)
+        Lg
 
         # na zmiennoprzecinkowe
         Lr['15_percent'] = Lr['15_percent'].apply(percentage_to_float)
