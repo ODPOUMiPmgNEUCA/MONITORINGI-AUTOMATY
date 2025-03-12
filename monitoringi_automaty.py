@@ -642,6 +642,9 @@ if sekcja == 'Alergia':
         Lg = Lg.dropna(subset=['KLIENT']) 
         Cg = Cg.dropna(subset=['KLIENT'])
 
+        Lg = Lg[~Lg['PAKIET'].str.lower().str.contains('brak')]
+        Cg = Cg[~Cg['PAKIET'].str.lower().str.contains('brak')]
+
         # klient na całkowite
         Lr['KLIENT'] = Lr['KLIENT'].astype(int)
         Cr['KLIENT'] = Cr['KLIENT'].astype(int)
