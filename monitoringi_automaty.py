@@ -687,7 +687,7 @@ if sekcja == 'Alergia':
         stand_lr = Lr2
         stand_cr= Cr2
         pow_lr = Lr1
-        pow_cr = Cr2
+        pow_cr = Cr1
 
 
 
