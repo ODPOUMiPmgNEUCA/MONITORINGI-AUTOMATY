@@ -864,7 +864,7 @@ if sekcja == 'Alergia':
             st.write('Poprzedni monitoring - Levalergedd_gratis :')
             st.write(poprzedni_lg.head())
         
-        if 'Cetalergedd_gratis' in xls.sheet_names:
+        if 'Cetalergedd_gratis ' in xls.sheet_names:
             poprzedni_cg = pd.read_excel(poprzedni, sheet_name='Cetalergedd_gratis ')
             st.write('Poprzedni monitoring - Cetalergedd_gratis :')
             st.write(poprzedni_cg.head())
