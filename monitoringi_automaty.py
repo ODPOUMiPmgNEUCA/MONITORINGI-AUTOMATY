@@ -885,14 +885,14 @@ if sekcja == 'Alergia':
 
         if 'ostatecznie_lg' in locals() and 'poprzedni_lg' in locals():
             # Zmień nazwę kolumny 'pakiet' na 'old_pakiet' w poprzedni_lg
-            poprzedni_lg = poprzedni_lg.rename(columns={'pakiet': 'old_pakiet'})
+            # poprzedni_lg = poprzedni_lg.rename(columns={'pakiet': 'old_pakiet'})
             # Dodaj poprzedni_lg na dole ostatecznie_lg
             result_lg = pd.concat([ostatecznie_lg, poprzedni_lg], ignore_index=True)
             # Usuń duplikaty na podstawie kluczowych kolumn (zachowując pierwsze wystąpienie)
             result_lg = result_lg.drop_duplicates(subset=['Kod klienta', 'pakiet'], keep='first')
             # Oznacz nowe wiersze (takie, które nie były w poprzedni_lg)
             result_lg['Czy dodać'] = result_lg.apply(lambda row: 'DODAJ' if row['Kod klienta'] not in poprzedni_lg['Kod klienta'].values 
-                                                     or row['pakiet'] not in poprzedni_lg['old_pakiet'].values else '', axis=1)
+                                                     or row['pakiet'] not in poprzedni_lg['pakiet'].values else '', axis=1)
 
        
         # Zapisywanie plików do Excela
