@@ -809,7 +809,7 @@ if sekcja == 'Alergia':
         ostatecznie_lg = polaczone_lg.drop_duplicates(subset=['Kod klienta', 'pakiet'])
         ostatecznie_cg = polaczone_cg.drop_duplicates(subset=['Kod klienta', 'pakiet'])
 
-        ostatecznie_lg
+        # ostatecznie_lg
         
         st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
         excel_file = io.BytesIO()
@@ -894,6 +894,17 @@ if sekcja == 'Alergia':
             result_lg['Czy dodać'] = result_lg.apply(lambda row: 'DODAJ' if row['Kod klienta'] not in poprzedni_lg['Kod klienta'].values 
                                                      or row['pakiet'] not in poprzedni_lg['pakiet'].values else '', axis=1)
 
+        if 'ostatecznie_cg' in locals() and 'poprzedni_cg' in locals():
+            # Zmień nazwę kolumny 'pakiet' na 'old_pakiet' w poprzedni_lg
+            # poprzedni_lg = poprzedni_lg.rename(columns={'pakiet': 'old_pakiet'})
+            # Dodaj poprzedni_lg na dole ostatecznie_lg
+            result_cg = pd.concat([ostatecznie_cg, poprzedni_cg], ignore_index=True)
+            # Usuń duplikaty na podstawie kluczowych kolumn (zachowując pierwsze wystąpienie)
+            result_cg = result_cg.drop_duplicates(subset=['Kod klienta', 'pakiet'], keep='first')
+            # Oznacz nowe wiersze (takie, które nie były w poprzedni_lg)
+            result_cg['Czy dodać'] = result_cg.apply(lambda row: 'DODAJ' if row['Kod klienta'] not in poprzedni_cg['Kod klienta'].values 
+                                                     or row['pakiet'] not in poprzedni_cg['pakiet'].values else '', axis=1)
+
        
         # Zapisywanie plików do Excela
         excel_file1 = io.BytesIO()
@@ -904,6 +915,8 @@ if sekcja == 'Alergia':
                 result_cr.to_excel(writer, index=False, sheet_name='Cetalergedd_rabat')
             if 'result_lg' in locals():
                 result_lg.to_excel(writer, index=False, sheet_name='Levalergedd_gratis')
+            if 'result_cg' in locals():
+                result_cg.to_excel(writer, index=False, sheet_name='Cetalergedd_gratis ')
 
 
         excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
@@ -920,6 +933,8 @@ if sekcja == 'Alergia':
 
         result_lr = result_lr.drop(columns=['old_percent', 'Czy dodać'])
         result_cr = result_cr.drop(columns=['old_percent', 'Czy dodać'])
+        result_lg = result_lg.drop(columns=['Czy dodać'])
+        result_cg = result_cg.drop(columns=['Czy dodać'])
         # result_lg = result_lg.drop(columns=['old_pakiet', 'Czy dodać'])
 
         st.write('Kliknij, aby pobrać plik z formułą max do następnego monitoringu')
@@ -932,6 +947,7 @@ if sekcja == 'Alergia':
             result_lr.to_excel(writer, index=False, sheet_name='Levalergedd_rabat')
             result_cr.to_excel(writer, index=False, sheet_name='Cetalergedd_rabat')
             result_lg.to_excel(writer, index=False, sheet_name='Levalergedd_gratis')
+            result_lg.to_excel(writer, index=False, sheet_name='Cetalergedd_gratis ')
 
 
         # Resetowanie wskaźnika do początku pliku
