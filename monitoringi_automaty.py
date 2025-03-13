@@ -884,12 +884,15 @@ if sekcja == 'Alergia':
             result_cr['Czy dodać'] = result_cr.apply(lambda row: 'DODAJ' if row['max_percent'] > row['old_percent'] else '', axis=1)
 
         if 'ostatecznie_lg' in locals() and 'poprzedni_lg' in locals():
+            # Zmień nazwę kolumny 'pakiet' na 'old_pakiet' w poprzedni_lg
             poprzedni_lg = poprzedni_lg.rename(columns={'pakiet': 'old_pakiet'})
-            # Merge ostatecznie_lr z poprzedni_lr na podstawie 'Kod klienta' oraz 'PAKIET'
-            #result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'old_pakiet']], on=['Kod klienta'], how='left')
-            result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'old_pakiet']], left_on=['Kod klienta', 'pakiet'], right_on=['Kod klienta', 'old_pakiet'], how='left')
-            result_lg['old_pakiet'] = result_lg['old_pakiet'].fillna(0)
-            result_lg['Czy dodać'] = result_lg.apply(lambda row: 'DODAJ' if pd.notna(row['pakiet']) and row['old_pakiet'] == 0 else '', axis=1)
+            # Dodaj poprzedni_lg na dole ostatecznie_lg
+            result_lg = pd.concat([ostatecznie_lg, poprzedni_lg], ignore_index=True)
+            # Usuń duplikaty na podstawie kluczowych kolumn (zachowując pierwsze wystąpienie)
+            result_lg = result_lg.drop_duplicates(subset=['Kod klienta', 'pakiet'], keep='first')
+            # Oznacz nowe wiersze (takie, które nie były w poprzedni_lg)
+            result_lg['Czy dodać'] = result_lg.apply(lambda row: 'DODAJ' if row['Kod klienta'] not in poprzedni_lg['Kod klienta'].values 
+                                                     or row['pakiet'] not in poprzedni_lg['old_pakiet'].values else '', axis=1)
 
        
         # Zapisywanie plików do Excela
