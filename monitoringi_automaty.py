@@ -90,7 +90,7 @@ if sekcja == 'Cykl Q1':
     # Zmiana nazw kolumn
     df = df.rename(columns={'0.12.1': '12', '0.14.1': '14'})
 
-    # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnach '12' lub '14' jest słowo 'powiązanie'
+    #Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnach '12' lub '14' jest słowo 'powiązanie'
     df['SIECIOWY'] = df.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() or 'powiązanie' in str(row['14']).lower() else '', axis=1)
 
     #SPRAWDZENIE CZY DZIAŁA
@@ -137,7 +137,7 @@ if sekcja == 'Cykl Q1':
 
     wynik_df = pd.merge(powiazanie, ims, left_on='KLIENT', right_on='Klient', how='left')
 
-    # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
+    #Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
     wynik_df = wynik_df[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
 
 
@@ -195,7 +195,7 @@ if sekcja == 'Cykl Q1':
     excel_file1.seek(0)  # Resetowanie wskaźnika do początku pliku
 
     nazwa_pliku1 = f"CYKL_Q1_{dzisiejsza_data}.xlsx"
-    # Umożliwienie pobrania pliku Excel
+    #Umożliwienie pobrania pliku Excel
     st.download_button(
         label='Pobierz',
         data=excel_file1,
@@ -251,7 +251,7 @@ if sekcja == 'Musy':
             st.write(Gratisy.head())
 
 
-        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        #Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Ekspozytor z gratisem, rabat' in xls.sheet_names:
             Eksp = pd.read_excel(df, sheet_name='Ekspozytor z gratisem, rabat', skiprows=12, usecols=[1, 2, 9, 10])
             st.write("Dane z arkusza Ekspozytor z gratisem, rabat:")
@@ -293,7 +293,7 @@ if sekcja == 'Musy':
         Eksp['13_percent'] = Eksp['13_percent'].apply(percentage_to_float)
         Eksp['16_percent'] = Eksp['16_percent'].apply(percentage_to_float)
     
-        # Dodaj nową kolumnę 'max_percent'
+        #Dodaj nową kolumnę 'max_percent'
         Rabat1 = Rabat[Rabat['SIECIOWY'] == 'SIECIOWY']
         Rabat2 = Rabat[Rabat['SIECIOWY'] != 'SIECIOWY']
         Rabat1['max_percent'] = Rabat1[['12_percent', '16_percent', '18_percent']].max(axis=1)
@@ -886,7 +886,8 @@ if sekcja == 'Alergia':
         if 'ostatecznie_lg' in locals() and 'poprzedni_lg' in locals():
             poprzedni_lg = poprzedni_lg.rename(columns={'pakiet': 'old_pakiet'})
             # Merge ostatecznie_lr z poprzedni_lr na podstawie 'Kod klienta' oraz 'PAKIET'
-            result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'old_pakiet']], on='Kod klienta', how='left')
+            #result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'old_pakiet']], on=['Kod klienta'], how='left')
+            result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'old_pakiet']], left_on=['Kod klienta', 'pakiet'], right_on=['Kod klienta', 'old_pakiet'], how='left')
             result_lg['old_pakiet'] - result_lg['old_pakiet'].fillna(0)
             result_lg['Czy dodać'] = result_lg.apply(lambda row: 'DODAJ' if pd.notna(row['pakiet']) and row['old_pakiet'] == 0 else '', axis=1)
 
