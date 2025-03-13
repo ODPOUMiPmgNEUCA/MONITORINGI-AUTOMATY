@@ -888,7 +888,7 @@ if sekcja == 'Alergia':
             # Merge ostatecznie_lr z poprzedni_lr na podstawie 'Kod klienta' oraz 'PAKIET'
             #result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'old_pakiet']], on=['Kod klienta'], how='left')
             result_lg = ostatecznie_lg.merge(poprzedni_lg[['Kod klienta', 'old_pakiet']], left_on=['Kod klienta', 'pakiet'], right_on=['Kod klienta', 'old_pakiet'], how='left')
-            result_lg['old_pakiet'] - result_lg['old_pakiet'].fillna(0)
+            result_lg['old_pakiet'] = result_lg['old_pakiet'].fillna(0)
             result_lg['Czy dodać'] = result_lg.apply(lambda row: 'DODAJ' if pd.notna(row['pakiet']) and row['old_pakiet'] == 0 else '', axis=1)
 
        
