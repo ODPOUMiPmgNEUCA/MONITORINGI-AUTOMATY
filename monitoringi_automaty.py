@@ -947,7 +947,7 @@ if sekcja == 'Alergia':
             result_lr.to_excel(writer, index=False, sheet_name='Levalergedd_rabat')
             result_cr.to_excel(writer, index=False, sheet_name='Cetalergedd_rabat')
             result_lg.to_excel(writer, index=False, sheet_name='Levalergedd_gratis')
-            result_lg.to_excel(writer, index=False, sheet_name='Cetalergedd_gratis ')
+            result_cg.to_excel(writer, index=False, sheet_name='Cetalergedd_gratis ')
 
 
         # Resetowanie wskaźnika do początku pliku
