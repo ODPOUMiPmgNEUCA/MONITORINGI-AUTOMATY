@@ -1163,7 +1163,7 @@ if sekcja == 'Cera+ Panthenol':
                 ostatecznie_p2.to_excel(writer, index=False, sheet_name='Panthenol 105211')
 
             if 'ostatecznie_p3' in locals():
-                ostatecznie_p3.to_excel(writer, index=False, sheet_name='Panthenol 105212 ')
+                ostatecznie_p3.to_excel(writer, index=False, sheet_name='Panthenol 105212')
 
         excel_file.seek(0)  # Resetowanie wskaźnika do początku pliku
 
