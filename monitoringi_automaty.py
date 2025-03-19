@@ -1201,7 +1201,7 @@ if sekcja == 'Cera+ Panthenol':
         
         if 'Panthenol 105212' in xls.sheet_names:
             poprzedni_p3 = pd.read_excel(poprzedni, sheet_name='Panthenol 105212')
-            st.write('Poprzedni monitoring - CPanthenol 105212:')
+            st.write('Poprzedni monitoring - Panthenol 105212:')
             st.write(poprzedni_p3.head())
 
         # Przetwarzanie 
