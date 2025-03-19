@@ -1015,23 +1015,23 @@ if sekcja == 'Cera+ Panthenol':
         P2['KLIENT'] = P2['KLIENT'].astype(int)
         P3['KLIENT'] = P3['KLIENT'].astype(int)
 
-        C.columns=['KLIENT','Kod klienta','max_percent']
-        P1.columns=['KLIENT','Kod klienta','max_percent']
-        P2.columns=['KLIENT','Kod klienta','max_percent']
-        P3.columns=['KLIENT','Kod klienta','max_percent']
+        C.columns=['KLIENT','Kod klienta','percent']
+        P1.columns=['KLIENT','Kod klienta','percent']
+        P2.columns=['KLIENT','Kod klienta','percent']
+        P3.columns=['KLIENT','Kod klienta','percent']
  
 
         # Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnach '12' lub '14' jest słowo 'powiązanie'
-        C['SIECIOWY'] = C.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['max_percent']).lower() else '', axis=1)
-        P1['SIECIOWY'] = P1.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['max_percent']).lower() else '', axis=1)
-        P2['SIECIOWY'] = P2.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['max_percent']).lower() else '', axis=1)
-        P3['SIECIOWY'] = P3.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['max_percent']).lower() else '', axis=1)
+        C['SIECIOWY'] = C.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['percent']).lower() else '', axis=1)
+        P1['SIECIOWY'] = P1.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['percent']).lower() else '', axis=1)
+        P2['SIECIOWY'] = P2.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['percent']).lower() else '', axis=1)
+        P3['SIECIOWY'] = P3.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['percent']).lower() else '', axis=1)
 
 
-        C['max_percent'] = C['max_percent'].apply(extract_percentage)
-        P1['max_percent'] = P1['max_percent'].apply(extract_percentage)
-        P2['max_percent'] = P2['max_percent'].apply(extract_percentage)
-        P3['max_percent'] = P3['max_percent'].apply(extract_percentage)
+        C['max_percent'] = C['percent'].apply(extract_percentage)
+        P1['max_percent'] = P1['percent'].apply(extract_percentage)
+        P2['max_percent'] = P2['percent'].apply(extract_percentage)
+        P3['max_percent'] = P3['percent'].apply(extract_percentage)
 
         # na zmiennoprzecinkowe
         C['max_percent'] = C['max_percent'].apply(percentage_to_float)
@@ -1049,14 +1049,14 @@ if sekcja == 'Cera+ Panthenol':
         P31 = P3[P3['SIECIOWY'] == 'SIECIOWY']
         P32 = P3[P3['SIECIOWY'] != 'SIECIOWY']
         
-        #C1['max_percent'] = C1[['max_percent']].max(axis=1)
-        #C2['max_percent'] = C2[['max_percent']].max(axis=1)
-        #P11['max_percent'] = P11[['max_percent']].max(axis=1)
-        #P12['max_percent'] = P12[['max_percent']].max(axis=1)
-        #P21['max_percent'] = P21[['max_percent']].max(axis=1)
-        #P22['max_percent'] = P22[['max_percent']].max(axis=1)
-        #P31['max_percent'] = P31[['max_percent']].max(axis=1)
-        #P32['max_percent'] = P32[['max_percent']].max(axis=1)
+        C1['max_percent'] = C1[['max_percent']].max(axis=1)
+        C2['max_percent'] = C2[['max_percent']].max(axis=1)
+        P11['max_percent'] = P11[['max_percent']].max(axis=1)
+        P12['max_percent'] = P12[['max_percent']].max(axis=1)
+        P21['max_percent'] = P21[['max_percent']].max(axis=1)
+        P22['max_percent'] = P22[['max_percent']].max(axis=1)
+        P31['max_percent'] = P31[['max_percent']].max(axis=1)
+        P32['max_percent'] = P32[['max_percent']].max(axis=1)
 
         stand_c = C2
         pow_c = C1
@@ -1174,7 +1174,8 @@ if sekcja == 'Cera+ Panthenol':
             file_name='czy_dodac.xlsx',
             mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
-    
+
+        
         # Plik z poprzedniego monitoringu
         poprzedni = st.file_uploader(
             label="Wrzuć plik z poprzedniego monitoringu"
