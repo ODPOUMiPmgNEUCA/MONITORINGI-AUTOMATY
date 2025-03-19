@@ -998,7 +998,7 @@ if sekcja == 'Cera+ Panthenol':
 
         # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
         if 'Panthenol 105212 ' in xls.sheet_names:
-            P3 = pd.read_excel(df, sheet_name='Panthenol 105212 ', skiprows=13, usecols=[1, 2, 10])
+            P3 = pd.read_excel(df, sheet_name='Panthenol 105212', skiprows=13, usecols=[1, 2, 10])
             st.write("Dane z arkusza Panthenol 105212")
             st.write(P3.head())
 
