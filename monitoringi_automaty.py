@@ -966,7 +966,7 @@ if sekcja == 'Alergia':
 
 
 ############################################################################# CERA+ PANTHENOL #####################################################################################
-if sekcja == 'Alergia':
+if sekcja == 'Cera+ Panthenol':
     st.write(tabs_font_css, unsafe_allow_html=True)
 
     df = st.file_uploader(
