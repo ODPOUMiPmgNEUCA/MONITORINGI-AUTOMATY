@@ -1084,16 +1084,47 @@ if sekcja == 'Cera+ Panthenol':
     standard_ost_p3 = standard_p3[['Kod klienta', 'max_percent']]
     powiazanie_p3 = powiazanie_p3[['KLIENT','Kod klienta','max_percent']]
 
-    standard_ost_3
-    powiazanie_p3
+    #standard_ost_3
+    #powiazanie_p3
 
+
+
+    #TERAZ IMS
+    ims = st.file_uploader(
+        label = "Wrzuć plik ims_nhd"
+    )
+
+    if ims:
+        ims = pd.read_excel(ims, usecols=[0,2,19,21])
+        st.write(ims.head())
+
+    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
+    ims = ims[ims['APD_Rodzaj_farmaceutyczny'].isin(['AP - Apteka','ME - Sklep zielarsko - medyczny','PU - Punkt apteczny'])]
     
-
-
-                
-                
-            
+    wynik_df_c = pd.merge(powiazanie_c, ims, left_on='KLIENT', right_on='Klient', how='left')
     
+    # Wybór potrzebnych kolumn: 'APD_kod_SAP_apteki' i 'max_percent'
+    wynik_df_c = wynik_df_c[['KLIENT','APD_kod_SAP_apteki', 'max_percent']]
+    
+    #to są kody SAP
+    wynik_df1_c = wynik_df_c.rename(columns={'APD_kod_SAP_apteki': 'Kod klienta'})
+    wynik_df1_c = wynik_df1_c[['Kod klienta','max_percent']]
+        #wynik_df1
+    
+    #to są kody powiazan
+    wynik_df2_c = wynik_df_c.rename(columns={'KLIENT': 'Kod klienta'})
+    wynik_df2_c = wynik_df2_c[['Kod klienta','max_percent']]
+    #wynik_df2
+
+    #POŁĄCZYĆ wynik_df z standard_ost
+    polaczone_c = pd.concat([stand_c, wynik_df1_c, wynik_df2_c], axis = 0)
+  
+    posortowane_c = polaczone_c.sort_values(by='max_percent', ascending=False)
+
+    ostatecznie_c = posortowane_c.drop_duplicates(subset='Kod klienta')
+    ostatecznie_c = ostatecznie_c[ostatecznie_c['max_percent'] != 0]
+
+    st.write('Jeśli to pierwszy monitoring, pobierz ten plik, jeśli nie, wrzuć plik z poprzedniego monitoringu i NIE POBIERAJ TEGO PLIKU')
     
             
 
