@@ -968,21 +968,6 @@ if sekcja == 'Alergia':
 ############################################################################# CERA+ PANTHENOL #####################################################################################
 if sekcja == 'Cera+ Panthenol':
     st.write(tabs_font_css, unsafe_allow_html=True)
-
-    #TERAZ IMS
-    ims = st.file_uploader(
-        label = "Wrzuć plik ims_nhd")
-    
-    if ims:
-        ims = pd.read_excel(ims, usecols=[0,2,19,21])
-        st.write(ims.head())
-    
-    ims = ims[ims['APD_Czy_istnieje_na_rynku']==1]
-    ims = ims[ims['APD_Rodzaj_farmaceutyczny'].isin(['AP - Apteka','ME - Sklep zielarsko - medyczny','PU - Punkt apteczny'])]
-    
-    df = st.file_uploader(
-        label="Wrzuć plik Cykl - Cera+ Panthenol"
-    )
     
     if df:
         # Pobieramy listę dostępnych arkuszy
@@ -1065,7 +1050,6 @@ if sekcja == 'Cera+ Panthenol':
         P2['max_percent'] = P2[['pakiet_percent']].max(axis=1)
         P3['max_percent'] = P3[['pakiet_percent']].max(axis=1)
 
-        P3
         
     
         # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
