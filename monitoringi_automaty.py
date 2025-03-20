@@ -1002,10 +1002,11 @@ if sekcja == 'Cera+ Panthenol':
             st.write(P3.head())
 
         #usuń braki danych z Kod klienta
-        C = C.dropna(subset=['Kod klienta'])
-        P1 = P1.dropna(subset=['Kod klienta'])
-        P2 = P2.dropna(subset=['Kod klienta'])
-        P3 = P3.dropna(subset=['Kod klienta'])
+            C = C.dropna(subset=['Kod klienta'])
+            P1 = P1.dropna(subset=['Kod klienta'])
+            P2 = P2.dropna(subset=['Kod klienta'])
+            P3 = P3.dropna(subset=['Kod klienta'])
+            P3
     
         # klient na całkowite
         C['KLIENT'] = C['KLIENT'].astype(int)
