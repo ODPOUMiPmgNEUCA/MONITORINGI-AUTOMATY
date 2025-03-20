@@ -1044,9 +1044,9 @@ if sekcja == 'Cera+ Panthenol':
 
     # Konwersja kolumn '12_percent' i '14_percent' na liczby zmiennoprzecinkowe
     C['pakiet_percent'] = C['pakiet_percent'].apply(percentage_to_float)
-    P1['pakiet_percent'] = P1['14_percent'].apply(percentage_to_float)
-    P2['pakiet_percent'] = P2['14_percent'].apply(percentage_to_float)
-    P3['pakiet_percent'] = P3['14_percent'].apply(percentage_to_float)
+    P1['pakiet_percent'] = P1['pakiet_percent'].apply(percentage_to_float)
+    P2['pakiet_percent'] = P2['pakiet_percent'].apply(percentage_to_float)
+    P3['pakiet_percent'] = P3['pakiet_percent'].apply(percentage_to_float)
 
     # Dodaj nową kolumnę 'max_percent' z maksymalnymi wartościami z kolumn '12_percent' i '14_percent'
     C['max_percent'] = C[['pakiet_percent']].max(axis=1)
