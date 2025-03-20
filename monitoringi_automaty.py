@@ -1025,10 +1025,10 @@ if sekcja == 'Cera+ Panthenol':
     P3.columns=['KLIENT','Kod klienta','pakiet']
 
     #Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnach '12' lub '14' jest słowo 'powiązanie'
-    C['SIECIOWY'] = C.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() else '', axis=1)
-    P1['SIECIOWY'] = P1.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() else '', axis=1)
-    P2['SIECIOWY'] = P2.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() else '', axis=1)
-    P3['SIECIOWY'] = P3.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() else '', axis=1)
+    C['SIECIOWY'] = C.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['pakiet']).lower() else '', axis=1)
+    P1['SIECIOWY'] = P1.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['pakiet']).lower() else '', axis=1)
+    P2['SIECIOWY'] = P2.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['pakiet']).lower() else '', axis=1)
+    P3['SIECIOWY'] = P3.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['pakiet']).lower() else '', axis=1)
 
     #SPRAWDZENIE CZY DZIAŁA
     #df[df['SIECIOWY'] == 'SIECIOWY']
