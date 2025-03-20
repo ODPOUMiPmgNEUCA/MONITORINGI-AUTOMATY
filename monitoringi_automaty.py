@@ -1057,17 +1057,34 @@ if sekcja == 'Cera+ Panthenol':
 
     # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
     filtered_c = C[C['max_percent'] != 0]
-
     standard_c = filtered_c[filtered_c['SIECIOWY'] != 'SIECIOWY']
     powiazanie_c = filtered_c[filtered_c['SIECIOWY'] == 'SIECIOWY']
-
     #len(standard), len(powiazanie), len(filtered_df)
-
     standard_ost_c = standard_c[['Kod klienta', 'max_percent']]
-
     powiazanie_c = powiazanie_c[['KLIENT','Kod klienta','max_percent']]
 
-    standard_ost_c
+    filtered_p1 = P1[P1['max_percent'] != 0]
+    standard_p1 = filtered_p1[filtered_p1['SIECIOWY'] != 'SIECIOWY']
+    powiazanie_p1 = filtered_p1[filtered_p1['SIECIOWY'] == 'SIECIOWY']
+    #len(standard), len(powiazanie), len(filtered_df)
+    standard_ost_p1 = standard_p1[['Kod klienta', 'max_percent']]
+    powiazanie_p1 = powiazanie_p1[['KLIENT','Kod klienta','max_percent']]
+
+    filtered_p2 = P2[P2['max_percent'] != 0]
+    standard_p2 = filtered_p2[filtered_p2['SIECIOWY'] != 'SIECIOWY']
+    powiazanie_p2 = filtered_p2[filtered_p2['SIECIOWY'] == 'SIECIOWY']
+    #len(standard), len(powiazanie), len(filtered_df)
+    standard_ost_p2 = standard_p2[['Kod klienta', 'max_percent']]
+    powiazanie_p2 = powiazanie_p2[['KLIENT','Kod klienta','max_percent']]
+
+    filtered_p3 = P3[P3['max_percent'] != 0]
+    standard_p3 = filtered_p3[filtered_p3['SIECIOWY'] != 'SIECIOWY']
+    powiazanie_p3 = filtered_p3[filtered_p3['SIECIOWY'] == 'SIECIOWY']
+    #len(standard), len(powiazanie), len(filtered_df)
+    standard_ost_p3 = standard_p3[['Kod klienta', 'max_percent']]
+    powiazanie_p3 = powiazanie_p3[['KLIENT','Kod klienta','max_percent']]
+
+    
 
 
                 
