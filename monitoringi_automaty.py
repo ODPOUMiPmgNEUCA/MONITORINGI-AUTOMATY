@@ -1084,6 +1084,9 @@ if sekcja == 'Cera+ Panthenol':
     standard_ost_p3 = standard_p3[['Kod klienta', 'max_percent']]
     powiazanie_p3 = powiazanie_p3[['KLIENT','Kod klienta','max_percent']]
 
+    standard_ost_3
+    powiazanie_p3
+
     
 
 
