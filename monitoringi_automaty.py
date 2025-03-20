@@ -1006,7 +1006,7 @@ if sekcja == 'Cera+ Panthenol':
         P1 = P1.dropna(subset=['Kod klienta'])
         P2 = P2.dropna(subset=['Kod klienta'])
         P3 = P3.dropna(subset=['Kod klienta'])
-        P3
+        C.columns
     
         # klient na całkowite
         C['KLIENT'] = C['KLIENT'].astype(int)
