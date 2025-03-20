@@ -1053,6 +1053,8 @@ if sekcja == 'Cera+ Panthenol':
         P1['max_percent'] = P1[['pakiet_percent']].max(axis=1)
         P2['max_percent'] = P2[['pakiet_percent']].max(axis=1)
         P3['max_percent'] = P3[['pakiet_percent']].max(axis=1)
+
+        P3
         
     
         # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
