@@ -966,7 +966,108 @@ if sekcja == 'Alergia':
 
 
 ############################################################################# CERA+ PANTHENOL #####################################################################################
+if sekcja == 'Alergia':
+    st.write(tabs_font_css, unsafe_allow_html=True)
 
+    df = st.file_uploader(
+        label="Wrzuć plik Cykl - Alergia"
+    )
+    
+    if df:
+        # Pobieramy listę dostępnych arkuszy
+        xls = pd.ExcelFile(df)
+        
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'CERA+' in xls.sheet_names:
+            C = pd.read_excel(df, sheet_name='CERA+', skiprows=13, usecols=[1, 2, 10])
+            st.write("Dane z arkusza CERA+:")
+            st.write(C.head())
+
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'Panthenol 105210' in xls.sheet_names:
+            P1 = pd.read_excel(df, sheet_name='Panthenol 105210', skiprows=13, usecols=[1, 2, 10])
+            st.write("Dane z arkusza Panthenol 105210:")
+            st.write(P1.head())
+
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'Panthenol 105211' in xls.sheet_names:
+            P2 = pd.read_excel(df, sheet_name='Panthenol 105211', skiprows=13, usecols=[1, 2, 10])
+            st.write("Dane z arkusza Panthenol 105211:")
+            st.write(P2.head())
+
+        # Sprawdzamy, które arkusze są dostępne i wczytujemy odpowiednie dane
+        if 'Panthenol 105212' in xls.sheet_names:
+            P3 = pd.read_excel(df, sheet_name='Panthenol 105212', skiprows=13, usecols=[1, 2, 10])
+            st.write("Dane z arkusza Panthenol 105212:")
+            st.write(P3.head())
+
+
+    #usuń braki danych z Kod klienta
+    C = C.dropna(subset=['Kod klienta'])
+    P1 = P1.dropna(subset=['Kod klienta'])
+    P2 = P2.dropna(subset=['Kod klienta'])
+    P3 = P3.dropna(subset=['Kod klienta'])
+
+    # klient na całkowite
+    C['KLIENT'] = C['KLIENT'].astype(int)
+    C['Kod klienta'] = C['Kod klienta'].astype(int)
+    P1['KLIENT'] = P1['KLIENT'].astype(int)
+    P1['Kod klienta'] = P1['Kod klienta'].astype(int)
+    P2['KLIENT'] = P2['KLIENT'].astype(int)
+    P2['Kod klienta'] = P2['Kod klienta'].astype(int)
+    P3['KLIENT'] = P3['KLIENT'].astype(int)
+    P3['Kod klienta'] = P3['Kod klienta'].astype(int)
+    
+
+    C.columns=['KLIENT','Kod klienta','pakiet']
+    P1.columns=['KLIENT','Kod klienta','pakiet']
+    P2.columns=['KLIENT','Kod klienta','pakiet']
+    P3.columns=['KLIENT','Kod klienta','pakiet']
+
+    #Dodaj kolumnę 'SIECIOWY', która będzie zawierać 'SIECIOWY' jeśli w kolumnach '12' lub '14' jest słowo 'powiązanie'
+    C['SIECIOWY'] = C.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() else '', axis=1)
+    P1['SIECIOWY'] = P1.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() else '', axis=1)
+    P2['SIECIOWY'] = P2.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() else '', axis=1)
+    P3['SIECIOWY'] = P3.apply(lambda row: 'SIECIOWY' if 'powiązanie' in str(row['12']).lower() else '', axis=1)
+
+    #SPRAWDZENIE CZY DZIAŁA
+    #df[df['SIECIOWY'] == 'SIECIOWY']
+    #DZIAŁA :)
+
+    
+    # Zastosowanie funkcji do kolumn '12' i '14'
+    C['pakiet_percent'] = C['pakiet'].apply(extract_percentage)
+    P1['pakiet_percent'] = P1['pakiet'].apply(extract_percentage)
+    P2['pakiet_percent'] = P2['pakiet'].apply(extract_percentage)
+    P3['pakiet_percent'] = P3['pakiet'].apply(extract_percentage)
+
+
+    # Konwersja kolumn '12_percent' i '14_percent' na liczby zmiennoprzecinkowe
+    C['pakiet_percent'] = C['pakiet_percent'].apply(percentage_to_float)
+    P1['pakiet_percent'] = P1['14_percent'].apply(percentage_to_float)
+    P2['pakiet_percent'] = P2['14_percent'].apply(percentage_to_float)
+    P3['pakiet_percent'] = P3['14_percent'].apply(percentage_to_float)
+
+    # Dodaj nową kolumnę 'max_percent' z maksymalnymi wartościami z kolumn '12_percent' i '14_percent'
+    C['max_percent'] = C[['pakiet_percent']].max(axis=1)
+    P1['max_percent'] = P1[['pakiet_percent']].max(axis=1)
+    P2['max_percent'] = P2[['pakiet_percent']].max(axis=1)
+    P3['max_percent'] = P3[['pakiet_percent']].max(axis=1)
+    
+
+    # Wybierz wiersze, gdzie 'max_percent' nie jest równa 0
+    filtered_c = C[C['max_percent'] != 0]
+
+    standard_c = filtered_c[filtered_c['SIECIOWY'] != 'SIECIOWY']
+    powiazanie_c = filtered_c[filtered_c['SIECIOWY'] == 'SIECIOWY']
+
+    #len(standard), len(powiazanie), len(filtered_df)
+
+    standard_ost_c = standard_c[['Kod klienta', 'max_percent']]
+
+    powiazanie_c = powiazanie_c[['KLIENT','Kod klienta','max_percent']]
+
+    standard_ost_c
 
 
                 
