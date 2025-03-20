@@ -1093,8 +1093,7 @@ if sekcja == 'Cera+ Panthenol':
     
         #TERAZ IMS
         ims = st.file_uploader(
-            label = "Wrzuć plik ims_nhd"
-        )
+            label = "Wrzuć plik ims_nhd")
     
         if ims:
             ims = pd.read_excel(ims, usecols=[0,2,19,21])
