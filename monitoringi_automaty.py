@@ -29,7 +29,7 @@ st.set_page_config(page_title='Monitoringi AUTOMATY', layout='wide')
 
 sekcja = st.sidebar.radio(
     'Wybierz monitoring:',
-    ('Cykl Q1','Musy','Plastry','Alergia','Cera+ Panthenol')
+    ('Cykl Q1','Musy','Ofera sezonowa','Plastry','Alergia','Cera+ Panthenol')
  )
 
 tabs_font_css = """
@@ -68,7 +68,7 @@ dzisiejsza_data = datetime.datetime.now().strftime("%d.%m.%Y")
 
 
 ############################################################################### Oferta sezonowa  ##############################################################################################
-if sekcja == 'Cykl Q1':
+if sekcja == 'Oferta sezonowa':
     st.write(tabs_font_css, unsafe_allow_html=True)
 
     df = st.file_uploader(
